@@ -1,5 +1,5 @@
 import axios from "axios";
-import { logOut } from "./auth";
+import { logOut } from "./logOut";
 
 export default function instance() {
   const instance = axios.create({
