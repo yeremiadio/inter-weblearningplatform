@@ -10,9 +10,9 @@ import {
   DocumentTextIcon,
   ClipboardIcon,
 } from "@heroicons/react/solid";
-// import Image from "next/image";
 import { Transition, Dialog } from "@headlessui/react";
 const AdminSidebar = ({ setOpen, open }) => {
+  // const auth = useSelector((state) => state.auth);
   const router = useRouter();
   return (
     <>
@@ -118,6 +118,29 @@ const AdminSidebar = ({ setOpen, open }) => {
                     </span>
                   </Link>
                 </li>
+                <li className="items-center" onClick={() => setOpen(false)}>
+                  <Link href="/admin/users">
+                    <span
+                      className={
+                        "flex w-full transition-all delay-75 items-center space-x-3 py-3 px-4 rounded cursor-pointer " +
+                        (router.pathname.indexOf("/users") !== -1
+                          ? "bg-blue-600 text-white font-medium"
+                          : "font-normal text-secondary")
+                      }
+                    >
+                      <UserGroupIcon
+                        style={{
+                          width: 24,
+                          color:
+                            router.pathname.indexOf("/users") !== -1
+                              ? "text-white"
+                              : "text-secondary",
+                        }}
+                      />
+                      <span>User</span>
+                    </span>
+                  </Link>
+                </li>
               </ul>
             </div>
           </Transition.Child>
@@ -212,6 +235,29 @@ const AdminSidebar = ({ setOpen, open }) => {
                     }}
                   />
                   <span>Materi</span>
+                </span>
+              </Link>
+            </li>
+            <li className="items-center" onClick={() => setOpen(false)}>
+              <Link href="/admin/users">
+                <span
+                  className={
+                    "flex w-full transition-all delay-75 items-center space-x-3 py-3 px-4 rounded cursor-pointer " +
+                    (router.pathname.indexOf("/users") !== -1
+                      ? "bg-blue-600 text-white font-medium"
+                      : "font-normal text-secondary")
+                  }
+                >
+                  <UserGroupIcon
+                    style={{
+                      width: 24,
+                      color:
+                        router.pathname.indexOf("/users") !== -1
+                          ? "text-white"
+                          : "text-secondary",
+                    }}
+                  />
+                  <span>User</span>
                 </span>
               </Link>
             </li>

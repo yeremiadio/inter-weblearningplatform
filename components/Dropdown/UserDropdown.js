@@ -8,7 +8,7 @@ import { ChevronDownIcon } from "@heroicons/react/solid";
 import { logoutUser } from "../../redux/actions/authAction";
 import { useToast } from "@chakra-ui/toast";
 
-const UserDropdown = ({ user }) => {
+const UserDropdown = ({ user, setOpen, open }) => {
   const toast = useToast();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -23,13 +23,7 @@ const UserDropdown = ({ user }) => {
       <Menu.Button className="flex items-center">
         <img
           className="w-8 h-8 object-cover inline rounded-full"
-          src={
-            user?.avatar
-              ? process.env.baseUrl +
-                "/assets/images/user/avatar/" +
-                user?.avatar
-              : "/vercel.svg"
-          }
+          src={user?.avatar ? user?.avatar : "/vercel.svg"}
           alt=""
         />
         <p className="inline mx-2 text-secondary font-medium text-sm tracking-wide">
@@ -50,14 +44,25 @@ const UserDropdown = ({ user }) => {
         <Menu.Items className="origin-top-right mt-6 focus:outline-none absolute right-2 bg-white overflow-hidden rounded-md shadow-lg border w-48">
           <Menu.Item>
             <Link href="/admin/dashboard">
-              <a className="block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-100">
+              <a
+                className={
+                  "block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-100 " +
+                  (router.pathname.indexOf("/dashboard") !== -1 &&
+                    "bg-gray-100")
+                }
+              >
                 Dashboard
               </a>
             </Link>
           </Menu.Item>
           <Menu.Item>
             <Link href="/admin/profile">
-              <a className="block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-100">
+              <a
+                className={
+                  "block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-100 " +
+                  (router.pathname.indexOf("/profile") !== -1 && "bg-gray-100")
+                }
+              >
                 My Profile
               </a>
             </Link>
