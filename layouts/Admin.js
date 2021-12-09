@@ -30,7 +30,7 @@ function Admin({ children }) {
   return (
     <>
       <Head>
-        <title>BUMDes Laut Sakti Daratan Bertuah</title>
+        <title>Web Learning Platform</title>
       </Head>
       <div className="flex min-h-screen" style={{ background: "#f7fafc" }}>
         <AdminSidebar open={open} setOpen={setOpen} />

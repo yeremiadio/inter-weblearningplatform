@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 import { LOGOUT } from "../constants/types";
-import { store } from "../store";
+import store from "../redux/store";
 
 export const logOut = () => {
   if (typeof window !== "undefined") {

@@ -61,6 +61,7 @@ export const loginUser = (data, toast) => async (dispatch) => {
             type: SET_USER,
             payload: res.data.user,
           });
+          console.log(res);
           dispatch(setIsFetching(false));
           toast({
             title: "Success",

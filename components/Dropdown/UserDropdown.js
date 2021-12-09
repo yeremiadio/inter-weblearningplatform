@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { Menu, Transition } from "@headlessui/react";
 import Link from "next/link";
 import { ChevronDownIcon } from "@heroicons/react/solid";
-import { logoutUser } from "../../actions/auth/authAction";
+import { logoutUser } from "../../redux/actions/authAction";
 import { useToast } from "@chakra-ui/toast";
 
 const UserDropdown = ({ user }) => {
