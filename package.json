@@ -9,11 +9,27 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@chakra-ui/react": "^1.7.2",
+    "@chakra-ui/toast": "^1.4.1",
+    "@emotion/react": "^11.7.0",
+    "@emotion/styled": "^11.6.0",
+    "@tailwindcss/line-clamp": "^0.2.2",
     "axios": "^0.24.0",
     "formik": "^2.2.9",
+    "framer-motion": "^4.1.17",
+    "js-cookie": "^3.0.1",
+    "moment": "^2.29.1",
     "next": "11.1.2",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-data-table-component": "^7.4.5",
+    "react-dom": "17.0.2",
+    "react-dropzone": "^11.4.2",
+    "react-redux": "^7.2.6",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-persist": "^6.0.0",
+    "redux-persist-transform-encrypt": "^3.0.1",
+    "redux-thunk": "^2.4.1",
+    "swr": "^1.1.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.3.7",
