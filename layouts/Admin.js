@@ -6,6 +6,7 @@ import AdminSidebar from "../components/Sidebar/AdminSidebar";
 import { RESET_USER, RESET_ERRORS } from "../constants/types";
 import { motion } from "framer-motion";
 import Head from "next/head";
+import Cookies from "js-cookie";
 
 function Admin({ children }) {
   const auth = useSelector((state) => state.auth);
@@ -15,7 +16,10 @@ function Admin({ children }) {
   const router = useRouter();
   useEffect(() => {
     const ac = new AbortController();
-    if (!auth.isAuthenticated || errors.entries.status === 401) {
+    if (
+      auth.isAuthenticated === false ||
+      Cookies.get("access_token") === undefined
+    ) {
       dispatch({
         type: RESET_USER,
       });
@@ -26,7 +30,7 @@ function Admin({ children }) {
     } else {
       return ac.abort();
     }
-  }, [auth, errors]);
+  }, []);
   return (
     <>
       <Head>

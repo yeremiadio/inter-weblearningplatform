@@ -43,26 +43,28 @@ const UserDropdown = ({ user, setOpen, open }) => {
       >
         <Menu.Items className="origin-top-right mt-6 focus:outline-none absolute right-2 bg-white overflow-hidden rounded-md shadow-lg border w-48">
           <Menu.Item>
-            <Link href="/admin/dashboard">
-              <a
-                className={
-                  "block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-100 "
-                }
-              >
-                Dashboard
-              </a>
-            </Link>
+            <a
+              className={
+                router.pathname.indexOf("dashboard") !== -1
+                  ? "block px-4 py-2 text-sm text-gray-700 cursor-pointer bg-gray-100"
+                  : "block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-100"
+              }
+              href="/admin/dashboard"
+            >
+              Dashboard
+            </a>
           </Menu.Item>
           <Menu.Item>
-            <Link href="/admin/profile">
-              <a
-                className={
-                  "block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-100 "
-                }
-              >
-                My Profile
-              </a>
-            </Link>
+            <a
+              className={
+                router.pathname.indexOf("profile") !== -1
+                  ? "block px-4 py-2 text-sm text-gray-700 cursor-pointer bg-gray-100"
+                  : "block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-100"
+              }
+              href="/admin/profile"
+            >
+              Profile
+            </a>
           </Menu.Item>
           <Menu.Item>
             <a

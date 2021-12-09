@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Formik, Field, Form } from "formik";
 import Link from "next/link";
 import { Transition } from "@headlessui/react";
-import { loginUser } from "../redux/actions/authAction";
+import { loginUser, registerUser } from "../redux/actions/authAction";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { useToast } from "@chakra-ui/toast";
@@ -14,10 +14,12 @@ import Head from "next/head";
 import Cookies from "js-cookie";
 import { RESET_ERRORS, RESET_USER } from "../constants/types";
 
-function Login() {
+function Register() {
   const initialValues = {
+    name: "",
     email: "",
     password: "",
+    password_confirmation: "",
   };
   const FormikRef = useRef();
   const dispatch = useDispatch();
@@ -40,6 +42,9 @@ function Login() {
         type: RESET_ERRORS,
       });
     } else {
+      // if (auth.isAuthenticated) {
+      //   router.replace("/admin/dashboard");
+      // }
       return ac.abort();
     }
   }, []);
@@ -65,7 +70,8 @@ function Login() {
     };
   }, [errors]);
   const onSubmit = async (values) => {
-   await dispatch(loginUser(values, toast));
+    values.password_confirmation = values.password;
+    await dispatch(registerUser(values, toast));
   };
   return (
     <>
@@ -88,10 +94,10 @@ function Login() {
           <div className="bg-white border border-gray-100 p-4 rounded lg:shadow w-full sm:w-3/5 md:w-3/5 lg:w-4/12">
             <div className="text-center">
               <h3 className="text-primary text-lg font-bold tracking-wide">
-                Login
+                Register
               </h3>
               <p className="text-secondary text-base">
-                Silahkan masukkan kredensial anda.
+                Silahkan lengkapi data anda.
               </p>
             </div>
             <div>
@@ -104,9 +110,21 @@ function Login() {
                   <Form>
                     <>
                       <div className="mt-4">
-                        <label
-                          className={errorEntries?.email && "text-red-500"}
-                        >
+                        <label className={errorEntries?.name && "text-red-500"}>
+                          Nama
+                        </label>
+                        <Field
+                          as={Input}
+                          isInvalid={errorEntries?.name && true}
+                          size="lg"
+                          variant="outline"
+                          focusBorderColor="blue.600"
+                          name="name"
+                          placeholder="Masukkan Nama..."
+                        />
+                      </div>
+                      <div className="mt-4">
+                        <label className={errorEntries?.name && "text-red-500"}>
                           Email
                         </label>
                         <Field
@@ -185,10 +203,10 @@ function Login() {
                       )}
                       <div className="my-4 text-right">
                         <span className="text-secondary">
-                          Belum memiliki akun? Klik{" "}
+                          Sudah memiliki akun? Klik{" "}
                         </span>
-                        <Link href="/register">
-                          <a className="text-blue-600 font-medium">Register</a>
+                        <Link href="/login">
+                          <a className="text-blue-600 font-medium">Login</a>
                         </Link>
                       </div>
                       <Button
@@ -200,7 +218,7 @@ function Login() {
                         size="md"
                         px="6"
                       >
-                        Login
+                        Register
                       </Button>
                     </>
                   </Form>
@@ -214,4 +232,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Register;

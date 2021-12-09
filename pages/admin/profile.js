@@ -46,11 +46,8 @@ export default function profileConfiguration() {
     async (values) => {
       const formData = jsonToFormData(values);
       formData.append("_method", "put");
-      for (let pair of formData.entries()) {
-        console.log(pair[0] + ", " + pair[1]);
-      }
       await instance()
-        .post(`api/admin/users/${user?.id}/update`, formData, {
+        .post(`api/profile/${user?.id}/update`, formData, {
           headers: {
             Authorization: `Bearer ${Cookies.get("access_token")}`,
           },
