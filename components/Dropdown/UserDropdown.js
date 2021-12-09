@@ -46,9 +46,7 @@ const UserDropdown = ({ user, setOpen, open }) => {
             <Link href="/admin/dashboard">
               <a
                 className={
-                  "block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-100 " +
-                  (router.pathname.indexOf("/dashboard") !== -1 &&
-                    "bg-gray-100")
+                  "block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-100 "
                 }
               >
                 Dashboard
@@ -59,8 +57,7 @@ const UserDropdown = ({ user, setOpen, open }) => {
             <Link href="/admin/profile">
               <a
                 className={
-                  "block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-100 " +
-                  (router.pathname.indexOf("/profile") !== -1 && "bg-gray-100")
+                  "block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-100 "
                 }
               >
                 My Profile
