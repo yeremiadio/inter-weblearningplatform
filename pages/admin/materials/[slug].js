@@ -1,11 +1,7 @@
-import { useEffect } from "react";
+import React from "react";
 import instance from "../../../utils/instance";
 
 export default function DetailMaterial({ page }) {
-  // useEffect(async () => {
-  //   const res = await instance().get("api/pages");
-  //   console.log(res.data.data.map((item) => item.id));
-  // }, []);
   return <div>Ini detail Materi {page.id}</div>;
 }
 

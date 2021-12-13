@@ -47,7 +47,7 @@ export const registerUser = (data, toast) => async (dispatch) => {
     });
 };
 
-export const loginUser = (data, toast) => async (dispatch) => {
+export const loginUser = (data, toast, router) => async (dispatch) => {
   dispatch(setIsFetching(true));
   await instance()
     .get("sanctum/csrf-cookie")
@@ -61,7 +61,7 @@ export const loginUser = (data, toast) => async (dispatch) => {
             type: SET_USER,
             payload: res.data.user,
           });
-          console.log(res);
+          router.push("admin/dashboard");
           dispatch(setIsFetching(false));
           toast({
             title: "Success",
@@ -86,6 +86,17 @@ export const loginUser = (data, toast) => async (dispatch) => {
           });
           // console.log(error.response.data.errors);
         });
+    })
+    .catch((err) => {
+      dispatch(setIsFetching(false));
+      toast({
+        title: "Error",
+        description: "Unexpected Error",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      localStorage.clear();
     });
 };
 

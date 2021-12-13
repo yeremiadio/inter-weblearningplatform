@@ -1,8 +1,8 @@
 import Cookies from "js-cookie";
 import instance from "./instance";
 
-export const fetcher = (...args) =>
-  instance()(...args).then((res) => res.data.data);
+export const fetcher = async (...args) =>
+  await instance()(...args).then((res) => res.data.data);
 
 export const fetcherwithParams = (
   category,

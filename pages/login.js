@@ -65,7 +65,7 @@ function Login() {
     };
   }, [errors]);
   const onSubmit = async (values) => {
-   await dispatch(loginUser(values, toast));
+    await dispatch(loginUser(values, toast, router));
   };
   return (
     <>

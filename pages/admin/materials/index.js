@@ -1,7 +1,7 @@
 import { useToast } from "@chakra-ui/toast";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import DataTable from "react-data-table-component";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useSWR from "swr";
 import Admin from "../../../layouts/Admin";
 import { fetcher } from "../../../utils/fetcher";
@@ -12,9 +12,10 @@ import BlueSpinner from "../../../components/Spinner/BlueSpinner";
 import { Button } from "@chakra-ui/react";
 import { PlusIcon } from "@heroicons/react/solid";
 import moment from "moment";
+import { pageLoad } from "../../../redux/actions/pageAction";
 
 export default function MaterialPage() {
-  const auth = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   const {
     data: pages,
     mutate,
@@ -22,6 +23,9 @@ export default function MaterialPage() {
   } = useSWR([`api/pages`], (url) => fetcher(url), {
     revalidateOnFocus: false,
   });
+  useEffect(() => {
+    pageLoad()(dispatch);
+  }, [dispatch]);
   const addModalRef = useRef();
   const deleteModalRef = useRef();
   const [selectedIndexData, setIndexData] = useState(0);
@@ -70,7 +74,7 @@ export default function MaterialPage() {
           parent={addModalRef}
           toast={toast}
           mutate={mutate}
-          users={pages}
+          materials={pages}
         />
       </Modal>
       <div className="bg-section">
