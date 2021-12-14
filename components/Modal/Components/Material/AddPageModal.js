@@ -162,6 +162,14 @@ function AddMaterialModal({ parent, materials, mutate, toast }) {
               </div>
               <Box className="flex justify-end gap-2">
                 <Button
+                  size="md"
+                  onClick={() => parent.current.close()}
+                  mt="4"
+                  type="button"
+                >
+                  Cancel
+                </Button>
+                <Button
                   isLoading={isSubmitting}
                   loadingText="Checking..."
                   size="md"
@@ -171,14 +179,6 @@ function AddMaterialModal({ parent, materials, mutate, toast }) {
                   type="submit"
                 >
                   Submit
-                </Button>
-                <Button
-                  size="md"
-                  onClick={() => parent.current.close()}
-                  mt="4"
-                  type="button"
-                >
-                  Cancel
                 </Button>
               </Box>
             </Form>

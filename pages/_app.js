@@ -26,7 +26,7 @@ function MyApp({ Component, pageProps, router }) {
           <ChakraProvider theme={themeProvider}>
             <AnimatePresence exitBeforeEnter>
               <Layout>
-                <NextNProgress />
+                <NextNProgress options={{ showSpinner: false }} />
                 <Component {...pageProps} key={router.route} />
               </Layout>
             </AnimatePresence>
