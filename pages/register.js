@@ -42,15 +42,12 @@ function Register() {
         type: RESET_ERRORS,
       });
     } else {
-      // if (auth.isAuthenticated) {
-      //   router.replace("/admin/dashboard");
-      // }
       return ac.abort();
     }
   }, []);
 
   useEffect(() => {
-    auth.isAuthenticated && router.replace("/admin/dashboard");
+    auth.isAuthenticated && router.replace("/dashboard");
   }, [auth]);
 
   useEffect(() => {

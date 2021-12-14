@@ -132,7 +132,7 @@ const MainSideBar = ({ setOpen, open }) => {
                               ? `${process.env.baseUrl}/assets/images/user/avatar/${auth.user.avatar}`
                               : "/vercel.svg"
                           }
-                          onClick={() => router.replace("/admin/dashboard")}
+                          onClick={() => router.replace("/dashboard")}
                           className="w-12 h-12 rounded-full object-cover focus:border-2 focus:border-blue-700"
                         />
                         <div className="flex flex-col">

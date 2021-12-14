@@ -9,10 +9,13 @@ import {
   XIcon,
   DocumentTextIcon,
   ClipboardIcon,
+  CodeIcon,
 } from "@heroicons/react/solid";
 import { Transition, Dialog } from "@headlessui/react";
+// import { useSelector } from "react-redux";
 const AdminSidebar = ({ setOpen, open }) => {
   // const auth = useSelector((state) => state.auth);
+  // const { role } = auth.user.role.role_name;
   const router = useRouter();
   return (
     <>
@@ -50,7 +53,7 @@ const AdminSidebar = ({ setOpen, open }) => {
             <div className="mb-10 mt-8">
               <ul className="md:flex-col md:min-w-screen flex flex-col list-none pt-2 mx-4 space-y-1">
                 <li className="items-center" onClick={() => setOpen(false)}>
-                  <Link href="/admin/dashboard">
+                  <Link href="/dashboard">
                     <span
                       className={
                         "flex w-full transition-all delay-75 items-center space-x-3 py-3 px-4 rounded cursor-pointer " +
@@ -73,7 +76,7 @@ const AdminSidebar = ({ setOpen, open }) => {
                   </Link>
                 </li>
                 <li className="items-center" onClick={() => setOpen(false)}>
-                  <Link href="/admin/assignment">
+                  <Link href="/assignment">
                     <span
                       className={
                         "flex w-full transition-all delay-75 items-center space-x-3 py-3 px-4 rounded cursor-pointer " +
@@ -96,7 +99,30 @@ const AdminSidebar = ({ setOpen, open }) => {
                   </Link>
                 </li>
                 <li className="items-center" onClick={() => setOpen(false)}>
-                  <Link href="/admin/materials">
+                  <Link href="/playground">
+                    <span
+                      className={
+                        "flex w-full transition-all delay-75 items-center space-x-3 py-3 px-4 rounded cursor-pointer " +
+                        (router.pathname.indexOf("/playground") !== -1
+                          ? "bg-blue-600 text-white font-medium"
+                          : "font-normal text-secondary")
+                      }
+                    >
+                      <CodeIcon
+                        style={{
+                          width: 24,
+                          color:
+                            router.pathname.indexOf("/playground") !== -1
+                              ? "text-white"
+                              : "text-secondary",
+                        }}
+                      />
+                      <span>Playground</span>
+                    </span>
+                  </Link>
+                </li>
+                <li className="items-center" onClick={() => setOpen(false)}>
+                  <Link href="/materials">
                     <span
                       className={
                         "flex w-full transition-all delay-75 items-center space-x-3 py-3 px-4 rounded cursor-pointer " +
@@ -119,7 +145,7 @@ const AdminSidebar = ({ setOpen, open }) => {
                   </Link>
                 </li>
                 <li className="items-center" onClick={() => setOpen(false)}>
-                  <Link href="/admin/users">
+                  <Link href="/users">
                     <span
                       className={
                         "flex w-full transition-all delay-75 items-center space-x-3 py-3 px-4 rounded cursor-pointer " +
@@ -170,7 +196,7 @@ const AdminSidebar = ({ setOpen, open }) => {
         <div className="my-10">
           <ul className="md:flex-col md:min-w-screen flex flex-col list-none pt-2 mx-4 space-y-1">
             <li className="items-center" onClick={() => setOpen(false)}>
-              <Link href="/admin/dashboard">
+              <Link href="dashboard">
                 <span
                   className={
                     "flex w-full transition-all delay-75 items-center space-x-3 py-3 px-4 rounded cursor-pointer " +
@@ -193,7 +219,7 @@ const AdminSidebar = ({ setOpen, open }) => {
               </Link>
             </li>
             <li className="items-center" onClick={() => setOpen(false)}>
-              <Link href="/admin/assignment">
+              <Link href="/assignment">
                 <span
                   className={
                     "flex w-full transition-all delay-75 items-center space-x-3 py-3 px-4 rounded cursor-pointer " +
@@ -216,7 +242,30 @@ const AdminSidebar = ({ setOpen, open }) => {
               </Link>
             </li>
             <li className="items-center" onClick={() => setOpen(false)}>
-              <Link href="/admin/materials">
+              <Link href="/playground">
+                <span
+                  className={
+                    "flex w-full transition-all delay-75 items-center space-x-3 py-3 px-4 rounded cursor-pointer " +
+                    (router.pathname.indexOf("/playground") !== -1
+                      ? "bg-blue-600 text-white font-medium"
+                      : "font-normal text-secondary")
+                  }
+                >
+                  <CodeIcon
+                    style={{
+                      width: 24,
+                      color:
+                        router.pathname.indexOf("/playground") !== -1
+                          ? "text-white"
+                          : "text-secondary",
+                    }}
+                  />
+                  <span>Playground</span>
+                </span>
+              </Link>
+            </li>
+            <li className="items-center" onClick={() => setOpen(false)}>
+              <Link href="/materials">
                 <span
                   className={
                     "flex w-full transition-all delay-75 items-center space-x-3 py-3 px-4 rounded cursor-pointer " +
@@ -239,7 +288,7 @@ const AdminSidebar = ({ setOpen, open }) => {
               </Link>
             </li>
             <li className="items-center" onClick={() => setOpen(false)}>
-              <Link href="/admin/users">
+              <Link href="/users">
                 <span
                   className={
                     "flex w-full transition-all delay-75 items-center space-x-3 py-3 px-4 rounded cursor-pointer " +

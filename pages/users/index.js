@@ -1,19 +1,19 @@
-import Admin from "../../../layouts/Admin";
+import Admin from "../../layouts/Admin";
 // import { useMediaQuery } from "@chakra-ui/media-query";
 import DataTable from "react-data-table-component";
 import { Button, IconButton } from "@chakra-ui/button";
 // import { DotsVerticalIcon } from "@heroicons/react/solid";
-import { fetchWithToken } from "../../../utils/fetcher";
-import BlueSpinner from "../../../components/Spinner/BlueSpinner";
+import { fetchWithToken } from "../../utils/fetcher";
+import BlueSpinner from "../../components/Spinner/BlueSpinner";
 import moment from "moment";
 import { useRef, useState, useEffect } from "react";
 import { useToast } from "@chakra-ui/toast";
-import DeleteUserModal from "../../../components/Modal/Components/User/DeleteUserModal";
-import { Modal } from "../../../components/Modal/Modal";
-import ActionsButtonTable from "../../../components/Actions/ActionButtonsTable";
-import UpdateUserModal from "../../../components/Modal/Components/User/UpdateUserModal";
+import DeleteUserModal from "../../components/Modal/Components/User/DeleteUserModal";
+import { Modal } from "../../components/Modal/Modal";
+import ActionsButtonTable from "../../components/Actions/ActionButtonsTable";
+import UpdateUserModal from "../../components/Modal/Components/User/UpdateUserModal";
 import useSWR from "swr";
-import AddUserModal from "../../../components/Modal/Components/User/AddUserModal";
+import AddUserModal from "../../components/Modal/Components/User/AddUserModal";
 import { PlusIcon } from "@heroicons/react/solid";
 import { useSelector } from "react-redux";
 

@@ -45,7 +45,7 @@ function Login() {
   }, []);
 
   useEffect(() => {
-    auth.isAuthenticated && router.replace("/admin/dashboard");
+    auth.isAuthenticated && router.replace("dashboard");
   }, [auth]);
 
   useEffect(() => {

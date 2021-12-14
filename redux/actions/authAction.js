@@ -61,7 +61,7 @@ export const loginUser = (data, toast, router) => async (dispatch) => {
             type: SET_USER,
             payload: res.data.user,
           });
-          router.push("admin/dashboard");
+          router.push("dashboard");
           dispatch(setIsFetching(false));
           toast({
             title: "Success",

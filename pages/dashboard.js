@@ -1,5 +1,5 @@
 import React from "react";
-import Admin from "../../layouts/Admin.js";
+import Admin from "../layouts/Admin.js";
 import Head from "next/head";
 
 export default function dashboard() {

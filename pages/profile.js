@@ -1,10 +1,10 @@
 import React, { useCallback, useRef, useState } from "react";
-import Admin from "../../layouts/Admin.js";
+import Admin from "../layouts/Admin.js";
 import { useDispatch, useSelector } from "react-redux";
 // import useSWR from "swr";
 // import { fetchWithToken } from "../../utils/fetcher.js";
-import instance from "../../utils/instance.js";
-import { jsonToFormData } from "../../utils/jsonToFormData.js";
+import instance from "../utils/instance.js";
+import { jsonToFormData } from "../utils/jsonToFormData.js";
 import { useToast } from "@chakra-ui/toast";
 import { Field, Form, Formik } from "formik";
 import { Box } from "@chakra-ui/layout";
@@ -19,7 +19,7 @@ import {
 import { Button } from "@chakra-ui/button";
 import { CameraIcon, PaperAirplaneIcon } from "@heroicons/react/solid";
 import { Input } from "@chakra-ui/input";
-import { SET_USER } from "../../constants/types.js";
+import { SET_USER } from "../constants/types.js";
 
 export default function profileConfiguration() {
   const auth = useSelector((state) => state.auth);
