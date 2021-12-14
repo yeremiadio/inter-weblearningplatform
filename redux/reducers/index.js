@@ -20,7 +20,6 @@ const authPersistConfig = {
 
 const appReducer = combineReducers({
   auth: persistReducer(authPersistConfig, authReducer),
-  pageStore: pageReducer,
   errors: errorReducer,
 });
 

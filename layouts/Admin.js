@@ -10,7 +10,7 @@ import Cookies from "js-cookie";
 
 function Admin({ children }) {
   const auth = useSelector((state) => state.auth);
-  const errors = useSelector((state) => state.errors);
+  // const errors = useSelector((state) => state.errors);
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const router = useRouter();

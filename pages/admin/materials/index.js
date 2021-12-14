@@ -7,12 +7,13 @@ import Admin from "../../../layouts/Admin";
 import { fetcher } from "../../../utils/fetcher";
 import MaterialActionButtonsTable from "../../../components/Actions/MaterialActionButtonsTable";
 import { Modal } from "../../../components/Modal/Modal";
-import AddPageModal from "../../../components/Modal/Components/Material/AddMaterialModal";
+import AddPageModal from "../../../components/Modal/Components/Material/AddPageModal";
 import BlueSpinner from "../../../components/Spinner/BlueSpinner";
 import { Button } from "@chakra-ui/react";
 import { PlusIcon } from "@heroicons/react/solid";
 import moment from "moment";
 import { pageLoad } from "../../../redux/actions/pageAction";
+import DeletePageModal from "../../../components/Modal/Components/Material/DeletePageModal";
 
 export default function MaterialPage() {
   const dispatch = useDispatch();
@@ -38,18 +39,19 @@ export default function MaterialPage() {
       sortable: true,
     },
     {
-      name: "Slug",
-      selector: (row) => row.slug,
+      name: "Description",
+      selector: (row) => row.description,
       sortable: true,
     },
     {
-      name: "Created At",
-      selector: (row) => moment(row.created_at).format("L"),
-      sortable: true,
-    },
-    {
-      name: "Updated At",
-      selector: (row) => moment(row.updated_at).format("L"),
+      name: "Thumbnail",
+      selector: (row) => (
+        <img
+          src={row.thumbnail !== null ? row.thumbnail : "imgPlaceholder.jpg"}
+          className="w-1/2"
+          alt="thumbnail"
+        />
+      ),
       sortable: true,
     },
     {
@@ -75,6 +77,16 @@ export default function MaterialPage() {
           toast={toast}
           mutate={mutate}
           materials={pages}
+        />
+      </Modal>
+      <Modal ref={deleteModalRef}>
+        <DeletePageModal
+          parent={deleteModalRef}
+          toast={toast}
+          mutate={mutate}
+          name={selectedData?.name}
+          pages={pages}
+          slug={selectedData?.slug}
         />
       </Modal>
       <div className="bg-section">

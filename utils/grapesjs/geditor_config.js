@@ -1,9 +1,22 @@
 import grapesjs from "grapesjs";
+import $ from "jquery";
 import gjsBlockBasic from "grapesjs-blocks-basic";
 import grapesjsPluginExport from "grapesjs-plugin-export";
-import { addEditorCommand, storageSetting } from "./geditor_utils";
+import {
+  addEditorCommand,
+  deviceManager,
+  layerManager,
+  panels,
+  scripts,
+  selectorManager,
+  storageSetting,
+  styleManager,
+  styles,
+  traitManager,
+} from "./geditor_utils";
 
 const geditorConfig = (assets, slug) => {
+  $("#blocks").html("");
   const editor = grapesjs.init({
     container: "#editor",
     assetManager: { assets: assets, upload: false },
