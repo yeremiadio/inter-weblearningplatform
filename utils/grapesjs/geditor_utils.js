@@ -531,37 +531,37 @@ export const addEditorCommand = (editor) => {
   });
 };
 
-// export const storageSetting = () => {
-//   return {
-//     type: "local",
-//     stepsBeforeSave: 3,
-//     contentTypeJson: true,
-//     storeComponents: true,
-//     storeStyles: true,
-//     storeHtml: true,
-//     storeCss: true,
-//     id: "mycustom-",
-
-//   };
-// };
-export const storageSetting = (slug) => {
+export const storageSetting = () => {
   return {
-    type: "remote",
+    type: "local",
     stepsBeforeSave: 3,
     contentTypeJson: true,
     storeComponents: true,
     storeStyles: true,
     storeHtml: true,
     storeCss: true,
-    headers: {
-      "Content-Type": "application/json",
-    },
     id: "mycustom-",
-    urlStore: `${process.env.baseUrl}/api/pages/${slug}/content`,
-    urlLoad: `${process.env.baseUrl}/api/pages/${slug}/content`,
-    // method: "put",
+
   };
 };
+// export const storageSetting = (slug) => {
+//   return {
+//     type: "remote",
+//     stepsBeforeSave: 3,
+//     contentTypeJson: true,
+//     storeComponents: true,
+//     storeStyles: true,
+//     storeHtml: true,
+//     storeCss: true,
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     id: "mycustom-",
+//     urlStore: `${process.env.baseUrl}/api/pages/${slug}/content`,
+//     urlLoad: `${process.env.baseUrl}/api/pages/${slug}/content`,
+//     // method: "put",
+//   };
+// };
 
 export const scripts = [
   "https://code.jquery.com/jquery-3.5.1.slim.min.js",

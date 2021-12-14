@@ -100,7 +100,7 @@ function Login() {
                 innerRef={FormikRef}
                 onSubmit={onSubmit}
               >
-                {() => (
+                {({ isSubmitting }) => (
                   <Form>
                     <>
                       <div className="mt-4">
@@ -193,7 +193,7 @@ function Login() {
                       </div>
                       <Button
                         colorScheme="blue"
-                        isLoading={auth.isFetching}
+                        isLoading={auth.isFetching && isSubmitting}
                         loadingText="Checking"
                         isFullWidth={isSmallestThan768 && true}
                         type="submit"

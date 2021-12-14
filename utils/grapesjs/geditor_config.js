@@ -15,12 +15,12 @@ import {
   traitManager,
 } from "./geditor_utils";
 
-const geditorConfig = (assets, slug) => {
+const geditorConfig = (assets) => {
   $("#blocks").html("");
   const editor = grapesjs.init({
     container: "#editor",
     assetManager: { assets: assets, upload: false },
-    storageManager: storageSetting(slug),
+    storageManager: storageSetting,
     plugins: [gjsBlockBasic, grapesjsPluginExport],
     pluginsOpts: {
       tailwindComponent: {},

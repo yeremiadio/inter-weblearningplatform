@@ -8,6 +8,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { AnimatePresence } from "framer-motion";
 import { themeProvider } from "../utils/theme";
 import Head from "next/head";
+import NextNProgress from "nextjs-progressbar";
 
 function MyApp({ Component, pageProps, router }) {
   const Layout = Component.layout || (({ children }) => <>{children}</>);
@@ -25,6 +26,7 @@ function MyApp({ Component, pageProps, router }) {
           <ChakraProvider theme={themeProvider}>
             <AnimatePresence exitBeforeEnter>
               <Layout>
+                <NextNProgress />
                 <Component {...pageProps} key={router.route} />
               </Layout>
             </AnimatePresence>
