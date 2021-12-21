@@ -30,7 +30,7 @@ export default function profileConfiguration() {
     name: user?.name || "",
     email: user?.email || "",
     avatar: user?.avatar || "",
-    role_id: user?.role.id || "",
+    role_id: user?.role?.id || "",
   };
   //   const { data: roles, error } = useSWR("api/roles", fetchWithToken);
   const FormikRef = useRef();

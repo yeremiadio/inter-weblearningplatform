@@ -194,7 +194,7 @@ const AdminSidebar = ({ setOpen, open }) => {
           />
         </div>
         <div className="my-10">
-          <ul className="md:flex-col md:min-w-screen flex flex-col list-none pt-2 mx-4 space-y-1">
+          <ul className="md:flex-col md:min-w-screen flex flex-col list-none pt-2 mx-4 space-y-2">
             <li className="items-center" onClick={() => setOpen(false)}>
               <Link href="dashboard">
                 <span

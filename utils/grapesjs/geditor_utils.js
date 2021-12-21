@@ -484,6 +484,11 @@ export const deviceManager = {
       width: "",
     },
     {
+      name: "Tablet",
+      width: "640px",
+      widthMedia: "960px",
+    },
+    {
       name: "Mobile",
       width: "320px",
       widthMedia: "480px",
@@ -541,27 +546,8 @@ export const storageSetting = () => {
     storeHtml: true,
     storeCss: true,
     id: "mycustom-",
-
   };
 };
-// export const storageSetting = (slug) => {
-//   return {
-//     type: "remote",
-//     stepsBeforeSave: 3,
-//     contentTypeJson: true,
-//     storeComponents: true,
-//     storeStyles: true,
-//     storeHtml: true,
-//     storeCss: true,
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     id: "mycustom-",
-//     urlStore: `${process.env.baseUrl}/api/pages/${slug}/content`,
-//     urlLoad: `${process.env.baseUrl}/api/pages/${slug}/content`,
-//     // method: "put",
-//   };
-// };
 
 export const scripts = [
   "https://code.jquery.com/jquery-3.5.1.slim.min.js",

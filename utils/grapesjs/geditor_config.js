@@ -1,19 +1,13 @@
 import grapesjs from "grapesjs";
 import $ from "jquery";
 import gjsBlockBasic from "grapesjs-blocks-basic";
-import grapesjsPluginExport from "grapesjs-plugin-export";
 import {
   addEditorCommand,
   deviceManager,
-  layerManager,
   panels,
-  scripts,
-  selectorManager,
   storageSetting,
-  styleManager,
-  styles,
-  traitManager,
 } from "./geditor_utils";
+import grapesJsPresetWebpage from "grapesjs-preset-webpage";
 
 const geditorConfig = (assets) => {
   $("#blocks").html("");
@@ -21,11 +15,12 @@ const geditorConfig = (assets) => {
     container: "#editor",
     assetManager: { assets: assets, upload: false },
     storageManager: storageSetting,
-    plugins: [gjsBlockBasic, grapesjsPluginExport],
+    deviceManager: deviceManager,
+    panels: panels,
+    plugins: [gjsBlockBasic, grapesJsPresetWebpage],
     pluginsOpts: {
-      tailwindComponent: {},
       gjsBlockBasic: {},
-      grapesjsPluginExport: {},
+      grapesJsPresetWebpage: {},
     },
     canvas: {
       styles: [],
