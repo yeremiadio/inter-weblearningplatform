@@ -8,7 +8,7 @@ import { ChevronDownIcon } from "@heroicons/react/solid";
 import { logoutUser } from "../../redux/actions/authAction";
 import { useToast } from "@chakra-ui/toast";
 
-const UserDropdown = ({ user, setOpen, open }) => {
+const UserDropdown = ({ user }) => {
   const toast = useToast();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -49,7 +49,7 @@ const UserDropdown = ({ user, setOpen, open }) => {
                   ? "block px-4 py-2 text-sm text-gray-700 cursor-pointer bg-gray-100"
                   : "block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-100"
               }
-              onClick={() => router.replace("dashboard")}
+              onClick={() => router.replace("/dashboard")}
             >
               Dashboard
             </a>
@@ -61,7 +61,7 @@ const UserDropdown = ({ user, setOpen, open }) => {
                   ? "block px-4 py-2 text-sm text-gray-700 cursor-pointer bg-gray-100"
                   : "block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-100"
               }
-              onClick={() => router.replace("profile")}
+              onClick={() => router.replace("/profile")}
             >
               Profile
             </a>

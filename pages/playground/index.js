@@ -1,7 +1,9 @@
+import { useRouter } from "next/router";
 import React from "react";
 import Admin from "../../layouts/Admin.js";
 
 export default function playground() {
+  const router = useRouter();
   const items = [
     {
       id: 1,
@@ -25,7 +27,7 @@ export default function playground() {
           {items.map((item) => (
             <div
               key={item.id}
-              onClick={() => window.open(item.href, "_blank")}
+              onClick={() => router.push(item.href)}
               className="hover:shadow-lg cursor-pointer transition-all delay-75 bg-white border border-gray-200 rounded-lg"
             >
               <img

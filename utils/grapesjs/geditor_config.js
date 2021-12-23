@@ -1,5 +1,4 @@
 import grapesjs from "grapesjs";
-import $ from "jquery";
 import gjsBlockBasic from "grapesjs-blocks-basic";
 import {
   addEditorCommand,
@@ -10,7 +9,6 @@ import {
 import grapesJsPresetWebpage from "grapesjs-preset-webpage";
 
 const geditorConfig = (assets) => {
-  $("#blocks").html("");
   const editor = grapesjs.init({
     container: "#editor",
     assetManager: { assets: assets, upload: false },

@@ -5,6 +5,7 @@ import geditorConfig from "../../utils/grapesjs/geditor_config";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import { RESET_ERRORS, RESET_USER } from "../../constants/types";
+import { useToast } from "@chakra-ui/toast";
 
 export default function webPageBuilder() {
   const assets = [
@@ -28,6 +29,7 @@ export default function webPageBuilder() {
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const router = useRouter();
+  const toast = useToast();
   useEffect(() => {
     if (
       auth.isAuthenticated === false ||
@@ -40,6 +42,13 @@ export default function webPageBuilder() {
         type: RESET_ERRORS,
       });
       router.replace("/login");
+      toast({
+        title: "Error",
+        description: "Not Authenticated",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
     } else {
       geditorConfig(assets);
     }

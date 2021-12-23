@@ -110,6 +110,7 @@ export const logoutUser = (toast) => async (dispatch) => {
   })
     .then((response) => {
       Cookies.remove("access_token");
+      localStorage.clear();
       dispatch({
         type: LOGOUT,
         payload: {},
