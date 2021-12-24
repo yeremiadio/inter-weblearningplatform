@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import { Controlled as ControlledEditor } from "react-codemirror2";
-import {
-  ArrowDownIcon,
-  ArrowsExpandIcon,
-  ArrowUpIcon,
-} from "@heroicons/react/outline";
+import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/solid";
 
 export default function CodeEditor(props) {
   let CodeMirror = null;
@@ -27,17 +23,19 @@ export default function CodeEditor(props) {
 
   return (
     <div className="w-full flex flex-col p-2 truncate">
-      <div className="flex justify-between bg-gray-900 p-2 rounded-b-lg text-white">
+      <div
+        className="flex justify-between bg-gray-900 p-2 rounded-b-lg text-white"
+        onClick={() => setOpen((prevOpen) => !prevOpen)}
+      >
         {displayName}
         <button
           type="button"
           className="ml-2 bg-none border-none text-white cursor-pointer"
-          onClick={() => setOpen((prevOpen) => !prevOpen)}
         >
           {open ? (
-            <ArrowDownIcon className="w-5 h-5" />
+            <ChevronDownIcon className="w-5 h-5" />
           ) : (
-            <ArrowUpIcon className="w-5 h-5" />
+            <ChevronUpIcon className="w-5 h-5" />
           )}
         </button>
       </div>

@@ -5,14 +5,12 @@ import Cookies from "js-cookie";
 import { RESET_ERRORS, RESET_USER } from "../../constants/types";
 import useLocalStorage from "../../utils/useLocalStorage";
 import Editor from "../../components/CodePenEditor/Editor";
-import AdminNavbar from "../../components/Navbar/AdminNavbar";
 import UserDropdown from "../../components/Dropdown/UserDropdown";
 import { useToast } from "@chakra-ui/toast";
 
 function code() {
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const [open, setOpen] = useState(false);
   const router = useRouter();
   const toast = useToast();
   const [html, setHtml] = useLocalStorage("html", "");
@@ -61,7 +59,7 @@ function code() {
 
   return (
     <>
-      <div className="flex justify-between p-4 lg:py-6 lg:px-8 bg-white mt-0 fixed w-full z-40 top-0 border-b border-gray-200">
+      <div className="flex justify-between p-6 lg:py-6 lg:px-8 bg-white mt-0 fixed w-full z-40 top-0 border-b border-gray-200">
         <div className="w-1/4 flex items-center">
           <img
             src="/vercel.svg"
