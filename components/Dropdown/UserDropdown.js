@@ -22,7 +22,7 @@ const UserDropdown = ({ user }) => {
     <Menu as="div" className="relative flex items-center">
       {({ open }) => (
         <>
-          <Menu.Button className="flex items-center">
+          <Menu.Button>
             <img
               className="w-8 h-8 object-cover inline rounded-full"
               src={user?.avatar ? user?.avatar : "/vercel.svg"}
@@ -33,9 +33,9 @@ const UserDropdown = ({ user }) => {
             </p>
 
             {open ? (
-              <ChevronUpIcon className="inline h-4 w-4 mt-0.5 mr-4 text-secondary" />
+              <ChevronUpIcon className="inline h-4 w-4 mt-0.5 text-secondary" />
             ) : (
-              <ChevronDownIcon className="inline h-4 w-4 mt-0.5 mr-4 text-secondary" />
+              <ChevronDownIcon className="inline h-4 w-4 mt-0.5 text-secondary" />
             )}
           </Menu.Button>
 

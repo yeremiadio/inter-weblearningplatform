@@ -41,9 +41,9 @@ const AdminSidebar = ({ setOpen, open }) => {
               className="hover:ring-2 hover:ring-gray-300 flex absolute top-2 right-2 justify-center items-center w-10 h-10 rounded-full"
               type="button"
             >
-              <XIcon className="w-7 h-7 text-secondary" />
+              <XIcon className="w-6 h-6 text-secondary" />
             </button>
-            <div className="py-4 px-6 mt-10 flex flex-col justify-center items-center">
+            <div className="py-4 px-6 mt-20 flex flex-col justify-center items-center">
               <img
                 src="/vercel.svg"
                 onClick={() => router.replace("/")}
@@ -51,7 +51,7 @@ const AdminSidebar = ({ setOpen, open }) => {
               />
             </div>
             <div className="mb-10 mt-8">
-              <ul className="md:flex-col md:min-w-screen flex flex-col list-none pt-2 mx-4 space-y-1">
+              <ul className="md:flex-col md:min-w-screen flex flex-col list-none pt-2 mx-4 space-y-2">
                 <li className="items-center" onClick={() => setOpen(false)}>
                   <Link href="/dashboard">
                     <span

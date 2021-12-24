@@ -16,6 +16,7 @@ import useSWR from "swr";
 import AddUserModal from "../../components/Modal/Components/User/AddUserModal";
 import { PlusIcon } from "@heroicons/react/solid";
 import { useSelector } from "react-redux";
+import { useMediaQuery } from "@chakra-ui/react";
 
 const index = () => {
   const auth = useSelector((state) => state.auth);
@@ -33,6 +34,7 @@ const index = () => {
   const [selectedData, setSelectedData] = useState();
   const toast = useToast();
   const filteredUsers = users?.filter((item) => item.id !== auth.user.id);
+  const [isSmallestThan768] = useMediaQuery("(max-width: 768px)");
   const columns = [
     {
       name: "Name",
@@ -107,7 +109,7 @@ const index = () => {
         />
       </Modal>
       <div className="bg-section">
-        <div className="flex items-center">
+        <div className="flex items-center flex-col lg:flex-row">
           <div>
             <h3 className="font-bold text-xl text-primary">User</h3>
             <p className="font-base tracking-wide text-secondary">
@@ -119,6 +121,7 @@ const index = () => {
             className="mt-2 ml-auto"
             leftIcon={<PlusIcon className="w-4 h-4" />}
             onClick={() => addUserModalRef.current.open()}
+            isFullWidth={isSmallestThan768}
           >
             Tambah
           </Button>
