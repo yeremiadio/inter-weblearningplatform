@@ -7,17 +7,24 @@ export default function playground() {
   const items = [
     {
       id: 1,
-      name: "Code Editor",
-      desc: "Code Editor merupakan bla bla lorem ipsum",
+      name: "Frontend Editor",
+      desc: "Frontend Editor merupakan bla bla lorem ipsum",
       image: "/codemirror.png",
-      href: "/playground/code",
+      href: "/playground/frontend-editor",
     },
     {
       id: 2,
+      name: "JS Code Editor",
+      desc: "Javascript Editor merupakan bla bla lorem ipsum",
+      image: "/javascriptlogo.png",
+      href: "/playground/js-editor",
+    },
+    {
+      id: 3,
       name: "Webpage Builder",
       desc: "Webpage Builder merupakan bla bla lorem ipsum",
       image: "/webpage.jpg",
-      href: "/playground/builder",
+      href: "/playground/webpage-builder",
     },
   ];
   return (

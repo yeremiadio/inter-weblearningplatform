@@ -9,12 +9,12 @@ export default function CodeEditor(props) {
     typeof window.navigator !== "undefined"
   ) {
     CodeMirror = require("codemirror/lib/codemirror");
-    require("codemirror/theme/material.css");
+    require("codemirror/theme/material-ocean.css");
     require("codemirror/mode/xml/xml");
     require("codemirror/mode/javascript/javascript");
     require("codemirror/mode/css/css");
   }
-  const { language, displayName, value, onChange } = props;
+  const { language, displayName, value, onChange, ...rest } = props;
   const [open, setOpen] = useState(true);
 
   function handleChange(editor, data, value) {
@@ -50,14 +50,18 @@ export default function CodeEditor(props) {
           <ControlledEditor
             onBeforeChange={handleChange}
             value={value}
+            {...rest}
             className={"break-words"}
             options={{
               lint: true,
               mode: language,
-              theme: "material",
+              theme: "material-ocean",
               lineWrapping: true,
               extraKeys: { "Ctrl-Space": "autocomplete" },
               lineNumbers: true,
+              autocorrect: true,
+              spellcheck: true,
+              smartIndent: true,
             }}
           />
         )}

@@ -1,9 +1,11 @@
 import React from "react";
+// import LoadingSpinner from "../../assets/loading.svg";
+import LoadingAnimation from "./LoadingAnimation";
 
 export default function LoadingPageSpinner() {
   return (
-    <div className="h-screen relative z-50 bg-white flex justify-center items-center mb-12">
-      <img src="../loading.svg" className="w-24" alt="spinner" />
+    <div className="z-50 bg-white grid place-items-center h-screen">
+      <LoadingAnimation className="w-24" />
     </div>
   );
 }
