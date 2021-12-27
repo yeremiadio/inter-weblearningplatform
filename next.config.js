@@ -5,7 +5,7 @@ module.exports = (phase, { defaultConfig }) => {
     return {
       // reactStrictMode: true,
       env: {
-        baseUrl: process.env.API_URL,
+        baseUrl: process.env.LOCAL_API_URL,
       },
       trailingSlash: true,
       webpackDevMiddleware: (config) => {

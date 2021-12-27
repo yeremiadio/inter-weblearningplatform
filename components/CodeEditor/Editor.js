@@ -25,8 +25,8 @@ export default function Editor(props) {
     <div
       className={
         open
-          ? "w-full flex flex-col p-2 truncate"
-          : "w-full flex flex-col p-2 truncate h-0"
+          ? "w-full flex flex-col truncate"
+          : "w-full flex flex-col truncate h-0"
       }
     >
       {CodeMirror && (
