@@ -5,7 +5,7 @@ module.exports = (phase, { defaultConfig }) => {
     return {
       // reactStrictMode: true,
       env: {
-        baseUrl: "http://192.168.0.10:8000",
+        baseUrl: process.env.baseUrl,
       },
       trailingSlash: true,
       webpackDevMiddleware: (config) => {
@@ -24,7 +24,7 @@ module.exports = (phase, { defaultConfig }) => {
   return {
     // reactStrictMode: true,
     env: {
-      baseUrl: "http://192.168.0.10:8000",
+      baseUrl: process.env.baseUrl,
     },
     trailingSlash: true,
     webpackDevMiddleware: (config) => {
