@@ -11,6 +11,8 @@
   "dependencies": {
     "@chakra-ui/react": "^1.7.2",
     "@chakra-ui/toast": "^1.4.1",
+    "@ckeditor/ckeditor5-build-classic": "^31.1.0",
+    "@ckeditor/ckeditor5-react": "^3.0.3",
     "@emotion/react": "^11.7.0",
     "@emotion/styled": "^11.6.0",
     "@headlessui/react": "^1.4.2",
@@ -23,6 +25,7 @@
     "grapesjs": "^0.17.29",
     "grapesjs-blocks-basic": "^0.1.8",
     "grapesjs-preset-webpage": "^0.1.11",
+    "html-react-parser": "^1.4.5",
     "js-cookie": "^3.0.1",
     "moment": "^2.29.1",
     "next": "11.1.2",
