@@ -20,7 +20,7 @@ function AddUserModal({ parent, users, mutate, toast }) {
     email: "",
     avatar: "",
     password: "",
-    role_id: "",
+    role: "",
     password_confirmation: "",
   };
   const { data: roles, error } = useSWR("api/roles", fetchWithToken);
@@ -40,7 +40,7 @@ function AddUserModal({ parent, users, mutate, toast }) {
         console.log(pair[0] + ", " + pair[1]);
       }
       await instance()
-        .post(`api/admin/users/create`, formData, {
+        .post(`api/users/create`, formData, {
           headers: {
             Authorization: `Bearer ${Cookies.get("access_token")}`,
           },
@@ -135,21 +135,21 @@ function AddUserModal({ parent, users, mutate, toast }) {
                       <FormLabel>Role</FormLabel>
                       <Select
                         placeholder="Role"
-                        isInvalid={errors?.role_id}
+                        isInvalid={errors?.role}
                         size="lg"
                         variant="outline"
                         focusBorderColor="blue.600"
-                        name="role_id"
+                        name="role"
                         onChange={handleChange}
                         onBlur={handleBlur}
                       >
                         {roles?.map((item, i) => (
-                          <option key={i} value={item.id}>
-                            {item.role_name}
+                          <option key={i} value={item.name}>
+                            {item.name}
                           </option>
                         ))}
                       </Select>
-                      <p className="text-red-500">{errors?.role_id}</p>
+                      <p className="text-red-500">{errors?.role}</p>
                     </FormControl>
                   </div>
                 )}

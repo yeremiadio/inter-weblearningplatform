@@ -22,7 +22,7 @@ function UpdateUserModal({ parent, user, indexData, users, mutate, toast }) {
     name: user?.name || "",
     email: user?.email || "",
     avatar: user?.avatar || "",
-    role_id: user?.role.id || "",
+    role: user?.roles[0]?.name || "",
   };
   const { data: roles, error } = useSWR("api/roles", fetchWithToken);
   const FormikRef = useRef();
@@ -42,7 +42,7 @@ function UpdateUserModal({ parent, user, indexData, users, mutate, toast }) {
         console.log(pair[0] + ", " + pair[1]);
       }
       await instance()
-        .post(`api/admin/users/${user.id}/update`, formData, {
+        .post(`api/users/${user.id}/update`, formData, {
           headers: {
             Authorization: `Bearer ${Cookies.get("access_token")}`,
           },
@@ -126,22 +126,26 @@ function UpdateUserModal({ parent, user, indexData, users, mutate, toast }) {
                     <FormControl id="role">
                       <FormLabel>Role</FormLabel>
                       <Select
-                        placeholder="Role"
-                        isInvalid={errors?.role_id}
+                        placeholder={"Role"}
+                        isInvalid={errors?.role}
                         size="lg"
                         variant="outline"
                         focusBorderColor="blue.600"
-                        name="role_id"
+                        name="role"
                         onChange={handleChange}
                         onBlur={handleBlur}
                       >
                         {roles?.map((item, i) => (
-                          <option key={i} value={item.id}>
-                            {item.role_name}
+                          <option
+                            key={i}
+                            value={item.name}
+                            selected={user?.roles[0]?.name === item.name}
+                          >
+                            {item.name}
                           </option>
                         ))}
                       </Select>
-                      <p className="text-red-500">{errors?.role_id}</p>
+                      <p className="text-red-500">{errors?.role}</p>
                     </FormControl>
                   </div>
                 )}

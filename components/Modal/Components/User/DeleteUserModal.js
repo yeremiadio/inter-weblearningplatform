@@ -12,7 +12,7 @@ function DeleteUserModal({ parent, id, userName, mutate, users, toast }) {
     setLoading(true);
     await sleep(1000);
     instance()
-      .delete(`api/admin/users/${id}/delete`, {
+      .delete(`api/users/${id}/delete`, {
         headers: {
           Authorization: `Bearer ${Cookies.get("access_token")}`,
         },
