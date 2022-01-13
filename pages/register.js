@@ -68,7 +68,7 @@ function Register() {
   }, [errors]);
   const onSubmit = async (values) => {
     values.password_confirmation = values.password;
-    await dispatch(registerUser(values, toast));
+    await dispatch(registerUser(values, toast, router));
   };
   return (
     <>

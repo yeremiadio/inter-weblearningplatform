@@ -4,6 +4,8 @@ import {
   SET_IS_FETCHING,
   REMOVE_ACCESS,
   LOGOUT,
+  ADD_EMAIL_VERIFICATION_TOKEN,
+  REMOVE_EMAIL_VERIFICATION_TOKEN,
 } from "../../constants/types";
 // import { token } from "../../config/token";
 import instance from "../../utils/instance";
@@ -16,12 +18,17 @@ export const setIsFetching = (payload) => {
   };
 };
 
-export const registerUser = (data, toast) => async (dispatch) => {
+export const registerUser = (data, toast, router) => async (dispatch) => {
   dispatch(setIsFetching(true));
   await instance()
     .post(`api/register`, data)
     .then((response) => {
       const res = response.data;
+      dispatch({
+        type: ADD_EMAIL_VERIFICATION_TOKEN,
+        payload: res.data.token,
+      });
+      router.push("verify");
       dispatch(setIsFetching(false));
       toast({
         title: "Success",
@@ -57,6 +64,11 @@ export const loginUser = (data, toast, router) => async (dispatch) => {
         .then((response) => {
           const res = response.data;
           Cookies.set("access_token", res.data.token);
+          if (res.data.user.email_verified_at !== null) {
+            dispatch({
+              type: REMOVE_EMAIL_VERIFICATION_TOKEN,
+            });
+          }
           dispatch({
             type: SET_USER,
             payload: res.data.user,
