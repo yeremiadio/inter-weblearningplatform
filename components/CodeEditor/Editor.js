@@ -9,7 +9,10 @@ export default function Editor(props) {
     typeof window.navigator !== "undefined"
   ) {
     CodeMirror = require("codemirror/lib/codemirror");
-    require("codemirror/theme/material-ocean.css");
+    // require("codemirror/theme/material-ocean.css");
+    require("codemirror/theme/seti.css");
+    require("codemirror/addon/hint/show-hint");
+    require("codemirror/addon/hint/javascript-hint");
     require("codemirror/mode/xml/xml");
     require("codemirror/mode/javascript/javascript");
     require("codemirror/mode/css/css");
@@ -38,13 +41,16 @@ export default function Editor(props) {
           options={{
             lint: true,
             mode: language,
-            theme: "material-ocean",
+            theme: "seti",
             lineWrapping: true,
-            extraKeys: { "Ctrl-Space": "autocomplete" },
             lineNumbers: true,
             autocorrect: true,
             spellcheck: true,
             smartIndent: true,
+            hintOptions: {
+              alignWithWord: true,
+              completeSingle: false,
+            },
           }}
         />
       )}

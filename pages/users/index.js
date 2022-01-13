@@ -2,7 +2,6 @@ import Admin from "../../layouts/Admin";
 // import { useMediaQuery } from "@chakra-ui/media-query";
 import DataTable from "react-data-table-component";
 import { Button, IconButton } from "@chakra-ui/button";
-// import { DotsVerticalIcon } from "@heroicons/react/solid";
 import { fetchWithToken } from "../../utils/fetcher";
 import BlueSpinner from "../../components/Spinner/BlueSpinner";
 import moment from "moment";
@@ -17,6 +16,13 @@ import AddUserModal from "../../components/Modal/Components/User/AddUserModal";
 import { PlusIcon } from "@heroicons/react/solid";
 import { useSelector } from "react-redux";
 import { useMediaQuery } from "@chakra-ui/react";
+import {
+  Tag,
+  TagLabel,
+  TagLeftIcon,
+  TagRightIcon,
+  TagCloseButton,
+} from "@chakra-ui/react";
 
 const index = () => {
   const auth = useSelector((state) => state.auth);
@@ -48,7 +54,21 @@ const index = () => {
     },
     {
       name: "Role",
-      selector: (row) => row.role.role_name,
+      selector: (row) => row?.roles[0]?.name,
+      sortable: true,
+    },
+    {
+      name: "Verified",
+      selector: (row) =>
+        row.email_verified_at === null ? (
+          <Tag borderRadius={"full"} colorScheme={"red"} variant={"solid"}>
+            Not Verified
+          </Tag>
+        ) : (
+          <Tag borderRadius={"full"} colorScheme={"green"} variant={"solid"}>
+            Verified
+          </Tag>
+        ),
       sortable: true,
     },
     {
