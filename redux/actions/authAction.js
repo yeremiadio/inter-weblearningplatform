@@ -6,9 +6,7 @@ import {
   LOGOUT,
   ADD_EMAIL_VERIFICATION_TOKEN,
   REMOVE_EMAIL_VERIFICATION_TOKEN,
-  ADD_ACCESS_TOKEN_USER,
 } from "../../constants/types";
-// import { token } from "../../config/token";
 import instance from "../../utils/instance";
 
 export const setIsFetching = (payload) => {
