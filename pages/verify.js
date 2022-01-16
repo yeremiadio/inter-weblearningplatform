@@ -20,15 +20,7 @@ function verifyEmail() {
   const onSubmit = useCallback(async () => {
     setLoading(true);
     instance()
-      .post(
-        "api/verify-email",
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${tokenEmail}`,
-          },
-        }
-      )
+      .post("api/verify-email", {})
       .then((res) => {
         toast({
           title: "Success",
@@ -43,7 +35,11 @@ function verifyEmail() {
   });
   return (
     <div className="z-50 bg-white flex flex-col justify-center items-center h-screen">
-      <img src="../email-ilus.svg" alt="" className="object-cover w-3/4 lg:w-1/5 mb-4" />
+      <img
+        src="../email-ilus.svg"
+        alt=""
+        className="object-cover w-3/4 lg:w-1/5 mb-4"
+      />
       <Button
         colorScheme={"blue"}
         size={"md"}
