@@ -8,7 +8,7 @@ import { jsonToFormData } from "../utils/jsonToFormData.js";
 import { useToast } from "@chakra-ui/toast";
 import { Field, Form, Formik } from "formik";
 import { Box } from "@chakra-ui/layout";
-import Cookies from "js-cookie";
+
 // import { Select } from "@chakra-ui/select";
 // import BlueSpinner from "../../components/Spinner/BlueSpinner";
 import {
@@ -25,7 +25,7 @@ export default function profileConfiguration() {
   const auth = useSelector((state) => state.auth);
   const toast = useToast();
   const dispatch = useDispatch();
-  const user = auth.user;
+  const user = auth.data.user;
   const initialValues = {
     name: user?.name || "",
     email: user?.email || "",
@@ -35,11 +35,11 @@ export default function profileConfiguration() {
   //   const { data: roles, error } = useSWR("api/roles", fetchWithToken);
   const FormikRef = useRef();
   const avatarRef = useRef();
-  const onChangeImage = (e, index) => {
+  const onChangeImage = useCallback((e, index) => {
     let files = e.target.files || e.dataTransfer.files;
     if (!files.length) return;
     FormikRef.current.setFieldValue(index, files[0]);
-  };
+  });
   // const [isSmallestThan768] = useMediaQuery("(max-width: 768px)");
   const [errors, setErrors] = useState({});
   const onSubmit = useCallback(
@@ -47,11 +47,7 @@ export default function profileConfiguration() {
       const formData = jsonToFormData(values);
       formData.append("_method", "put");
       await instance()
-        .post(`api/profile/${user?.id}/update`, formData, {
-          headers: {
-            Authorization: `Bearer ${Cookies.get("access_token")}`,
-          },
-        })
+        .post(`api/profile/${user?.id}/update`, formData)
         .then((res) => {
           toast({
             title: "Success",

@@ -14,8 +14,6 @@ import {
 import { Transition, Dialog } from "@headlessui/react";
 // import { useSelector } from "react-redux";
 const AdminSidebar = ({ setOpen, open }) => {
-  // const auth = useSelector((state) => state.auth);
-  // const { role } = auth.user.role.role_name;
   const router = useRouter();
   return (
     <>
