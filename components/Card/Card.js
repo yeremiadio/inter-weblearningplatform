@@ -18,7 +18,7 @@ const CustomCard = ({ thumbnail, name, description, slug }) => {
         <p className="text-secondary leading-loose text-base line-clamp-3 my-2">
           {description}
         </p>
-        <Link href={`materi/${slug}`}>
+        <Link href={slug ? slug : "/"}>
           <a>
             <Button
               colorScheme={"blue"}
