@@ -46,9 +46,11 @@ function Register() {
     }
   }, []);
 
-  useEffect(() => {
-    auth.isAuthenticated && router.replace("/dashboard");
-  }, [auth]);
+  // useEffect(() => {
+  //   auth.isAuthenticated ? auth.data.user.email_verified_at !== null :
+  //     ? router.replace("/dashboard")
+  //     : router.replace("verify");
+  // }, [auth]);
 
   useEffect(() => {
     const ac = new AbortController();
