@@ -6,7 +6,7 @@ import AdminSidebar from "../components/Sidebar/AdminSidebar";
 import { RESET_USER, RESET_ERRORS } from "../constants/types";
 import { motion } from "framer-motion";
 import Head from "next/head";
-import Cookies from "js-cookie";
+
 import { useToast } from "@chakra-ui/toast";
 
 function Admin({ children }) {
@@ -20,7 +20,8 @@ function Admin({ children }) {
     const ac = new AbortController();
     if (
       auth.isAuthenticated === false ||
-      Cookies.get("access_token") === undefined
+      auth.data.token === undefined ||
+      auth.data.token === ""
     ) {
       dispatch({
         type: RESET_USER,
@@ -48,7 +49,7 @@ function Admin({ children }) {
       <div className="flex min-h-screen" style={{ background: "#f7fafc" }}>
         <AdminSidebar open={open} setOpen={setOpen} />
         <div className="overflow-y-auto flex-1">
-          <AdminNavbar user={auth.user} setOpen={setOpen} open={open} />
+          <AdminNavbar user={auth.data.user} setOpen={setOpen} open={open} />
           <main className="wrapper">
             <motion.div
               initial="initial"
