@@ -1,4 +1,4 @@
-import Cookies from "js-cookie";
+
 import instance from "./instance";
 
 export const fetcher = async (...args) =>
