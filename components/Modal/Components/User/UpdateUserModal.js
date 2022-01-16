@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback } from "react";
-import Cookies from "js-cookie";
+
 import instance from "../../../../utils/instance";
 import { FormControl, FormLabel } from "@chakra-ui/react";
 import { Box } from "@chakra-ui/layout";
@@ -27,26 +27,22 @@ function UpdateUserModal({ parent, user, indexData, users, mutate, toast }) {
   const { data: roles, error } = useSWR("api/roles", fetchWithToken);
   const FormikRef = useRef();
   const avatarRef = useRef();
-  const onChangeImage = (e, index) => {
+  const onChangeImage = useCallback((e, index) => {
     let files = e.target.files || e.dataTransfer.files;
     if (!files.length) return;
     FormikRef.current.setFieldValue(index, files[0]);
-  };
+  });
   // const [isSmallestThan768] = useMediaQuery("(max-width: 768px)");
   const [errors, setErrors] = useState({});
   const onSubmit = useCallback(
     async (values) => {
       const formData = jsonToFormData(values);
       formData.append("_method", "put");
-      for (let pair of formData.entries()) {
-        console.log(pair[0] + ", " + pair[1]);
-      }
+      // for (let pair of formData.entries()) {
+      //   console.log(pair[0] + ", " + pair[1]);
+      // }
       await instance()
-        .post(`api/users/${user.id}/update`, formData, {
-          headers: {
-            Authorization: `Bearer ${Cookies.get("access_token")}`,
-          },
-        })
+        .post(`api/users/${user.id}/update`, formData)
         .then((res) => {
           toast({
             title: "Success",

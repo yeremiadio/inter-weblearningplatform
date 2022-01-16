@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback } from "react";
-import Cookies from "js-cookie";
+
 import instance from "../../../../utils/instance";
 import { FormControl, FormLabel } from "@chakra-ui/react";
 import { Box } from "@chakra-ui/layout";
@@ -26,11 +26,11 @@ function AddUserModal({ parent, users, mutate, toast }) {
   const { data: roles, error } = useSWR("api/roles", fetchWithToken);
   const FormikRef = useRef();
   const avatarRef = useRef();
-  const onChangeImage = (e, index) => {
+  const onChangeImage = useCallback((e, index) => {
     let files = e.target.files || e.dataTransfer.files;
     if (!files.length) return;
     FormikRef.current.setFieldValue(index, files[0]);
-  };
+  });
   const [errors, setErrors] = useState({});
   const onSubmit = useCallback(
     async (values) => {
@@ -40,11 +40,7 @@ function AddUserModal({ parent, users, mutate, toast }) {
         console.log(pair[0] + ", " + pair[1]);
       }
       await instance()
-        .post(`api/users/create`, formData, {
-          headers: {
-            Authorization: `Bearer ${Cookies.get("access_token")}`,
-          },
-        })
+        .post(`api/users/create`, formData)
         .then((res) => {
           toast({
             title: "Success",

@@ -1,5 +1,4 @@
 import { useState, useCallback, useRef } from "react";
-import Cookies from "js-cookie";
 import instance from "../../../../utils/instance";
 import { FormControl, FormLabel, Textarea } from "@chakra-ui/react";
 import { Box } from "@chakra-ui/layout";
@@ -19,20 +18,16 @@ function AddMaterialModal({ parent, materials, mutate, toast }) {
   const FormikRef = useRef();
   const thumbnailRef = useRef();
   const [errors, setErrors] = useState({});
-  const onChangeImage = (e, index) => {
+  const onChangeImage = useCallback((e, index) => {
     let files = e.target.files || e.dataTransfer.files;
     if (!files.length) return;
     FormikRef.current.setFieldValue(index, files[0]);
-  };
+  });
   const onSubmit = useCallback(
     async (values) => {
       const formData = jsonToFormData(values);
       await instance()
-        .post(`api/admin/pages/create`, formData, {
-          headers: {
-            Authorization: `Bearer ${Cookies.get("access_token")}`,
-          },
-        })
+        .post(`api/admin/pages/create`, formData)
         .then((res) => {
           toast({
             title: "Success",

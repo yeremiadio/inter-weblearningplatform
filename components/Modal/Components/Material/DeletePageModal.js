@@ -1,5 +1,5 @@
 import { Button } from "@chakra-ui/button";
-import Cookies from "js-cookie";
+
 import instance from "../../../../utils/instance";
 import { sleep } from "../../../../utils/sleep";
 import { useState, useCallback } from "react";
@@ -12,11 +12,7 @@ function DeletePageModal({ parent, slug, name, mutate, pages, toast }) {
     setLoading(true);
     await sleep(1000);
     instance()
-      .delete(`api/admin/pages/${slug}/delete`, {
-        headers: {
-          Authorization: `Bearer ${Cookies.get("access_token")}`,
-        },
-      })
+      .delete(`api/admin/pages/${slug}/delete`)
       .then((res) => {
         toast({
           title: "Success",
