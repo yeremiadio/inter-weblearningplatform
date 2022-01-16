@@ -4,8 +4,6 @@ import {
   SET_IS_FETCHING,
   REMOVE_ACCESS,
   LOGOUT,
-  ADD_EMAIL_VERIFICATION_TOKEN,
-  REMOVE_EMAIL_VERIFICATION_TOKEN,
 } from "../../constants/types";
 import instance from "../../utils/instance";
 
@@ -23,8 +21,8 @@ export const registerUser = (data, toast, router) => async (dispatch) => {
     .then((response) => {
       const res = response.data;
       dispatch({
-        type: ADD_EMAIL_VERIFICATION_TOKEN,
-        payload: res.data.token,
+        type: SET_USER,
+        payload: res.data,
       });
       router.push("verify");
       dispatch(setIsFetching(false));
@@ -61,11 +59,6 @@ export const loginUser = (data, toast, router) => async (dispatch) => {
         .post("api/login", data)
         .then((response) => {
           const res = response.data;
-          if (res.data.user.email_verified_at !== null) {
-            dispatch({
-              type: REMOVE_EMAIL_VERIFICATION_TOKEN,
-            });
-          }
           dispatch({
             type: SET_USER,
             payload: res.data,
@@ -84,7 +77,7 @@ export const loginUser = (data, toast, router) => async (dispatch) => {
           dispatch(setIsFetching(false));
           toast({
             title: "Error",
-            description: error?.response?.data?.message,
+            description: "Unexpected Error",
             status: "error",
             duration: 3000,
             isClosable: true,
@@ -93,7 +86,6 @@ export const loginUser = (data, toast, router) => async (dispatch) => {
             type: GET_ERRORS,
             payload: error?.response?.data,
           });
-          // console.log(error.response.data.errors);
         });
     })
     .catch((err) => {
@@ -137,7 +129,7 @@ export const logoutUser = (toast) => async (dispatch) => {
       dispatch(setIsFetching(false));
       toast({
         title: "Error",
-        description: error?.response?.data?.message,
+        description: "Unexpected Error",
         status: "error",
         duration: 3000,
         isClosable: true,

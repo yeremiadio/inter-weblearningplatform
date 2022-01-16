@@ -6,31 +6,32 @@ import { useToast } from "@chakra-ui/toast";
 
 function verifyEmail() {
   const [loading, setLoading] = useState(false);
-  const tokenEmail = useSelector((state) => state.email.access_token);
   const toast = useToast();
-  const [time, setTime] = useState(0);
-
-  useEffect(() => {
-    const timerId = setInterval(() => {
-      setTime((t) => t - 1);
-    }, 1000);
-    return () => clearInterval(timerId);
-  }, []);
 
   const onSubmit = useCallback(async () => {
     setLoading(true);
-    instance()
+    await instance()
       .post("api/verify-email", {})
       .then((res) => {
         toast({
           title: "Success",
-          description: res.data,
+          description: res ? res.data : "Check your email",
           status: "success",
           duration: 3000,
           isClosable: true,
         });
-        setTime(60);
         setLoading(false);
+      })
+      .catch((err) => {
+        toast({
+          title: "Error",
+          description: err
+            ? err.response.message
+            : "Failed to send the email verification",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
       });
   });
   return (
