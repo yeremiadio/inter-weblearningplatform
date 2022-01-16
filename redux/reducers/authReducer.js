@@ -6,7 +6,7 @@ import {
 } from "../../constants/types";
 
 const initialState = {
-  user: {},
+  data: {},
   isFetching: false,
   isAuthenticated: false,
 };
@@ -16,19 +16,19 @@ export default function authReducer(state = initialState, action) {
     case SET_USER:
       return {
         ...state,
-        user: action.payload,
+        data: action.payload,
         isAuthenticated: true,
       };
     case LOGOUT:
       return {
         ...state,
-        user: {},
+        data: {},
         isAuthenticated: false,
       };
     case RESET_USER:
       return {
         ...state,
-        user: {},
+        data: {},
         isAuthenticated: false,
       };
     case SET_IS_FETCHING:

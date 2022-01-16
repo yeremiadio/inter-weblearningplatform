@@ -6,10 +6,10 @@ import {
   LOGOUT,
   ADD_EMAIL_VERIFICATION_TOKEN,
   REMOVE_EMAIL_VERIFICATION_TOKEN,
+  ADD_ACCESS_TOKEN_USER,
 } from "../../constants/types";
 // import { token } from "../../config/token";
 import instance from "../../utils/instance";
-import Cookies from "js-cookie";
 
 export const setIsFetching = (payload) => {
   return {
@@ -58,12 +58,11 @@ export const loginUser = (data, toast, router) => async (dispatch) => {
   dispatch(setIsFetching(true));
   await instance()
     .get("sanctum/csrf-cookie")
-    .then(() => {
-      instance()
+    .then(async () => {
+      await instance()
         .post("api/login", data)
         .then((response) => {
           const res = response.data;
-          Cookies.set("access_token", res.data.token);
           if (res.data.user.email_verified_at !== null) {
             dispatch({
               type: REMOVE_EMAIL_VERIFICATION_TOKEN,
@@ -71,7 +70,7 @@ export const loginUser = (data, toast, router) => async (dispatch) => {
           }
           dispatch({
             type: SET_USER,
-            payload: res.data.user,
+            payload: res.data,
           });
           router.push("dashboard");
           dispatch(setIsFetching(false));
@@ -116,13 +115,8 @@ export const logoutUser = (toast) => async (dispatch) => {
   await instance()({
     url: "api/logout",
     method: "post",
-    headers: {
-      Authorization: "Bearer " + Cookies.get("access_token"),
-    },
   })
     .then((response) => {
-      Cookies.remove("access_token");
-      localStorage.clear();
       dispatch({
         type: LOGOUT,
         payload: {},
