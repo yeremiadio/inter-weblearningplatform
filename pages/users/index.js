@@ -1,11 +1,11 @@
 import Admin from "../../layouts/Admin";
 // import { useMediaQuery } from "@chakra-ui/media-query";
 import DataTable from "react-data-table-component";
-import { Button, IconButton } from "@chakra-ui/button";
-import { fetchWithToken } from "../../utils/fetcher";
+import { Button } from "@chakra-ui/button";
+import { fetcher, fetchWithToken } from "../../utils/fetcher";
 import BlueSpinner from "../../components/Spinner/BlueSpinner";
 import moment from "moment";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import { useToast } from "@chakra-ui/toast";
 import DeleteUserModal from "../../components/Modal/Components/User/DeleteUserModal";
 import { Modal } from "../../components/Modal/Modal";
@@ -16,13 +16,7 @@ import AddUserModal from "../../components/Modal/Components/User/AddUserModal";
 import { PlusIcon } from "@heroicons/react/solid";
 import { useSelector } from "react-redux";
 import { useMediaQuery } from "@chakra-ui/react";
-import {
-  Tag,
-  TagLabel,
-  TagLeftIcon,
-  TagRightIcon,
-  TagCloseButton,
-} from "@chakra-ui/react";
+import { Tag } from "@chakra-ui/react";
 
 const index = () => {
   const auth = useSelector((state) => state.auth);
@@ -30,7 +24,7 @@ const index = () => {
     data: users,
     mutate,
     error,
-  } = useSWR([`api/users`], (url) => fetchWithToken(url), {
+  } = useSWR([`api/users`], (url) => fetcher(url), {
     revalidateOnFocus: false,
   });
   const updateUserModalRef = useRef();
@@ -39,7 +33,7 @@ const index = () => {
   const [selectedIndexData, setIndexData] = useState(0);
   const [selectedData, setSelectedData] = useState();
   const toast = useToast();
-  const filteredUsers = users?.filter((item) => item.id !== auth.user.id);
+  const filteredUsers = users?.filter((item) => item.id !== auth.data.user.id);
   const [isSmallestThan768] = useMediaQuery("(max-width: 768px)");
   const columns = [
     {

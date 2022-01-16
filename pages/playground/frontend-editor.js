@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
-import Cookies from "js-cookie";
+
 import { RESET_ERRORS, RESET_USER } from "../../constants/types";
 import useLocalStorage from "../../utils/useLocalStorage";
 import Editor from "../../components/CodePenEditor/Editor";
@@ -22,7 +22,8 @@ function code() {
     const ac = new AbortController();
     if (
       auth.isAuthenticated === false ||
-      Cookies.get("access_token") === undefined
+      auth.data.token === undefined ||
+      auth.data.token === ""
     ) {
       dispatch({
         type: RESET_USER,
@@ -67,7 +68,7 @@ function code() {
             className="w-full md:w-1/4 object-cover cursor-pointer"
           />
         </div>
-        <UserDropdown user={auth.user} />
+        <UserDropdown user={auth.data.user} />
       </div>
       <div className="mt-20 min-h-screen h-1/2">
         <div className="bg-gray-900 flex flex-col lg:flex-row">

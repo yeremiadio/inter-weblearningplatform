@@ -3,7 +3,7 @@ import "grapesjs/dist/css/grapes.min.css";
 import { useRouter } from "next/dist/client/router";
 import geditorConfig from "../../utils/grapesjs/geditor_config";
 import { useDispatch, useSelector } from "react-redux";
-import Cookies from "js-cookie";
+
 import { RESET_ERRORS, RESET_USER } from "../../constants/types";
 import { useToast } from "@chakra-ui/toast";
 
@@ -33,7 +33,8 @@ export default function webPageBuilder() {
   useEffect(() => {
     if (
       auth.isAuthenticated === false ||
-      Cookies.get("access_token") === undefined
+      auth.data.token === undefined ||
+      auth.data.token === ""
     ) {
       dispatch({
         type: RESET_USER,
