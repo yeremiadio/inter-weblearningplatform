@@ -10,13 +10,8 @@ import {
 } from "@heroicons/react/solid";
 import { useRouter } from "next/router";
 
-const CustomCardTotal = ({
-  name = "",
-  count = 0,
-  icon = null,
-  router,
-  href = "",
-}) => {
+const CustomCardTotal = ({ name = "", count = 0, icon = null, href = "" }) => {
+  const router = useRouter();
   return (
     <div
       className="bg-white p-6 text-gray-800 rounded-md hover:shadow-default-weblearning transition-all delay-75 cursor-pointer"
@@ -38,7 +33,6 @@ const CustomCardTotal = ({
 };
 
 export default function dashboard() {
-  const router = useRouter();
   return (
     <>
       <div className="p-4">
@@ -47,28 +41,24 @@ export default function dashboard() {
             name="Materi"
             count={10}
             href="materials"
-            router={router}
             icon={<BookOpenIcon className="w-6 h-6" />}
           />
           <CustomCardTotal
             name="User"
             count={10}
             href="users"
-            router={router}
             icon={<UserGroupIcon className="w-6 h-6" />}
           />
           <CustomCardTotal
             name="Code Editor"
             count={10}
             href="playground"
-            router={router}
             icon={<CodeIcon className="w-6 h-6" />}
           />
           <CustomCardTotal
             name="Tugas"
             count={10}
             href="assignment"
-            router={router}
             icon={<PencilAltIcon className="w-6 h-6" />}
           />
         </div>
