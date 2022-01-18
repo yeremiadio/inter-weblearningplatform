@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import instance from "../utils/instance";
 import { useToast } from "@chakra-ui/toast";
+import Link from "next/link";
 
 function verifyEmail() {
   const [loading, setLoading] = useState(false);
@@ -41,15 +42,20 @@ function verifyEmail() {
         alt=""
         className="object-cover w-3/4 lg:w-1/5 mb-4"
       />
-      <Button
-        colorScheme={"blue"}
-        size={"md"}
-        onClick={onSubmit}
-        isLoading={loading}
-        loadingText="Checking"
-      >
-        Verify Email
-      </Button>
+      <div className="flex flex-col gap-4">
+        <Button
+          colorScheme={"blue"}
+          size={"md"}
+          onClick={onSubmit}
+          isLoading={loading}
+          loadingText="Checking"
+        >
+          Verify Email
+        </Button>
+        <Link href={"dashboard"}>
+          <a className="text-gray-400 text-sm">Back to Dashboard</a>
+        </Link>
+      </div>
     </div>
   );
 }
