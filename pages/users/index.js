@@ -2,7 +2,7 @@ import Admin from "../../layouts/Admin";
 // import { useMediaQuery } from "@chakra-ui/media-query";
 import DataTable from "react-data-table-component";
 import { Button } from "@chakra-ui/button";
-import { fetcher, fetchWithToken } from "../../utils/fetcher";
+import { fetcher } from "../../utils/fetcher";
 import BlueSpinner from "../../components/Spinner/BlueSpinner";
 import moment from "moment";
 import { useRef, useState } from "react";
