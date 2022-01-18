@@ -17,7 +17,6 @@ import { CameraIcon, PaperAirplaneIcon } from "@heroicons/react/solid";
 import { jsonToFormData } from "../../utils/jsonToFormData";
 import instance from "../../utils/instance";
 
-
 export default function createMaterialPage() {
   //DraftJs
   let initialEditorState = EditorState.createEmpty();
@@ -53,7 +52,7 @@ export default function createMaterialPage() {
     //   console.log(pair[0] + ", " + pair[1]);
     // }
     try {
-      const res = await instance().post("api/materials/create");
+      const res = await instance().post("api/materials/create", formData);
       toast({
         title: "Success",
         status: "success",
@@ -61,7 +60,8 @@ export default function createMaterialPage() {
         duration: 3000,
         isClosable: true,
       });
-      console.log(res);
+      setEditorState(initialEditorState);
+      formikRef.current.resetForm();
     } catch (err) {
       toast({
         title: "Error",
