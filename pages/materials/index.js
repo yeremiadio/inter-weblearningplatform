@@ -1,26 +1,45 @@
-import { Button } from "@chakra-ui/react";
-import { PlusIcon } from "@heroicons/react/solid";
+import {
+  Button,
+  IconButton,
+  Input,
+  InputGroup,
+  InputLeftElement,
+} from "@chakra-ui/react";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  PlusIcon,
+  SearchIcon,
+} from "@heroicons/react/solid";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useState } from "react";
 import useSWR from "swr";
 import CustomCard from "../../components/Card/Card.js";
 import EmptyDataComponent from "../../components/EmptyData.js";
 import Admin from "../../layouts/Admin.js";
-import { store } from "../../redux/store.js";
 import { fetcher } from "../../utils/fetcher.js";
-import instance from "../../utils/instance.js";
 import BlueSpinner from "../../components/Spinner/BlueSpinner";
-import { motion } from "framer-motion";
+import { paginate } from "../../utils/paginateData.js";
 
 function materialsPage() {
   const router = useRouter();
+  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
   const {
-    data: materials,
+    data: data,
     mutate,
     error,
   } = useSWR([`api/materials`], (url) => fetcher(url), {
     revalidateOnFocus: false,
   });
+  const materials = paginate(data, page, 6, search);
+  console.log(materials);
+
+  const onSearch = (event) => {
+    let keyword = event.target.value;
+    setSearch(keyword);
+  };
+
   return (
     <>
       {!error && materials?.length === 0 ? (
@@ -31,7 +50,19 @@ function materialsPage() {
         </div>
       ) : (
         <>
-          <div className="flex items-center flex-col lg:flex-row mb-4">
+          <div className="flex justify-between items-center flex-col lg:flex-row mb-4">
+            <div className="mb-4 lg:mb-0">
+              <InputGroup>
+                <InputLeftElement
+                  pointerEvents="none"
+                  children={<SearchIcon className="text-gray-300 w-6 h-6" />}
+                />
+                <Input
+                  placeholder="Cari materimu..."
+                  onChange={(e) => onSearch(e)}
+                />
+              </InputGroup>
+            </div>
             <Button
               colorScheme="blue"
               className="ml-auto"
@@ -41,30 +72,35 @@ function materialsPage() {
               Tambah
             </Button>
           </div>
-          <motion.div
-            initial="initial"
-            animate="animate"
-            variants={{
-              initial: {
-                opacity: 0,
-              },
-              animate: {
-                opacity: 1,
-              },
-            }}
-          >
+          <div>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-              {materials?.map((item) => (
-                <CustomCard
-                  key={item.id}
-                  name={item.title}
-                  description={item.description}
-                  thumbnail={item.thumbnail}
-                  slug={`materials/${item.slug}`}
-                />
-              ))}
+              {!error ? (
+                materials?.data?.map((item) => (
+                  <CustomCard
+                    key={item.id}
+                    name={item.title}
+                    description={item.description}
+                    thumbnail={item.thumbnail}
+                    slug={`materials/${item.slug}`}
+                  />
+                ))
+              ) : (
+                <BlueSpinner />
+              )}
             </div>
-          </motion.div>
+            <div className="flex justify-center items-center my-8 gap-2">
+              <IconButton
+                icon={<ChevronLeftIcon className="w-6 h-6" />}
+                disabled={page <= 1 && true}
+                onClick={() => setPage((prev) => prev - 1)}
+              />
+              <IconButton
+                icon={<ChevronRightIcon className="w-6 h-6" />}
+                onClick={() => setPage((prev) => prev + 1)}
+                disabled={page === materials?.total_pages && true}
+              />
+            </div>
+          </div>
         </>
       )}
     </>
