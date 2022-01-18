@@ -5,7 +5,6 @@ import AdminNavbar from "../components/Navbar/AdminNavbar";
 import AdminSidebar from "../components/Sidebar/AdminSidebar";
 import { RESET_USER, RESET_ERRORS } from "../constants/types";
 import { motion } from "framer-motion";
-import Head from "next/head";
 
 import { useToast } from "@chakra-ui/toast";
 
@@ -43,9 +42,6 @@ function Admin({ children }) {
   }, []);
   return (
     <>
-      <Head>
-        <title>Web Learning Platform</title>
-      </Head>
       <div className="flex min-h-screen" style={{ background: "#f7fafc" }}>
         <AdminSidebar open={open} setOpen={setOpen} />
         <div className="overflow-y-auto flex-1">

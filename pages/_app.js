@@ -30,7 +30,7 @@ function MyApp({ Component, pageProps, router }) {
             content="width=device-width, initial-scale=1, shrink-to-fit=no"
           />
           <Head>
-            <title>Web Learning Platform</title>
+            <title>Inter - Web Learning Platform</title>
           </Head>
           <ChakraProvider theme={themeProvider}>
             <NextNProgress color="#2563EB" options={{ showSpinner: false }} />
