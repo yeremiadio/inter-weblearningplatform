@@ -14,8 +14,8 @@ import { Select } from "@chakra-ui/select";
 // import Dropzone from "react-dropzone";
 import BlueSpinner from "../../../Spinner/BlueSpinner";
 import useSWR from "swr";
-import { fetchWithToken } from "../../../../utils/fetcher";
 import { FormErrorMessage } from "@chakra-ui/form-control";
+import { fetcher } from "../../../../utils/fetcher";
 
 function UpdateUserModal({ parent, user, indexData, users, mutate, toast }) {
   const initialValues = {
@@ -24,7 +24,7 @@ function UpdateUserModal({ parent, user, indexData, users, mutate, toast }) {
     avatar: user?.avatar || "",
     role: user?.roles[0]?.name || "",
   };
-  const { data: roles, error } = useSWR("api/roles", fetchWithToken);
+  const { data: roles, error } = useSWR("api/roles", fetcher);
   const FormikRef = useRef();
   const avatarRef = useRef();
   const onChangeImage = useCallback((e, index) => {

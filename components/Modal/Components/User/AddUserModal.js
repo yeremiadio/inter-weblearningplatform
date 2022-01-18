@@ -11,7 +11,7 @@ import { PaperAirplaneIcon, CameraIcon } from "@heroicons/react/solid";
 import { Select } from "@chakra-ui/select";
 import BlueSpinner from "../../../Spinner/BlueSpinner";
 import useSWR from "swr";
-import { fetchWithToken } from "../../../../utils/fetcher";
+import { fetcher } from "../../../../utils/fetcher";
 import { FormErrorMessage } from "@chakra-ui/form-control";
 
 function AddUserModal({ parent, users, mutate, toast }) {
@@ -23,7 +23,7 @@ function AddUserModal({ parent, users, mutate, toast }) {
     role: "",
     password_confirmation: "",
   };
-  const { data: roles, error } = useSWR("api/roles", fetchWithToken);
+  const { data: roles, error } = useSWR("api/roles", fetcher);
   const FormikRef = useRef();
   const avatarRef = useRef();
   const onChangeImage = useCallback((e, index) => {
