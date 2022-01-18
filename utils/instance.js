@@ -12,7 +12,6 @@ export default function instance() {
 
   instance.interceptors.request.use(function (config) {
     config.headers.Authorization = token ? `Bearer ${token}` : "";
-    // console.log(config);
     return config;
   });
 
