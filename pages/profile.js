@@ -19,7 +19,7 @@ import {
 import { Button } from "@chakra-ui/button";
 import { CameraIcon, PaperAirplaneIcon } from "@heroicons/react/solid";
 import { Input } from "@chakra-ui/input";
-import { SET_USER } from "../constants/types.js";
+import { SET_USER, UPDATE_USER } from "../constants/types.js";
 
 export default function profileConfiguration() {
   const auth = useSelector((state) => state.auth);
@@ -30,7 +30,6 @@ export default function profileConfiguration() {
     name: user?.name || "",
     email: user?.email || "",
     avatar: user?.avatar || "",
-    role_id: user?.role?.id || "",
   };
   //   const { data: roles, error } = useSWR("api/roles", fetchWithToken);
   const FormikRef = useRef();
@@ -56,11 +55,11 @@ export default function profileConfiguration() {
             duration: 3000,
             isClosable: true,
           });
-          // window.location.reload();
           dispatch({
-            type: SET_USER,
+            type: UPDATE_USER,
             payload: res.data.data,
           });
+          // window.location.reload();
         })
         .catch((err) => {
           toast({
@@ -123,32 +122,6 @@ export default function profileConfiguration() {
                       <p className="text-red-500">{errors?.email}</p>
                     </FormControl>
                   </div>
-                  {/* {!roles && !error ? (
-                    <BlueSpinner />
-                  ) : (
-                    <div className="mt-2">
-                      <FormControl id="role">
-                        <FormLabel>Role</FormLabel>
-                        <Select
-                          placeholder="Role"
-                          isInvalid={errors?.role_id}
-                          size="lg"
-                          variant="outline"
-                          focusBorderColor="blue.600"
-                          name="role_id"
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                        >
-                          {roles?.map((item, i) => (
-                            <option key={i} value={item.id}>
-                              {item.role_name}
-                            </option>
-                          ))}
-                        </Select>
-                        <p className="text-red-500">{errors?.role_id}</p>
-                      </FormControl>
-                    </div>
-                  )} */}
                   <div className="mt-2">
                     <FormControl
                       id="avatar"
@@ -177,23 +150,23 @@ export default function profileConfiguration() {
                       <div className="my-2 lg:my-4">
                         {values?.avatar ? (
                           typeof values?.avatar !== "object" ? (
-                            <Box className="w-full lg:w-80 rounded-md p-4 border border-gray-200">
+                            <div className="flex justify-center items-center">
                               <img
                                 src={
                                   user?.avatar ? user?.avatar : "/vercel.svg"
                                 }
                                 alt=""
-                                className="w-full object-cover"
+                                className="w-56 h-56 object-cover inline rounded-full"
                               />
-                            </Box>
+                            </div>
                           ) : (
-                            <Box className="w-full lg:w-80 rounded-md p-4 border border-gray-200">
+                            <div className="flex justify-center items-center">
                               <img
                                 src={URL.createObjectURL(values.avatar)}
                                 alt=""
-                                className="w-full object-cover"
+                                className="w-56 h-56 object-cover inline rounded-full"
                               />
-                            </Box>
+                            </div>
                           )
                         ) : (
                           ""
