@@ -28,14 +28,14 @@ const UserDropdown = ({ user }) => {
               src={user?.avatar ? user?.avatar : "/vercel.svg"}
               alt=""
             />
-            <p className="inline mx-2 text-secondary font-medium text-sm tracking-wide">
+            <p className="hidden md:inline mx-2 text-secondary font-medium text-sm tracking-wide">
               {user?.name || ""}
             </p>
 
             {open ? (
-              <ChevronUpIcon className="inline h-4 w-4 mt-0.5 text-secondary" />
+              <ChevronUpIcon className="hidden md:inline h-4 w-4 mb-0.5 text-secondary" />
             ) : (
-              <ChevronDownIcon className="inline h-4 w-4 mt-0.5 text-secondary" />
+              <ChevronDownIcon className="hidden md:inline h-4 w-4 mb-0.5 text-secondary" />
             )}
           </Menu.Button>
 
