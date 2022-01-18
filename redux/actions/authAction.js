@@ -54,16 +54,21 @@ export const loginUser = (data, toast, router) => async (dispatch) => {
   dispatch(setIsFetching(true));
   await instance()
     .get("sanctum/csrf-cookie")
-    .then(async () => {
+    .then(async (res) => {
       await instance()
-        .post("api/login", data)
+        .post("api/login", data, {
+          headers: { "Content-Type": "application/json" },
+        })
         .then((response) => {
           const res = response.data;
           dispatch({
             type: SET_USER,
             payload: res.data,
           });
-          router.push("dashboard");
+          if (res.data.user.email_verified_at === null) {
+            router.push("verify");
+          } else {
+          }
           dispatch(setIsFetching(false));
           toast({
             title: "Success",
@@ -77,7 +82,7 @@ export const loginUser = (data, toast, router) => async (dispatch) => {
           dispatch(setIsFetching(false));
           toast({
             title: "Error",
-            description: "Unexpected Error",
+            description: `${error.response.statusText} [${error.response.status}]`,
             status: "error",
             duration: 3000,
             isClosable: true,
@@ -86,17 +91,19 @@ export const loginUser = (data, toast, router) => async (dispatch) => {
             type: GET_ERRORS,
             payload: error?.response?.data,
           });
+          // console.log(error.response);
         });
     })
     .catch((err) => {
       dispatch(setIsFetching(false));
       toast({
         title: "Error",
-        description: "Unexpected Error",
+        description: "Error",
         status: "error",
         duration: 3000,
         isClosable: true,
       });
+      console.log(err.response);
       localStorage.clear();
     });
 };
