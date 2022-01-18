@@ -13,7 +13,7 @@ import { useRouter } from "next/router";
 import { fetcher } from "../utils/fetcher.js";
 import useSWR from "swr";
 import dynamic from "next/dynamic";
-import instance from "../utils/instance.js";
+// import instance from "../utils/instance.js";
 
 const Chart = dynamic(() => import("react-apexcharts").then((mod) => mod), {
   ssr: false,
