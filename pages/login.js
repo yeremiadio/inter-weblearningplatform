@@ -77,7 +77,7 @@ function Login() {
           <Link href="/">
             <a>
               <img
-                src="/vercel.svg"
+                src="/inter.svg"
                 alt="logo"
                 className="object-cover w-24 mb-6 cursor-pointer transition-all delay-75 hover:-translate-y-1"
               />

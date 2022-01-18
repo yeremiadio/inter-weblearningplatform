@@ -25,7 +25,7 @@ const UserDropdown = ({ user }) => {
           <Menu.Button>
             <img
               className="w-8 h-8 object-cover inline rounded-full"
-              src={user?.avatar ? user?.avatar : "/vercel.svg"}
+              src={user?.avatar ? user?.avatar : "/inter.svg"}
               alt=""
             />
             <p className="hidden md:inline mx-2 text-secondary font-medium text-sm tracking-wide">

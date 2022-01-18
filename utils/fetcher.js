@@ -3,20 +3,9 @@ import instance from "./instance";
 export const fetcher = async (...args) =>
   await instance()(...args).then((res) => res.data.data);
 
-export const fetcherwithParams = (
-  category,
-  sort,
-  search,
-  page,
-  limit,
-  ...args
-) =>
+export const fetcherwithParams = (search, ...args) =>
   instance()(...args, {
     params: {
       search: search,
-      category: category,
-      sort: sort,
-      page: page || 1,
-      limit: limit || 6,
     },
   }).then((res) => res.data.data);
