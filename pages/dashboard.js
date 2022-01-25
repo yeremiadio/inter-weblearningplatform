@@ -193,10 +193,12 @@ export default function dashboard() {
             {!error && data !== undefined ? (
               <div className="grid place-items-center h-full">
                 <Chart
-                  type="donut"
-                  options={{}}
+                  type="pie"
+                  options={{
+                    dataLabels: { enabled: true },
+                    labels: data?.all_roles_count?.names,
+                  }}
                   series={data?.all_roles_count?.count}
-                  labels={data?.all_roles_count?.name}
                   className="w-60 lg:w-96"
                 />
               </div>

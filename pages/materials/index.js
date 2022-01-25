@@ -58,6 +58,7 @@ function materialsPage() {
                   children={<SearchIcon className="text-gray-300 w-6 h-6" />}
                 />
                 <Input
+                  className="bg-white"
                   placeholder="Cari materimu..."
                   onChange={(e) => onSearch(e)}
                 />

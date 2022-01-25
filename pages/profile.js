@@ -153,7 +153,7 @@ export default function profileConfiguration() {
                             <div className="flex justify-center items-center">
                               <img
                                 src={
-                                  user?.avatar ? user?.avatar : "/inter.svg"
+                                  user?.avatar ? user?.avatar : "/interLogoOnly.svg"
                                 }
                                 alt=""
                                 className="w-56 h-56 object-cover inline rounded-full"

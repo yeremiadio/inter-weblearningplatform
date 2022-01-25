@@ -43,7 +43,7 @@ const AdminSidebar = ({ setOpen, open }) => {
             </button>
             <div className="py-4 px-6 mt-20 flex flex-col justify-center items-center">
               <img
-                src="/inter.svg"
+                src="/interWithText.svg"
                 onClick={() => router.replace("/")}
                 className="w-3/4 cursor-pointer object-cover"
               />
@@ -186,7 +186,7 @@ const AdminSidebar = ({ setOpen, open }) => {
       <div className="hidden w-64 bg-white border-r border-gray-200 md:block fixed h-full z-50">
         <div className="py-4 px-6 mt-4 flex flex-col justify-center items-center">
           <img
-            src="/inter.svg"
+            src="/interWithText.svg"
             onClick={() => router.replace("/")}
             className="w-2/4 object-cover cursor-pointer"
           />
