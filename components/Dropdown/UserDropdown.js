@@ -8,7 +8,7 @@ import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/solid";
 import { logoutUser } from "../../redux/actions/authAction";
 import { useToast } from "@chakra-ui/toast";
 
-const UserDropdown = ({ user }) => {
+const UserDropdown = ({ user = {}, darkMode = false }) => {
   const toast = useToast();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -28,15 +28,20 @@ const UserDropdown = ({ user }) => {
               src={user?.avatar ? user?.avatar : "/interLogoOnly.svg"}
               alt=""
             />
-            <p className="hidden md:inline mx-2 text-secondary font-medium text-sm tracking-wide">
+            <p
+              className={
+                "hidden md:inline mx-2 font-medium text-sm tracking-wide " +
+                (darkMode ? "text-white" : "text-secondary")
+              }
+            >
               {user?.name || ""}
             </p>
 
-            {open ? (
-              <ChevronUpIcon className="hidden md:inline h-4 w-4 mb-0.5 text-secondary" />
-            ) : (
-              <ChevronDownIcon className="hidden md:inline h-4 w-4 mb-0.5 text-secondary" />
-            )}
+            <ChevronDownIcon
+              className={`hidden md:inline h-4 w-4 mb-0.5 transition-all delay-75 ${
+                open ? "transform rotate-180" : ""
+              } ${darkMode ? "text-white" : "text-secondary"}`}
+            />
           </Menu.Button>
 
           <Transition
