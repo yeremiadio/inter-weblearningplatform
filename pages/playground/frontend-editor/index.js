@@ -1,21 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useRouter } from "next/router";
-
+import { useDispatch, useSelector } from "react-redux";
 import { RESET_ERRORS, RESET_USER } from "../../constants/types";
-import useLocalStorage from "../../utils/useLocalStorage";
 import Editor from "../../components/CodePenEditor/Editor";
-import UserDropdown from "../../components/Dropdown/UserDropdown";
 import { useToast } from "@chakra-ui/toast";
+import CodeEditorNavbar from "../../components/Navbar/CodeEditorNavbar";
 
-function code() {
-  const auth = useSelector((state) => state.auth);
+function frontendEditorPage() {
   const dispatch = useDispatch();
-  const router = useRouter();
   const toast = useToast();
-  const [html, setHtml] = useLocalStorage("html", "");
-  const [css, setCss] = useLocalStorage("css", "");
-  const [js, setJs] = useLocalStorage("js", "");
+  const auth = useSelector((state) => state.auth);
+  const [html, setHtml] = useState("<h1>Hello World</h1>");
+  const [css, setCss] = useState("* { font-family: 'Arial'; }");
+  const [js, setJs] = useState("function testWorld() { alert('test') }");
   const [srcDoc, setSrcDoc] = useState("");
 
   useEffect(() => {
@@ -59,19 +55,16 @@ function code() {
   }, [html, css, js]);
 
   return (
-    <>
-      <div className="flex justify-between p-6 lg:py-6 lg:px-8 bg-white mt-0 fixed w-full z-40 top-0 border-b border-gray-200">
-        <div className="w-1/4 flex items-center">
-          <img
-            src="/interWithText.svg"
-            onClick={() => router.replace("/")}
-            className="w-full md:w-1/4 object-cover cursor-pointer"
-          />
-        </div>
-        <UserDropdown user={auth.data.user} />
-      </div>
+    <div className="bg-gray-900">
+      <CodeEditorNavbar
+        data={{
+          type: "frontend",
+          code: JSON.stringify({ html: html, css: css, js: js }),
+        }}
+        auth={auth.data.user}
+      />
       <div className="mt-20 min-h-screen h-1/2">
-        <div className="bg-gray-900 flex flex-col lg:flex-row">
+        <div className="flex flex-col lg:flex-row border-t border-gray-700 py-4">
           <Editor
             language="xml"
             displayName="HTML"
@@ -91,7 +84,7 @@ function code() {
             onChange={setJs}
           />
         </div>
-        <div className="h-screen">
+        <div className="h-screen bg-white">
           <iframe
             srcDoc={srcDoc}
             title="output"
@@ -102,8 +95,8 @@ function code() {
           />
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
-export default code;
+export default frontendEditorPage;

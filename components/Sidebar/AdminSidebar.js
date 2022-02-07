@@ -10,11 +10,113 @@ import {
   DocumentTextIcon,
   ClipboardIcon,
   CodeIcon,
+  ChevronUpIcon,
+  ChevronDownIcon,
 } from "@heroicons/react/solid";
 import { Transition, Dialog } from "@headlessui/react";
 // import { useSelector } from "react-redux";
+import { Disclosure } from "@headlessui/react";
 const AdminSidebar = ({ setOpen, open }) => {
   const router = useRouter();
+  const navigations = [
+    {
+      id: 1,
+      name: "Dashboard",
+      href: "/dashboard",
+      icon: (
+        <HomeIcon
+          style={{
+            width: 22,
+            color:
+              router.pathname.indexOf("/dashboard") !== -1
+                ? "text-white"
+                : "group-hover:text-gray-800",
+          }}
+        />
+      ),
+    },
+    {
+      id: 2,
+      name: "Assignment",
+      href: "/assignment",
+      icon: (
+        <ClipboardIcon
+          style={{
+            width: 22,
+            color:
+              router.pathname.indexOf("/assignment") !== -1
+                ? "text-white"
+                : "group-hover:text-gray-800",
+          }}
+        />
+      ),
+    },
+    {
+      id: 3,
+      name: "Playground",
+      href: "/playground",
+      icon: (
+        <CodeIcon
+          style={{
+            width: 22,
+            color:
+              router.pathname.indexOf("/playground") !== -1
+                ? "text-white"
+                : "group-hover:text-gray-800",
+          }}
+        />
+      ),
+      children: [
+        {
+          id: 1,
+          name: "Frontend Editor",
+          href: "/frontend-editor",
+        },
+        {
+          id: 2,
+          name: "Javascript Editor",
+          href: "/js-editor",
+        },
+        {
+          id: 3,
+          name: "Webpage Builder",
+          href: "/webpage-builder",
+        },
+      ],
+    },
+    {
+      id: 4,
+      name: "Materi",
+      href: "/materials",
+      icon: (
+        <DocumentTextIcon
+          style={{
+            width: 22,
+            color:
+              router.pathname.indexOf("/materials") !== -1
+                ? "text-white"
+                : "group-hover:text-gray-800",
+          }}
+        />
+      ),
+    },
+    {
+      id: 5,
+      name: "User",
+      href: "/users",
+      icon: (
+        <UserGroupIcon
+          style={{
+            width: 22,
+            color:
+              router.pathname.indexOf("/users") !== -1
+                ? "text-white"
+                : "group-hover:text-gray-800",
+          }}
+        />
+      ),
+    },
+  ];
   return (
     <>
       {/* Mobile */}
@@ -41,130 +143,36 @@ const AdminSidebar = ({ setOpen, open }) => {
             >
               <XIcon className="w-6 h-6 text-secondary" />
             </button>
-            <div className="py-4 px-6 mt-20 flex flex-col justify-center items-center">
+            <div className="py-4 px-6 mt-14 flex flex-col justify-center items-center">
               <img
                 src="/interWithText.svg"
                 onClick={() => router.replace("/")}
-                className="w-3/4 cursor-pointer object-cover"
+                className="w-3/5 cursor-pointer object-cover"
               />
             </div>
             <div className="mb-10 mt-8">
               <ul className="md:flex-col md:min-w-screen flex flex-col list-none pt-2 mx-4 space-y-2">
-                <li className="items-center" onClick={() => setOpen(false)}>
-                  <Link href="/dashboard">
-                    <span
-                      className={
-                        "flex w-full transition-all delay-75 items-center space-x-3 py-3 px-4 rounded cursor-pointer " +
-                        (router.pathname.indexOf("/dashboard") !== -1
-                          ? "bg-blue-600 text-white font-medium"
-                          : "font-normal text-secondary")
-                      }
-                    >
-                      <HomeIcon
-                        style={{
-                          width: 24,
-                          color:
-                            router.pathname.indexOf("/dashboard") !== -1
-                              ? "text-white"
-                              : "text-secondary",
-                        }}
-                      />
-                      <span>Dashboard</span>
-                    </span>
-                  </Link>
-                </li>
-                <li className="items-center" onClick={() => setOpen(false)}>
-                  <Link href="/assignment">
-                    <span
-                      className={
-                        "flex w-full transition-all delay-75 items-center space-x-3 py-3 px-4 rounded cursor-pointer " +
-                        (router.pathname.indexOf("/assignment") !== -1
-                          ? "bg-blue-600 text-white font-medium"
-                          : "font-normal text-secondary")
-                      }
-                    >
-                      <ClipboardIcon
-                        style={{
-                          width: 24,
-                          color:
-                            router.pathname.indexOf("/assignment") !== -1
-                              ? "text-white"
-                              : "text-secondary",
-                        }}
-                      />
-                      <span>Tugas</span>
-                    </span>
-                  </Link>
-                </li>
-                <li className="items-center" onClick={() => setOpen(false)}>
-                  <Link href="/playground">
-                    <span
-                      className={
-                        "flex w-full transition-all delay-75 items-center space-x-3 py-3 px-4 rounded cursor-pointer " +
-                        (router.pathname.indexOf("/playground") !== -1
-                          ? "bg-blue-600 text-white font-medium"
-                          : "font-normal text-secondary")
-                      }
-                    >
-                      <CodeIcon
-                        style={{
-                          width: 24,
-                          color:
-                            router.pathname.indexOf("/playground") !== -1
-                              ? "text-white"
-                              : "text-secondary",
-                        }}
-                      />
-                      <span>Playground</span>
-                    </span>
-                  </Link>
-                </li>
-                <li className="items-center" onClick={() => setOpen(false)}>
-                  <Link href="/materials">
-                    <span
-                      className={
-                        "flex w-full transition-all delay-75 items-center space-x-3 py-3 px-4 rounded cursor-pointer " +
-                        (router.pathname.indexOf("/materials") !== -1
-                          ? "bg-blue-600 text-white font-medium"
-                          : "font-normal text-secondary")
-                      }
-                    >
-                      <DocumentTextIcon
-                        style={{
-                          width: 24,
-                          color:
-                            router.pathname.indexOf("/materials") !== -1
-                              ? "text-white"
-                              : "text-secondary",
-                        }}
-                      />
-                      <span>Materi</span>
-                    </span>
-                  </Link>
-                </li>
-                <li className="items-center" onClick={() => setOpen(false)}>
-                  <Link href="/users">
-                    <span
-                      className={
-                        "flex w-full transition-all delay-75 items-center space-x-3 py-3 px-4 rounded cursor-pointer " +
-                        (router.pathname.indexOf("/users") !== -1
-                          ? "bg-blue-600 text-white font-medium"
-                          : "font-normal text-secondary")
-                      }
-                    >
-                      <UserGroupIcon
-                        style={{
-                          width: 24,
-                          color:
-                            router.pathname.indexOf("/users") !== -1
-                              ? "text-white"
-                              : "text-secondary",
-                        }}
-                      />
-                      <span>User</span>
-                    </span>
-                  </Link>
-                </li>
+                {navigations.map((item) => (
+                  <li
+                    className="items-center group text-blue-600"
+                    onClick={() => setOpen(false)}
+                    key={item.id}
+                  >
+                    <Link href={item.href}>
+                      <span
+                        className={
+                          "transition-all delay-75 " +
+                          (router.pathname.indexOf(item.href) !== -1
+                            ? "rounded flex w-full items-center space-x-3 py-2 px-4 cursor-pointer bg-blue-100 font-medium"
+                            : "rounded flex w-full items-center space-x-3 py-3 px-4 group-hover:text-gray-800 cursor-pointer font-normal text-gray-600")
+                        }
+                      >
+                        {item.icon}
+                        <span>{item.name}</span>
+                      </span>
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
           </Transition.Child>
@@ -183,131 +191,37 @@ const AdminSidebar = ({ setOpen, open }) => {
       </Transition>
 
       {/* Desktop */}
-      <div className="hidden w-64 bg-white border-r border-gray-200 md:block fixed h-full z-50">
-        <div className="py-4 px-6 mt-4 flex flex-col justify-center items-center">
+      <div className="hidden w-64 bg-white border-r border-gray-220 md:block fixed h-full z-50">
+        <div className="py-4 px-6 mt-12 flex flex-col justify-center items-center">
           <img
             src="/interWithText.svg"
             onClick={() => router.replace("/")}
-            className="w-2/4 object-cover cursor-pointer"
+            className="w-3/5 object-cover cursor-pointer"
           />
         </div>
-        <div className="my-10">
+        <div className="my-6">
           <ul className="md:flex-col md:min-w-screen flex flex-col list-none pt-2 mx-4 space-y-2">
-            <li className="items-center" onClick={() => setOpen(false)}>
-              <Link href="dashboard">
-                <span
-                  className={
-                    "flex w-full transition-all delay-75 items-center space-x-3 py-3 px-4 rounded cursor-pointer " +
-                    (router.pathname.indexOf("/dashboard") !== -1
-                      ? "bg-blue-600 text-white font-medium"
-                      : "font-normal text-secondary")
-                  }
-                >
-                  <HomeIcon
-                    style={{
-                      width: 24,
-                      color:
-                        router.pathname.indexOf("/dashboard") !== -1
-                          ? "text-white"
-                          : "text-secondary",
-                    }}
-                  />
-                  <span>Dashboard</span>
-                </span>
-              </Link>
-            </li>
-            <li className="items-center" onClick={() => setOpen(false)}>
-              <Link href="/assignment">
-                <span
-                  className={
-                    "flex w-full transition-all delay-75 items-center space-x-3 py-3 px-4 rounded cursor-pointer " +
-                    (router.pathname.indexOf("/assignment") !== -1
-                      ? "bg-blue-600 text-white font-medium"
-                      : "font-normal text-secondary")
-                  }
-                >
-                  <ClipboardIcon
-                    style={{
-                      width: 24,
-                      color:
-                        router.pathname.indexOf("/assignment") !== -1
-                          ? "text-white"
-                          : "text-secondary",
-                    }}
-                  />
-                  <span>Tugas</span>
-                </span>
-              </Link>
-            </li>
-            <li className="items-center" onClick={() => setOpen(false)}>
-              <Link href="/playground">
-                <span
-                  className={
-                    "flex w-full transition-all delay-75 items-center space-x-3 py-3 px-4 rounded cursor-pointer " +
-                    (router.pathname.indexOf("/playground") !== -1
-                      ? "bg-blue-600 text-white font-medium"
-                      : "font-normal text-secondary")
-                  }
-                >
-                  <CodeIcon
-                    style={{
-                      width: 24,
-                      color:
-                        router.pathname.indexOf("/playground") !== -1
-                          ? "text-white"
-                          : "text-secondary",
-                    }}
-                  />
-                  <span>Playground</span>
-                </span>
-              </Link>
-            </li>
-            <li className="items-center" onClick={() => setOpen(false)}>
-              <Link href="/materials">
-                <span
-                  className={
-                    "flex w-full transition-all delay-75 items-center space-x-3 py-3 px-4 rounded cursor-pointer " +
-                    (router.pathname.indexOf("/materials") !== -1
-                      ? "bg-blue-600 text-white font-medium"
-                      : "font-normal text-secondary")
-                  }
-                >
-                  <DocumentTextIcon
-                    style={{
-                      width: 24,
-                      color:
-                        router.pathname.indexOf("/materials") !== -1
-                          ? "text-white"
-                          : "text-secondary",
-                    }}
-                  />
-                  <span>Materi</span>
-                </span>
-              </Link>
-            </li>
-            <li className="items-center" onClick={() => setOpen(false)}>
-              <Link href="/users">
-                <span
-                  className={
-                    "flex w-full transition-all delay-75 items-center space-x-3 py-3 px-4 rounded cursor-pointer " +
-                    (router.pathname.indexOf("/users") !== -1
-                      ? "bg-blue-600 text-white font-medium"
-                      : "font-normal text-secondary")
-                  }
-                >
-                  <UserGroupIcon
-                    style={{
-                      width: 24,
-                      color:
-                        router.pathname.indexOf("/users") !== -1
-                          ? "text-white"
-                          : "text-secondary",
-                    }}
-                  />
-                  <span>User</span>
-                </span>
-              </Link>
-            </li>
+            {navigations.map((item) => (
+              <li
+                className="items-center group text-blue-600"
+                onClick={() => setOpen(false)}
+                key={item.id}
+              >
+                <Link href={item.href}>
+                  <span
+                    className={
+                      "transition-all delay-75 " +
+                      (router.pathname.indexOf(item.href) !== -1
+                        ? "rounded flex w-full items-center space-x-3 py-2 px-4 cursor-pointer bg-blue-100 font-medium"
+                        : "rounded flex w-full items-center space-x-3 py-3 px-4 group-hover:text-gray-800 cursor-pointer font-normal text-gray-600")
+                    }
+                  >
+                    {item.icon}
+                    <span>{item.name}</span>
+                  </span>
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
       </div>

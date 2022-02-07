@@ -29,7 +29,7 @@ function JsCodeEditorPage() {
     };
     setLoading(true);
     try {
-      const res = await instance().post("api/code", data);
+      const res = await instance().post("api/code-glot", data);
       setOutputData(res.data);
       setLoading(false);
     } catch (err) {
