@@ -1,9 +1,10 @@
 import axios from "axios";
 import { store } from "../redux/store";
 import { logOut } from "./logOut";
+import Cookies from "js-cookie";
 
 export default function instance() {
-  const token = store.getState().auth.data.token;
+  const token = Cookies.get("token");
 
   const instance = axios.create({
     baseURL: process.env.baseUrl,

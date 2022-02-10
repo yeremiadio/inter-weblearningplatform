@@ -13,9 +13,13 @@ const store = createStore(
   )
 );
 
+const initializeStore = (initialState = {}) => {
+  return store;
+};
+
 const persistor = persistStore(store);
 
-export { store, persistor };
+export { store, initializeStore, persistor };
 
 // Without Devtools
 // const store = createStore(reducers, applyMiddleware(reduxThunk));

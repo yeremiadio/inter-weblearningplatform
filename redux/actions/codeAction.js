@@ -93,37 +93,26 @@ export const updateCode = (data, router, toast) => async (dispatch) => {
     });
 };
 
-export const deleteCode = (slug, toast) => async (dispatch) => {
-  dispatch(setIsFetching(true));
+export const deleteCode = async (id, data, mutate, toast) => {
   await instance()
-    .delete(`api/code/${slug}`)
-    .then((response) => {
-      const res = response.data;
-      dispatch({
-        type: RESET_CODE,
-        payload: {},
-      });
-      dispatch(setIsFetching(false));
+    .delete(`api/code/${id}/delete`)
+    .then((res) => {
       toast({
         title: "Success",
-        description: res.message,
+        description: res.data.message,
         status: "success",
         duration: 3000,
         isClosable: true,
       });
+      mutate([...data.filter((item) => item.id !== id)], false);
     })
-    .catch((error) => {
-      dispatch(setIsFetching(false));
+    .catch((err) => {
       toast({
         title: "Error",
-        description: error?.response?.data?.message,
+        description: "Unexpected Error",
         status: "error",
         duration: 3000,
         isClosable: true,
-      });
-      dispatch({
-        type: GET_ERRORS,
-        payload: error.response.data.data,
       });
     });
 };

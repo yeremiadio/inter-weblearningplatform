@@ -1,21 +1,21 @@
 import { useRouter } from "next/router";
-import React, { Fragment } from "react";
+import React from "react";
 import Admin from "../../layouts/Admin.js";
 import { Tab } from "@headlessui/react";
 import classNames from "../../utils/tailwindClassNames.js";
 import DataTable from "react-data-table-component";
-import Link from "next/link";
 import useSWR from "swr";
 import { fetcher } from "../../utils/fetcher.js";
 import BlueSpinner from "../../components/Spinner/BlueSpinner";
 import moment from "moment";
 import { Button, Tag, TagLabel } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
-import { getCode } from "../../redux/actions/codeAction.js";
-
+import { deleteCode, getCode } from "../../redux/actions/codeAction.js";
+import { useToast } from "@chakra-ui/toast";
 export default function playground() {
   const router = useRouter();
   const dispatch = useDispatch();
+  const toast = useToast();
   const {
     data: codehistories,
     mutate,
@@ -85,9 +85,21 @@ export default function playground() {
     {
       name: "Link",
       selector: (row) => (
-        <Button size={"sm"} onClick={() => dispatch(getCode(row.slug, router))}>
-          View
-        </Button>
+        <div className="flex space-x-2">
+          <Button
+            size={"sm"}
+            onClick={() => dispatch(getCode(row.slug, router))}
+          >
+            View
+          </Button>
+          <Button
+            size={"sm"}
+            colorScheme={"red"}
+            onClick={() => deleteCode(row.id, codehistories, mutate, toast)}
+          >
+            Delete
+          </Button>
+        </div>
       ),
       sortable: true,
     },

@@ -27,6 +27,7 @@
     "grapesjs-blocks-basic": "^0.1.8",
     "grapesjs-preset-webpage": "^0.1.11",
     "html-react-parser": "^1.4.5",
+    "js-cookie": "^3.0.1",
     "moment": "^2.29.1",
     "next": "11.1.3",
     "nextjs-progressbar": "^0.0.13",
