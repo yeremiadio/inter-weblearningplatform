@@ -15,7 +15,7 @@ export const setIsFetching = (payload) => {
 
 export const getCode = (slug, router) => async (dispatch) => {
   await instance()
-    .get(`api/code/${slug}`)
+    .get(`api/code/single/${slug}`)
     .then((res) => {
       dispatch({
         type: SET_CODE,

@@ -4,14 +4,41 @@ import { Box, Button, Spinner } from "@chakra-ui/react";
 import instance from "../../../utils/instance";
 import { TrashIcon } from "@heroicons/react/solid";
 import CodeEditorNavbar from "../../../components/Navbar/CodeEditorNavbar";
+import axios from "axios";
 import { useSelector } from "react-redux";
 
-function JsCodeEditorPage() {
+// This function gets called at build time
+export async function getStaticPaths() {
+  // Call an external API endpoint to get posts
+  const res = await axios.get(process.env.baseUrl + "/api/codes");
+  const codes = await res.data.data;
+
+  // Get the paths we want to pre-render based on posts
+  const paths = codes.map((item) => ({
+    params: { slug: item.slug },
+  }));
+
+  // We'll pre-render only these paths at build time.
+  // { fallback: false } means other routes should 404.
+  return { paths, fallback: false };
+}
+
+export async function getStaticProps(ctx) {
+  const { params } = ctx;
+  // Pass data to the page via props
+  const res = await axios.get(
+    process.env.baseUrl + `/api/code/single/${params.slug}`
+  );
+  const data = await res.data.data;
+  return { props: { data } };
+}
+
+function singleJsCodeEditorPage({ data }) {
   const initialState = `/*    
   Write your first code...
 */`;
   const auth = useSelector((state) => state.auth);
-  const [code, setCode] = useState(initialState);
+  const [code, setCode] = useState(data ? data.code : initialState);
   const [outputData, setOutputData] = useState("");
   const [loading, setLoading] = useState("");
   const resetCode = () => {
@@ -43,7 +70,7 @@ function JsCodeEditorPage() {
   return (
     <div>
       <CodeEditorNavbar
-        isEdited={false}
+        isEdited={true}
         data={{
           type: "js",
           code: code,
@@ -102,4 +129,4 @@ function JsCodeEditorPage() {
   );
 }
 
-export default JsCodeEditorPage;
+export default singleJsCodeEditorPage;

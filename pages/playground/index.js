@@ -88,7 +88,7 @@ export default function playground() {
         <div className="flex space-x-2">
           <Button
             size={"sm"}
-            onClick={() => dispatch(getCode(row.slug, router))}
+            onClick={() => router.push(`playground/${row.type}/${row.slug}`)}
           >
             View
           </Button>
