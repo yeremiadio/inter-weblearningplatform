@@ -23,7 +23,7 @@ export const registerUser = (data, toast, router) => async (dispatch) => {
       const res = response.data;
       dispatch({
         type: SET_USER,
-        payload: res.data,
+        payload: res.data.user,
       });
       router.push("verify");
       dispatch(setIsFetching(false));
@@ -64,9 +64,9 @@ export const loginUser = (data, toast, router) => async (dispatch) => {
           const res = response.data;
           dispatch({
             type: SET_USER,
-            payload: res.data,
+            payload: res.data.user,
           });
-          Cookies.set("token", res.data.token);
+          Cookies.set("personal_access_token", res.data.token);
           if (res.data.user.email_verified_at === null) {
             router.push("verify");
           }

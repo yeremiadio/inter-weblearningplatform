@@ -11,6 +11,7 @@ import { Input, InputGroup, InputRightElement } from "@chakra-ui/react";
 import { useMediaQuery } from "@chakra-ui/media-query";
 import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid";
 import Head from "next/head";
+import Cookies from "js-cookie";
 
 import { RESET_ERRORS, RESET_USER } from "../constants/types";
 
@@ -32,7 +33,11 @@ function Login() {
   //Check if authenticated with role
   useEffect(() => {
     const ac = new AbortController();
-    if (auth.data.token === undefined || auth.data.token === "") {
+    if (
+      auth.isAuthenticated === false ||
+      Cookies.get("personal_access_token") === undefined ||
+      Cookies.get("personal_access_token") === ""
+    ) {
       dispatch({
         type: RESET_USER,
       });

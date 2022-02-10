@@ -4,7 +4,7 @@ import { logOut } from "./logOut";
 import Cookies from "js-cookie";
 
 export default function instance() {
-  const token = Cookies.get("token");
+  const token = Cookies.get("personal_access_token");
 
   const instance = axios.create({
     baseURL: process.env.baseUrl,

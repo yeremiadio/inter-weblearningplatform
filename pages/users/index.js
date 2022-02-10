@@ -33,7 +33,7 @@ const index = () => {
   const [selectedIndexData, setIndexData] = useState(0);
   const [selectedData, setSelectedData] = useState();
   const toast = useToast();
-  const filteredUsers = users?.filter((item) => item.id !== auth.data.user.id);
+  const filteredUsers = users?.filter((item) => item.id !== auth.user.id);
   const [isSmallestThan768] = useMediaQuery("(max-width: 768px)");
   const columns = [
     {

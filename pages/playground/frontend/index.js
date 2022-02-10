@@ -4,6 +4,7 @@ import { RESET_ERRORS, RESET_USER } from "../../../constants/types";
 import Editor from "../../../components/CodePenEditor/Editor";
 import { useToast } from "@chakra-ui/toast";
 import CodeEditorNavbar from "../../../components/Navbar/CodeEditorNavbar";
+import Cookies from "js-cookie";
 
 function frontendEditorPage() {
   const dispatch = useDispatch();
@@ -18,8 +19,8 @@ function frontendEditorPage() {
     const ac = new AbortController();
     if (
       auth.isAuthenticated === false ||
-      auth.data.token === undefined ||
-      auth.data.token === ""
+      Cookies.get("personal_access_token") === undefined ||
+      Cookies.get("personal_access_token") === ""
     ) {
       dispatch({
         type: RESET_USER,
@@ -62,7 +63,7 @@ function frontendEditorPage() {
           type: "frontend",
           code: JSON.stringify({ html: html, css: css, js: js }),
         }}
-        auth={auth.data.user}
+        auth={auth.user}
       />
       <div className="mt-20 min-h-screen h-1/2">
         <div className="flex flex-col lg:flex-row border-t border-gray-700 py-4">

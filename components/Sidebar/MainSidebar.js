@@ -128,8 +128,8 @@ const MainSideBar = ({ setOpen, open }) => {
                       <>
                         <img
                           src={
-                            auth.data.user.avatar !== null
-                              ? `${process.env.baseUrl}/assets/images/user/avatar/${auth.data.user.avatar}`
+                            auth.user.avatar !== null
+                              ? `${process.env.baseUrl}/assets/images/user/avatar/${auth.user.avatar}`
                               : "/interWithText.svg"
                           }
                           onClick={() => router.replace("/dashboard")}
@@ -137,7 +137,7 @@ const MainSideBar = ({ setOpen, open }) => {
                         />
                         <div className="flex flex-col">
                           <h3 className="text-primary">
-                            Hello, {auth.data.user.name}
+                            Hello, {auth.user.name}
                           </h3>
                           <a
                             onClick={logOut}

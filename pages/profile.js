@@ -25,7 +25,7 @@ export default function profileConfiguration() {
   const auth = useSelector((state) => state.auth);
   const toast = useToast();
   const dispatch = useDispatch();
-  const user = auth.data.user;
+  const user = auth.user;
   const initialValues = {
     name: user?.name || "",
     email: user?.email || "",
