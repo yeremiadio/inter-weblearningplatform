@@ -8,11 +8,11 @@ import {
 } from "./geditor_utils";
 import grapesJsPresetWebpage from "grapesjs-preset-webpage";
 
-const geditorConfig = (assets) => {
+const geditorConfig = (slug, assets) => {
   const editor = grapesjs.init({
     container: "#editor",
     assetManager: { assets: assets, upload: false },
-    storageManager: storageSetting,
+    storageManager: storageSetting(slug),
     deviceManager: deviceManager,
     panels: panels,
     plugins: [gjsBlockBasic, grapesJsPresetWebpage],

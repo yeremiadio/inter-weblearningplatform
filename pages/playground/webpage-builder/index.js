@@ -1,12 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "grapesjs/dist/css/grapes.min.css";
 import { useRouter } from "next/dist/client/router";
 import geditorConfig from "../../utils/grapesjs/geditor_config";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
-
 import { RESET_ERRORS, RESET_USER } from "../../constants/types";
 import { useToast } from "@chakra-ui/toast";
+import CodeEditorNavbar from "../../components/Navbar/CodeEditorNavbar";
+import storage from "redux-persist/lib/storage";
 
 export default function webPageBuilder() {
   const assets = [
@@ -30,6 +31,7 @@ export default function webPageBuilder() {
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const router = useRouter();
+  const { slug } = router.query;
   const toast = useToast();
   useEffect(() => {
     if (
@@ -57,6 +59,10 @@ export default function webPageBuilder() {
   }, [assets]);
   return (
     <>
+      <CodeEditorNavbar
+        isEdited={false}
+        data={{ type: "webpage-builder", code: storage.code }}
+      />
       <div id="editor" />
     </>
   );

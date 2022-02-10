@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useRef } from "react";
 import Admin from "../../layouts/Admin.js";
 import { Tab } from "@headlessui/react";
 import classNames from "../../utils/tailwindClassNames.js";
@@ -10,12 +10,15 @@ import BlueSpinner from "../../components/Spinner/BlueSpinner";
 import moment from "moment";
 import { Button, Tag, TagLabel } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
-import { deleteCode, getCode } from "../../redux/actions/codeAction.js";
+import { deleteCode } from "../../redux/actions/codeAction.js";
 import { useToast } from "@chakra-ui/toast";
+import { Modal } from "../../components/Modal/Modal.js";
+import CreateWebPageBuilderModal from "../../components/Modal/Components/Code/CreateWebPageBuilderModal.js";
 export default function playground() {
   const router = useRouter();
   const dispatch = useDispatch();
   const toast = useToast();
+  const refCreateWebPageBuilder = useRef();
   const {
     data: codehistories,
     mutate,
@@ -29,6 +32,7 @@ export default function playground() {
       name: "Frontend Editor",
       desc: "Frontend Editor merupakan Code Editor yang mencakup HTML, CSS, dan Javascript",
       image: "/codemirror.png",
+      type: "frontend",
       href: "/playground/frontend",
     },
     {
@@ -36,6 +40,7 @@ export default function playground() {
       name: "JS Code Editor",
       desc: "Javascript Editor merupakan compiler yang hanya mengeluarkan output kode javascript",
       image: "/javascriptlogo.png",
+      type: "js",
       href: "/playground/js",
     },
     {
@@ -43,6 +48,7 @@ export default function playground() {
       name: "Webpage Builder",
       desc: "Webpage Builder merupakan fitur belajar web dengan drag and drop komponen",
       image: "/webpage.jpg",
+      type: "webpage-builder",
       href: "/playground/webpage-builder",
     },
   ];
@@ -85,12 +91,12 @@ export default function playground() {
     {
       name: "Link",
       selector: (row) => (
-        <div className="flex space-x-2">
+        <div className="flex flex-col lg:flex-row py-2 gap-2">
           <Button
             size={"sm"}
             onClick={() => router.push(`playground/${row.type}/${row.slug}`)}
           >
-            View
+            Play
           </Button>
           <Button
             size={"sm"}
@@ -104,8 +110,18 @@ export default function playground() {
       sortable: true,
     },
   ];
+
   return (
     <>
+      <Modal ref={refCreateWebPageBuilder}>
+        <CreateWebPageBuilderModal
+          data={codehistories}
+          mutate={mutate}
+          router={router}
+          parent={refCreateWebPageBuilder}
+          toast={toast}
+        />
+      </Modal>
       <Tab.Group>
         <Tab.List className={"bg-white mb-6 overflow-hidden rounded"}>
           <Tab
@@ -137,7 +153,11 @@ export default function playground() {
               {items.map((item) => (
                 <div
                   key={item.id}
-                  onClick={() => router.push(item.href)}
+                  onClick={() =>
+                    item.type === "webpage-builder"
+                      ? refCreateWebPageBuilder.current.open()
+                      : router.push(item.href)
+                  }
                   className="hover:shadow-lg cursor-pointer transition-all delay-75 bg-white border border-gray-200 rounded-lg"
                 >
                   <img

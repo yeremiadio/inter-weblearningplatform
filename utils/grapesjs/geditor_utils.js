@@ -1,3 +1,5 @@
+import Cookies from "js-cookie";
+
 export const styleManager = {
   appendTo: "#styles-container",
   sectors: [
@@ -536,16 +538,23 @@ export const addEditorCommand = (editor) => {
   });
 };
 
-export const storageSetting = () => {
+export const storageSetting = (slug) => {
   return {
-    type: "local",
-    stepsBeforeSave: 3,
+    type: "remote",
     contentTypeJson: true,
     storeComponents: true,
     storeStyles: true,
     storeHtml: true,
     storeCss: true,
-    id: "mycustom-",
+    autosave: true, // Store data automatically
+    autoload: true, // Autoload stored data on init
+    stepsBeforeSave: 3, // If autosave enabled, indicates how many changes are necessary before store method is triggered
+    urlStore: `${process.env.baseUrl}/api/code/webpage-builder/${slug}/store`,
+    urlLoad: `${process.env.baseUrl}/api/code/webpage-builder/${slug}`,
+    // For custom parameters/headers on requests
+    headers: {
+      Authorization: `Bearer ${Cookies.get("personal_access_token")}`,
+    },
   };
 };
 
