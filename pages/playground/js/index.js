@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import Editor from "../../components/CodeEditor/Editor";
+import React, { useState } from "react";
+import Editor from "../../../components/CodeEditor/Editor";
 import { Box, Button, Spinner } from "@chakra-ui/react";
-import instance from "../../utils/instance";
+import instance from "../../../utils/instance";
 import { TrashIcon } from "@heroicons/react/solid";
-import NavbarDefaultAdmin from "../../components/Navbar/NavbarDefaultAdmin";
+import NavbarDefaultAdmin from "../../../components/Navbar/NavbarDefaultAdmin";
 
 function JsCodeEditorPage() {
   const initialState = `/*    

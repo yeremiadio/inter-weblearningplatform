@@ -163,8 +163,8 @@ const AdminSidebar = ({ setOpen, open }) => {
                         className={
                           "transition-all delay-75 " +
                           (router.pathname.indexOf(item.href) !== -1
-                            ? "rounded flex w-full items-center space-x-3 py-2 px-4 cursor-pointer bg-blue-100 font-medium"
-                            : "rounded flex w-full items-center space-x-3 py-3 px-4 group-hover:text-gray-800 cursor-pointer font-normal text-gray-600")
+                            ? "rounded flex w-full items-center space-x-3 py-2 px-4 cursor-pointer bg-blue-100 font-semibold"
+                            : "rounded flex w-full items-center space-x-3 py-2 px-4 group-hover:text-gray-800 cursor-pointer font-normal text-gray-600")
                         }
                       >
                         {item.icon}
@@ -212,8 +212,8 @@ const AdminSidebar = ({ setOpen, open }) => {
                     className={
                       "transition-all delay-75 " +
                       (router.pathname.indexOf(item.href) !== -1
-                        ? "rounded flex w-full items-center space-x-3 py-2 px-4 cursor-pointer bg-blue-100 font-medium"
-                        : "rounded flex w-full items-center space-x-3 py-3 px-4 group-hover:text-gray-800 cursor-pointer font-normal text-gray-600")
+                        ? "rounded flex w-full items-center space-x-3 py-2 px-4 cursor-pointer bg-blue-100 font-semibold"
+                        : "rounded flex w-full items-center space-x-3 py-2 px-4 group-hover:text-gray-800 cursor-pointer font-normal text-gray-600")
                     }
                   >
                     {item.icon}

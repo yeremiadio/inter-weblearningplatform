@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RESET_ERRORS, RESET_USER } from "../../constants/types";
-import Editor from "../../components/CodePenEditor/Editor";
+import { RESET_ERRORS, RESET_USER } from "../../../constants/types";
+import Editor from "../../../components/CodePenEditor/Editor";
 import { useToast } from "@chakra-ui/toast";
-import CodeEditorNavbar from "../../components/Navbar/CodeEditorNavbar";
+import CodeEditorNavbar from "../../../components/Navbar/CodeEditorNavbar";
 
 function frontendEditorPage() {
   const dispatch = useDispatch();
@@ -57,6 +57,7 @@ function frontendEditorPage() {
   return (
     <div className="bg-gray-900">
       <CodeEditorNavbar
+        isEdited={false}
         data={{
           type: "frontend",
           code: JSON.stringify({ html: html, css: css, js: js }),

@@ -9,10 +9,13 @@ import useSWR from "swr";
 import { fetcher } from "../../utils/fetcher.js";
 import BlueSpinner from "../../components/Spinner/BlueSpinner";
 import moment from "moment";
-import { Tag, TagLabel } from "@chakra-ui/react";
+import { Button, Tag, TagLabel } from "@chakra-ui/react";
+import { useDispatch } from "react-redux";
+import { getCode } from "../../redux/actions/codeAction.js";
 
 export default function playground() {
   const router = useRouter();
+  const dispatch = useDispatch();
   const {
     data: codehistories,
     mutate,
@@ -26,14 +29,14 @@ export default function playground() {
       name: "Frontend Editor",
       desc: "Frontend Editor merupakan Code Editor yang mencakup HTML, CSS, dan Javascript",
       image: "/codemirror.png",
-      href: "/playground/frontend-editor",
+      href: "/playground/frontend",
     },
     {
       id: 2,
       name: "JS Code Editor",
       desc: "Javascript Editor merupakan compiler yang hanya mengeluarkan output kode javascript",
       image: "/javascriptlogo.png",
-      href: "/playground/js-editor",
+      href: "/playground/js",
     },
     {
       id: 3,
@@ -82,9 +85,9 @@ export default function playground() {
     {
       name: "Link",
       selector: (row) => (
-        <Link href={`playground/${row.slug}`}>
-          <a>View</a>
-        </Link>
+        <Button size={"sm"} onClick={() => dispatch(getCode(row.slug, router))}>
+          View
+        </Button>
       ),
       sortable: true,
     },
@@ -96,7 +99,7 @@ export default function playground() {
           <Tab
             className={({ selected }) =>
               classNames(
-                "p-4",
+                "p-4 font-medium",
                 "",
                 selected ? "border-blue-500 border-b-2" : "text-gray-400"
               )
@@ -107,7 +110,7 @@ export default function playground() {
           <Tab
             className={({ selected }) =>
               classNames(
-                "p-4",
+                "p-4 font-medium",
                 "",
                 selected ? "border-blue-500 border-b-2" : "text-gray-400"
               )
@@ -143,7 +146,7 @@ export default function playground() {
             </div>
           </Tab.Panel>
           <Tab.Panel>
-            {!codehistories ? (
+            {error ? (
               <BlueSpinner />
             ) : (
               <div className="mt-4">
