@@ -27,10 +27,5 @@ export const themeProvider = extendTheme({
     sm: "0.25rem",
     base: "0.25rem",
     md: "0.25rem",
-    lg: "0.25rem",
-    xl: "0.25rem",
-    "2xl": "0.25rem",
-    "3xl": "0.25rem",
-    full: "0.25rem",
   },
 });

@@ -16,8 +16,12 @@ import * as Yup from "yup";
 import { CameraIcon, PaperAirplaneIcon } from "@heroicons/react/solid";
 import { jsonToFormData } from "../../utils/jsonToFormData";
 import instance from "../../utils/instance";
+import { useRouter } from "next/router";
 
 export default function createMaterialPage() {
+  //Router
+  const router = useRouter();
+  
   //DraftJs
   let initialEditorState = EditorState.createEmpty();
   const [editorState, setEditorState] = useState(initialEditorState);
@@ -62,6 +66,7 @@ export default function createMaterialPage() {
       });
       setEditorState(initialEditorState);
       formikRef.current.resetForm();
+      router.back();
     } catch (err) {
       toast({
         title: "Error",
