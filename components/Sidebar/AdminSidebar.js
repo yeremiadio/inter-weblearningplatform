@@ -37,14 +37,14 @@ const AdminSidebar = ({ setOpen, open }) => {
     },
     {
       id: 2,
-      name: "Assignment",
-      href: "/assignment",
+      name: "Assignments",
+      href: "/assignments",
       icon: (
         <ClipboardIcon
           style={{
             width: 22,
             color:
-              router.pathname.indexOf("/assignment") !== -1
+              router.pathname.indexOf("/assignments") !== -1
                 ? "text-white"
                 : "group-hover:text-gray-800",
           }}
@@ -86,7 +86,7 @@ const AdminSidebar = ({ setOpen, open }) => {
     },
     {
       id: 4,
-      name: "Materi",
+      name: "Materials",
       href: "/materials",
       icon: (
         <DocumentTextIcon
@@ -102,7 +102,7 @@ const AdminSidebar = ({ setOpen, open }) => {
     },
     {
       id: 5,
-      name: "User",
+      name: "Users",
       href: "/users",
       icon: (
         <UserGroupIcon
