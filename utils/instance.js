@@ -1,7 +1,7 @@
 import axios from "axios";
 import { store } from "../redux/store";
-import { logOut } from "./logOut";
 import Cookies from "js-cookie";
+import { logOut } from "./interceptorFunctions";
 
 export default function instance() {
   const token = Cookies.get("personal_access_token");

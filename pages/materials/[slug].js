@@ -24,7 +24,6 @@ export async function getStaticProps(ctx) {
   const res = await axios.get(
     process.env.baseUrl + `/api/materials/single/${params.slug}`
   );
-  console.log(Cookies.get("personal_access_token"));
   const material = await res.data.data;
   return { props: { material } };
 }

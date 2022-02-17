@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import instance from "../utils/instance";
 import { useToast } from "@chakra-ui/toast";
 import Link from "next/link";
+import Cookies from "js-cookie";
 
 function verifyEmail() {
   const [loading, setLoading] = useState(false);

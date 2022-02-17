@@ -25,7 +25,8 @@ export const registerUser = (data, toast, router) => async (dispatch) => {
         type: SET_USER,
         payload: res.data.user,
       });
-      router.push("verify");
+      if (res.data.user.email_verified_at === null) router.push("verify");
+      Cookies.set("personal_access_token", res.data.token);
       dispatch(setIsFetching(false));
       toast({
         title: "Success",
