@@ -1,0 +1,39 @@
+import { Button } from "@chakra-ui/react";
+import { CalendarIcon } from "@heroicons/react/solid";
+import moment from "moment";
+import { forwardRef } from "react";
+import ReactDatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
+const DatePicker = ({
+  selectedDate,
+  onChange,
+  isClearable = false,
+  showPopperArrow = false,
+  ...props
+}) => {
+  const CustomInputButton = forwardRef(({ value, onClick }, ref) => (
+    <Button
+      leftIcon={<CalendarIcon className="w-5 h-5" />}
+      onClick={onClick}
+      ref={ref}
+      variant="outline"
+    >
+      {value}
+    </Button>
+  ));
+  return (
+    <ReactDatePicker
+      selected={selectedDate ?? new Date()}
+      onChange={onChange}
+      showTimeInput
+      dateFormat={"MM/dd/yyyy h:mm aa"}
+      isClearable={isClearable}
+      showPopperArrow={showPopperArrow}
+      customInput={<CustomInputButton />}
+      {...props}
+    />
+  );
+};
+
+export default DatePicker;

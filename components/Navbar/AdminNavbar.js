@@ -1,6 +1,8 @@
 import React from "react";
 import UserDropdown from "../Dropdown/UserDropdown";
 import { MenuIcon } from "@heroicons/react/solid";
+import { Badge, Tag } from "@chakra-ui/react";
+import router from "next/router";
 
 const AdminNavbar = ({ setOpen, open, user }) => {
   return (
@@ -14,7 +16,18 @@ const AdminNavbar = ({ setOpen, open, user }) => {
             <MenuIcon className="h-6 w-6" />
           </button>
         </div>
-        <UserDropdown user={user} />
+        <>
+          {user?.email_verified_at === null && (
+            <Tag
+              colorScheme={"yellow"}
+              className="mx-4 cursor-pointer"
+              onClick={() => router.replace("verify")}
+            >
+              Verify Your Email
+            </Tag>
+          )}
+          <UserDropdown user={user} />
+        </>
       </div>
     </>
   );

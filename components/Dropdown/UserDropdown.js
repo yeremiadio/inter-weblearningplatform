@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 
 import { Menu, Transition } from "@headlessui/react";
-import Link from "next/link";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/solid";
 import { logoutUser } from "../../redux/actions/authAction";
 import { useToast } from "@chakra-ui/toast";
