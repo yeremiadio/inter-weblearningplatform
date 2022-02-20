@@ -32,6 +32,7 @@ export default function playground() {
       name: "Frontend Editor",
       desc: "Frontend Editor merupakan Code Editor yang mencakup HTML, CSS, dan Javascript",
       image: "/codemirror.png",
+      status: "live",
       type: "frontend",
       href: "/playground/frontend",
     },
@@ -41,6 +42,7 @@ export default function playground() {
       desc: "Javascript Editor merupakan compiler yang hanya mengeluarkan output kode javascript",
       image: "/javascriptlogo.png",
       type: "js",
+      status: "live",
       href: "/playground/js",
     },
     {
@@ -48,6 +50,7 @@ export default function playground() {
       name: "Webpage Builder",
       desc: "Webpage Builder merupakan fitur belajar web dengan drag and drop komponen",
       image: "/webpage.jpg",
+      status: "development",
       type: "webpage-builder",
       href: "/playground/webpage-builder",
     },
@@ -155,7 +158,7 @@ export default function playground() {
                   key={item.id}
                   onClick={() =>
                     item.type === "webpage-builder"
-                      ? refCreateWebPageBuilder.current.open()
+                      ? ""
                       : router.push(item.href)
                   }
                   className="hover:shadow-lg cursor-pointer transition-all delay-75 bg-white border border-gray-200 rounded-lg"
@@ -172,6 +175,11 @@ export default function playground() {
                     <p className="text-secondary leading-loose text-base line-clamp-3 my-2">
                       {item.desc}
                     </p>
+                    {item.status === "development" && (
+                      <Tag colorScheme={"red"} size="md">
+                        Under Development
+                      </Tag>
+                    )}
                   </div>
                 </div>
               ))}
