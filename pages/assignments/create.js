@@ -1,25 +1,26 @@
-import {
-  Box,
-  Button,
-  FormLabel,
-  Input,
-  LinkBox,
-  Select,
-  Tag,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { Box, Button, useDisclosure } from "@chakra-ui/react";
 import { PaperAirplaneIcon } from "@heroicons/react/solid";
-import { useFormik } from "formik";
-import React, { useCallback, useRef } from "react";
+import { Form, Formik, useFormikContext } from "formik";
+import React, { useRef, useState } from "react";
+import * as Yup from "yup";
 import moment from "moment";
 import BackButton from "../../components/Buttons/BackButton";
-import DatePicker from "../../components/DatePicker";
 import Admin from "../../layouts/Admin";
-import CustomUploadButton from "../../components/Buttons/CustomUploadButton";
-import RenderImageUpload from "../../components/Others/RenderImageUpload";
-import CustomModalChakra from "../../components/Modal/CustomModalChakra";
+// import RenderImageUpload from "../../components/Others/RenderImageUpload";
+// import CustomModalChakra from "../../components/Modal/CustomModalChakra";
+import MainQuizForm from "../../components/Forms/Assignment/MainQuizForm";
+import QuestionsForm from "../../components/Forms/Assignment/QuestionsForm";
+import AssignmentFormModel from "../../components/Forms/Assignment/FormModel/AssignmentFormModel";
+import validationSchema from "../../components/Forms/Assignment/FormModel/validationSchema";
+import AssignmentInputPreview from "../../components/Forms/Assignment/AssignmentInputPreview";
 
 function createAssignment() {
+  const steps = ["Main Quiz", "Add Questions and Options"];
+  const { formId, formField } = AssignmentFormModel;
+  const [activeStep, setActiveStep] = useState(0);
+  const formikRef = useRef();
+  const currentValidationSchema = validationSchema[activeStep];
+  const isLastStep = activeStep === steps.length - 1;
   const quizTypes = [
     {
       id: 1,
@@ -34,141 +35,100 @@ function createAssignment() {
     title: "",
     type: quizTypes[0].name,
     deadline: new Date(),
-    questions: [],
+    questions: [
+      {
+        id: "",
+        question: "",
+        file: "",
+        options: [{ id: "", title: "", correct: 0 }],
+      },
+    ],
     thumbnail: "",
   };
 
-  const buttonModalPreviewRef = useRef();
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  function _renderStepContent(step) {
+    switch (step) {
+      case 0:
+        return <MainQuizForm formField={formField} />;
+      case 1:
+        return <QuestionsForm formField={formField} />;
+      default:
+        return <div>Not Found</div>;
+    }
+  }
 
-  const onChangeImage = useCallback((e, index) => {
-    let files = e.target.files || e.dataTransfer.files;
-    if (!files.length) return;
-    formik.setFieldValue(index, files[0]);
-  });
+  async function _submitForm(values, actions) {
+    alert(JSON.stringify(values, null, 2));
+    actions.setSubmitting(false);
+    setActiveStep(activeStep + 1);
+  }
 
-  const formik = useFormik({
-    initialValues,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-    },
-  });
+  const handleSubmit = async (values, actions) => {
+    if (isLastStep) {
+      _submitForm(values, actions);
+      console.log(values);
+    } else {
+      setActiveStep(activeStep + 1);
+    }
+  };
+
+  function _handleBack() {
+    setActiveStep(activeStep - 1);
+  }
 
   return (
     <>
       <BackButton />
-      <div className="flex flex-col-reverse lg:flex-row gap-4">
-        <div className="bg-white w-full lg:w-4/5 h-4/5 shadow-default-weblearning p-4 rounded-md">
-          <form onSubmit={formik.handleSubmit}>
-            <div className="mt-4">
-              <FormLabel>Judul</FormLabel>
-              <Input
-                isInvalid={formik.errors.title}
-                focusBorderColor="blue.600"
-                name="title"
-                value={formik.values.title}
-                onChange={formik.handleChange}
-                placeholder="Masukkan Judul..."
-              />
-              {formik.errors.title && (
-                <p className="text-red-500">{formik.errors.title}</p>
-              )}
+
+      <Formik
+        onSubmit={handleSubmit}
+        initialValues={initialValues}
+        innerRef={formikRef}
+        validationSchema={currentValidationSchema}
+      >
+        {(props) => (
+          <Form id={formId}>
+            <div className="flex flex-col-reverse lg:flex-row gap-4 min-h-screen">
+              <div className="bg-white w-full lg:w-4/5 h-4/5 shadow-default-weblearning p-4 rounded-md">
+                Steps {`${activeStep + 1} of ${steps.length}`}
+                {_renderStepContent(activeStep, props)}
+                <Box className="flex justify-end gap-2">
+                  {activeStep !== 0 && (
+                    <Button
+                      size="md"
+                      mt="4"
+                      colorScheme="blue"
+                      onClick={_handleBack}
+                    >
+                      Back
+                    </Button>
+                  )}
+                  <Button
+                    size="md"
+                    leftIcon={
+                      isLastStep ? (
+                        <PaperAirplaneIcon className="w-4 h-4 rotate-90" />
+                      ) : (
+                        ""
+                      )
+                    }
+                    mt="4"
+                    colorScheme="blue"
+                    type={"submit"}
+                  >
+                    {isLastStep ? "Submit" : "Next"}
+                  </Button>
+                </Box>
+              </div>
+              <div className="w-full lg:w-2/5 h-3/5">
+                <div className="sticky top-10">
+                  <AssignmentInputPreview />
+                </div>
+              </div>
             </div>
-            <div className="mt-4">
-              <FormLabel>Deadline</FormLabel>
-              <DatePicker
-                selectedDate={formik.values.deadline}
-                onChange={(date) => formik.setFieldValue("deadline", date)}
-              />
-            </div>
-            <div className="mt-4">
-              <FormLabel>Thumbnail</FormLabel>
-              <CustomUploadButton
-                name={"thumbnail"}
-                value={formik.values.thumbnail}
-                onChange={(e) => onChangeImage(e, "thumbnail")}
-              />
-            </div>
-            <div className="mt-4 w-44">
-              <FormLabel>Assignment Type</FormLabel>
-              <Select
-                placeholder="Pilih tipe kuis"
-                name="type"
-                onChange={formik.handleChange}
-                value={formik.values.type}
-                size="md"
-              >
-                {quizTypes.map((item) => (
-                  <option key={item.id} value={item.name}>
-                    {item.name}
-                  </option>
-                ))}
-              </Select>
-            </div>
-            <Box className="flex justify-end gap-2">
-              <Button
-                size="md"
-                leftIcon={<PaperAirplaneIcon className="w-4 h-4 rotate-90" />}
-                mt="4"
-                colorScheme="blue"
-                type="submit"
-              >
-                Submit
-              </Button>
-            </Box>
-          </form>
-        </div>
-        <div className="w-full lg:w-2/5 h-3/5">
-          <p className="text-gray-500 text-sm mb-2">
-            Click the card for full preview
-          </p>
-          <LinkBox
-            as={"div"}
-            ref={buttonModalPreviewRef}
-            onClick={onOpen}
-            className="bg-white shadow-default-weblearning rounded-md overflow-hidden cursor-pointer"
-          >
-            <CustomModalChakra
-              ref={buttonModalPreviewRef}
-              isOpen={isOpen}
-              onClose={onClose}
-              onOpen={onOpen}
-              content={formik.values}
-            />
-            <RenderImageUpload
-              imageValue={
-                formik.values.thumbnail
-                  ? formik.values.thumbnail
-                  : "/imgPlaceholder.jpg"
-              }
-            />
-            <div className="p-4">
-              <h3 className="font-bold text-2xl my-2">
-                {formik.values.title ? formik.values.title : "title"}
-              </h3>
-              <Tag
-                className="my-2"
-                size={"md"}
-                colorScheme={formik.values.type === "quiz" ? "blue" : "yellow"}
-              >
-                {formik.values.type}
-              </Tag>
-              <p className="text-sm text-gray-500 my-2">
-                Due Date:{" "}
-                <span className="text-red-500">
-                  {moment(formik.values.deadline).format("lll")}
-                </span>
-              </p>
-              <p className="text-sm text-gray-500 my-2">
-                Questions:{" "}
-                <span className="font-bold">
-                  {formik.values.questions.length}
-                </span>
-              </p>
-            </div>
-          </LinkBox>
-        </div>
-      </div>
+          </Form>
+        )}
+      </Formik>
     </>
   );
 }
