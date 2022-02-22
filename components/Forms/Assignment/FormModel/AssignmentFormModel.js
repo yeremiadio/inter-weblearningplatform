@@ -26,5 +26,10 @@ export default {
       label: "Quiz Type",
       requiredErrorMsg: "Quiz Type is required",
     },
+    thumbnail: {
+      name: "thumbnail",
+      label: "Thumbnail",
+      requiredErrorMsg: "Thumbnail is required",
+    },
   },
 };

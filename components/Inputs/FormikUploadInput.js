@@ -1,6 +1,6 @@
 import { FormLabel } from "@chakra-ui/react";
 import { useField } from "formik";
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 import CustomUploadButton from "../Buttons/CustomUploadButton";
 
 const FormikUploadInput = (props) => {
@@ -16,8 +16,9 @@ const FormikUploadInput = (props) => {
   });
   return (
     <>
-      <FormLabel>Thumbnail</FormLabel>
+      <FormLabel>{label}</FormLabel>
       <CustomUploadButton {...field} {...rest} onChange={(e) => onChange(e)} />
+      {isError && <p className="text-sm text-red-500 mt-2">{error}</p>}
     </>
   );
 };

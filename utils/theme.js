@@ -12,15 +12,18 @@ export const themeProvider = extendTheme({
   },
   colors: {
     ...chakraTheme.colors,
-    green: {
-      ...chakraTheme.colors.green,
-    },
-    red: {
-      ...chakraTheme.colors.red,
-    },
-    blue: {
-      ...chakraTheme.colors.blue,
-    },
+    // orange: {
+    //   ...chakraTheme.colors.orange,
+    // },
+    // green: {
+    //   ...chakraTheme.colors.green,
+    // },
+    // red: {
+    //   ...chakraTheme.colors.red,
+    // },
+    // blue: {
+    //   ...chakraTheme.colors.blue,
+    // },
   },
   radii: {
     none: "0",

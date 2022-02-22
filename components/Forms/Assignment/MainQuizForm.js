@@ -2,9 +2,10 @@ import React from "react";
 import FormikDatePickerInput from "../../Inputs/FormikDatePickerInput";
 import FormikInputField from "../../Inputs/FormikInputField";
 import FormikSelectInput from "../../Inputs/FormikSelectInput";
+import FormikUploadInput from "../../Inputs/FormikUploadInput";
 
 const MainQuizForm = ({ formField }) => {
-  const { title, deadline, type } = formField;
+  const { title, deadline, type, thumbnail } = formField;
   const quizTypes = [
     {
       value: "quiz",
@@ -22,6 +23,9 @@ const MainQuizForm = ({ formField }) => {
       </div>
       <div className="mt-4">
         <FormikDatePickerInput name={deadline.name} label={deadline.label} />
+      </div>
+      <div className="mt-4">
+        <FormikUploadInput name={thumbnail.name} label={thumbnail.label} />
       </div>
       <div className="mt-4 w-1/2 lg:w-32">
         <FormikSelectInput
