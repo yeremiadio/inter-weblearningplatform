@@ -28,7 +28,6 @@ const QuizzesCard = ({
       return false;
     }
   );
-  console.log(isAllValuesObjectEmpty);
   return (
     <div className="hover:shadow-default-weblearning transition-all delay-75 border border-gray-200 rounded-lg bg-white">
       <img
