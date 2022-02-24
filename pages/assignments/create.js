@@ -1,7 +1,7 @@
 import { Box, Button } from "@chakra-ui/react";
 import { PaperAirplaneIcon } from "@heroicons/react/solid";
 import { Form, Formik } from "formik";
-import React, { useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import BackButton from "../../components/Buttons/BackButton";
 import Admin from "../../layouts/Admin";
 import MainQuizForm from "../../components/Forms/Assignment/MainQuizForm";
@@ -12,12 +12,16 @@ import AssignmentInputPreview from "../../components/Forms/Assignment/Assignment
 import { jsonToFormData } from "../../utils/jsonToFormData";
 import instance from "../../utils/instance";
 import moment from "moment";
+import { useToast } from "@chakra-ui/toast";
+import router from "next/router";
 
 function createAssignment() {
   const steps = ["Main Quiz", "Add Questions and Options"];
   const { formId, formField } = AssignmentFormModel;
   const [activeStep, setActiveStep] = useState(0);
+  const [isLoading, setLoading] = useState(false);
   const formikRef = useRef();
+  const toast = useToast();
   const currentValidationSchema = validationSchema[activeStep];
   const isLastStep = activeStep === steps.length - 1;
   const quizTypes = [
@@ -35,7 +39,6 @@ function createAssignment() {
     type: quizTypes[0].name,
     start_date: new Date(),
     end_date: new Date(),
-    duration: 1,
     questions: [
       {
         id: "",
@@ -58,18 +61,40 @@ function createAssignment() {
     }
   }
 
-  async function _submitForm(values, actions) {
+  const _submitForm = useCallback((values, actions) => {
+    setLoading(true);
     alert(JSON.stringify(values, null, 2));
-    const startDateVal = moment(values.start_date).format("YYYY-MM-DD HH:mm");
-    const endDateVal = moment(values.end_date).format("YYYY-MM-DD HH:mm");
-    const data = { ...values, start_date: startDateVal, end_date: endDateVal };
-    const formData = jsonToFormData(data);
+    values.start_date = moment(values.start_date).format("YYYY-MM-DD HH:mm");
+    values.end_date = moment(values.end_date).format("YYYY-MM-DD HH:mm");
+    console.log(values);
+    const formData = jsonToFormData(values);
     instance()
       .post("api/quizzes/create", formData)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      .then((res) => {
+        console.log(res);
+        toast({
+          title: "Success",
+          status: "success",
+          description: "Quiz created successfully",
+          isClosable: true,
+          duration: 3000,
+        });
+        setLoading(false);
+        router.back();
+      })
+      .catch((err) => {
+        console.log(err);
+        toast({
+          title: "Error",
+          status: "error",
+          description: err.response.data.message,
+          isClosable: true,
+          duration: 3000,
+        });
+        setLoading(false);
+      });
     actions.setSubmitting(false);
-  }
+  }, []);
 
   const handleSubmit = async (values, actions) => {
     if (isLastStep) {
@@ -135,6 +160,8 @@ function createAssignment() {
                     mt="4"
                     colorScheme="blue"
                     type={"submit"}
+                    isLoading={isLoading}
+                    disabled={isLoading}
                   >
                     {isLastStep ? "Submit" : "Next"}
                   </Button>

@@ -4,13 +4,15 @@ import React, { useRef } from "react";
 import CustomModalChakra from "../../Modal/CustomModalChakra";
 import RenderImageUpload from "../../Others/RenderImageUpload";
 import moment from "moment";
+import { getTimeDiff } from "../../../utils/getTimeDiff";
 
 const AssignmentInputPreview = () => {
   const { values: formValues } = useFormikContext();
   const buttonModalPreviewRef = useRef();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { thumbnail, title, questions, type, start_date, end_date, duration } =
+  const { thumbnail, title, questions, type, start_date, end_date } =
     formValues;
+  const { days, hours, minutes } = getTimeDiff(start_date, end_date);
   return (
     <div className="sticky top-0">
       <p className="text-gray-500 text-sm mb-2">
@@ -56,7 +58,8 @@ const AssignmentInputPreview = () => {
             </span>
           </p>
           <p className="text-sm text-gray-500 my-2">
-            Duration: <span>{duration + " minutes"}</span>
+            Duration:{" "}
+            <b>{`${days} days, ${hours} hours, ${minutes} minutes`}</b>
           </p>
           <p className="text-sm text-gray-500 my-2">
             Questions: <span className="font-bold">{questions.length}</span>

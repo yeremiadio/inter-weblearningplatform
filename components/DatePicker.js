@@ -25,7 +25,10 @@ const DatePicker = ({
   return (
     <ReactDatePicker
       selected={selectedDate ?? new Date()}
+      todayButton="Today"
       onChange={onChange}
+      minDate={new Date()}
+      showTimeSelect
       showTimeInput
       dateFormat={"MM/dd/yyyy h:mm aa"}
       isClearable={isClearable}

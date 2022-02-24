@@ -13,7 +13,7 @@ const CustomCard = ({
   return (
     <div className="hover:shadow-default-weblearning transition-all delay-75 border border-gray-200 rounded-lg bg-white">
       <img
-        src={thumbnail !== null ? thumbnail : "/imgPlaceholder.jpg"}
+        src={thumbnail ? thumbnail : "/imgPlaceholder.jpg"}
         alt=""
         className="w-full h-60 object-cover rounded-lg rounded-b-none"
       />

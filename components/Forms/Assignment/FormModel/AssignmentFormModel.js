@@ -16,11 +16,7 @@ export default {
       label: "End Date",
       requiredErrorMsg: "End Date is required",
     },
-    duration: {
-      name: "duration",
-      label: "Duration",
-      requiredErrorMsg: "Duration is required",
-    },
+
     questions: {
       name: "questions",
       label: "Questions",
