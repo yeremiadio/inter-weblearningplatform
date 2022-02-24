@@ -6,10 +6,20 @@ export default {
       label: "Title",
       requiredErrorMsg: "Title name is required",
     },
-    deadline: {
-      name: "deadline",
-      label: "Deadline",
-      requiredErrorMsg: "Deadline is required",
+    start_date: {
+      name: "start_date",
+      label: "Start Date",
+      requiredErrorMsg: "Start Date is required",
+    },
+    end_date: {
+      name: "end_date",
+      label: "End Date",
+      requiredErrorMsg: "End Date is required",
+    },
+    duration: {
+      name: "duration",
+      label: "Duration",
+      requiredErrorMsg: "Duration is required",
     },
     questions: {
       name: "questions",

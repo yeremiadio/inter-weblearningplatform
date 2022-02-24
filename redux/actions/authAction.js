@@ -84,7 +84,10 @@ export const loginUser = (data, toast, router) => async (dispatch) => {
           dispatch(setIsFetching(false));
           toast({
             title: "Error",
-            description: `${error.response.statusText} [${error.response.status}]`,
+            description:
+              error?.response.status === 500
+                ? `${error.response.statusText} [${error.response.status}]`
+                : "Email or password incorrect",
             status: "error",
             duration: 3000,
             isClosable: true,
@@ -95,18 +98,6 @@ export const loginUser = (data, toast, router) => async (dispatch) => {
           });
           // console.log(error.response);
         });
-    })
-    .catch((err) => {
-      dispatch(setIsFetching(false));
-      toast({
-        title: "Error",
-        description: "Error",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
-      console.log(err.response);
-      localStorage.clear();
     });
 };
 

@@ -1,5 +1,6 @@
 import { FormLabel } from "@chakra-ui/react";
 import { useField } from "formik";
+import moment from "moment";
 import React, { useEffect, useState } from "react";
 import DatePicker from "../DatePicker";
 
@@ -14,7 +15,7 @@ const FormikDatePickerInput = (props) => {
 
   useEffect(() => {
     if (value) {
-      const date = new Date(value);
+      const date = new Date();
       setSelectedDate(date);
     }
   }, [value]);

@@ -44,11 +44,20 @@ function frontendEditorPage() {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setSrcDoc(`
-        <html>
-          <body>${html}</body>
-          <style>${css}</style>
-          <script>${js}</script>
-        </html>
+      <html>
+      <head>
+        <style>
+          ${css}
+        </style>
+      </head>
+      <body>
+        ${html}
+        <script>
+          ${js}
+        </script>
+      </body>
+    </html>
+    
       `);
     }, 250);
 

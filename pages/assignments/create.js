@@ -9,6 +9,9 @@ import QuizDetailForm from "../../components/Forms/Assignment/QuizDetailForm";
 import AssignmentFormModel from "../../components/Forms/Assignment/FormModel/AssignmentFormModel";
 import validationSchema from "../../components/Forms/Assignment/FormModel/validationSchema";
 import AssignmentInputPreview from "../../components/Forms/Assignment/AssignmentInputPreview";
+import { jsonToFormData } from "../../utils/jsonToFormData";
+import instance from "../../utils/instance";
+import moment from "moment";
 
 function createAssignment() {
   const steps = ["Main Quiz", "Add Questions and Options"];
@@ -30,7 +33,9 @@ function createAssignment() {
   const initialValues = {
     title: "",
     type: quizTypes[0].name,
-    deadline: new Date(),
+    start_date: new Date(),
+    end_date: new Date(),
+    duration: 1,
     questions: [
       {
         id: "",
@@ -55,13 +60,20 @@ function createAssignment() {
 
   async function _submitForm(values, actions) {
     alert(JSON.stringify(values, null, 2));
+    const startDateVal = moment(values.start_date).format("YYYY-MM-DD HH:mm");
+    const endDateVal = moment(values.end_date).format("YYYY-MM-DD HH:mm");
+    const data = { ...values, start_date: startDateVal, end_date: endDateVal };
+    const formData = jsonToFormData(data);
+    instance()
+      .post("api/quizzes/create", formData)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
     actions.setSubmitting(false);
   }
 
   const handleSubmit = async (values, actions) => {
     if (isLastStep) {
-      _submitForm(values, actions);
-      console.log(values);
+      await _submitForm(values, actions);
     } else {
       setActiveStep(activeStep + 1);
     }

@@ -9,7 +9,8 @@ const AssignmentInputPreview = () => {
   const { values: formValues } = useFormikContext();
   const buttonModalPreviewRef = useRef();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { thumbnail, title, questions, type, deadline } = formValues;
+  const { thumbnail, title, questions, type, start_date, end_date, duration } =
+    formValues;
   return (
     <div className="sticky top-0">
       <p className="text-gray-500 text-sm mb-2">
@@ -43,10 +44,19 @@ const AssignmentInputPreview = () => {
             {type}
           </Tag>
           <p className="text-sm text-gray-500 my-2">
-            Due Date:{" "}
+            Start Date:{" "}
             <span className="text-red-500">
-              {moment(deadline).format("lll")}
+              {moment(start_date).format("lll")}
             </span>
+          </p>
+          <p className="text-sm text-gray-500 my-2">
+            End Date:{" "}
+            <span className="text-red-500">
+              {moment(end_date).format("lll")}
+            </span>
+          </p>
+          <p className="text-sm text-gray-500 my-2">
+            Duration: <span>{duration + " minutes"}</span>
           </p>
           <p className="text-sm text-gray-500 my-2">
             Questions: <span className="font-bold">{questions.length}</span>

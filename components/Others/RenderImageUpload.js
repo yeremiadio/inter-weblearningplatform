@@ -1,8 +1,12 @@
 import React from "react";
 
-const RenderImageUpload = ({ imageValue = "", isRounded = false }) => {
+const RenderImageUpload = ({
+  imageValue = "",
+  isRounded = false,
+  ...props
+}) => {
   return (
-    <div>
+    <div {...props}>
       {imageValue ? (
         typeof imageValue !== "object" ? (
           <div className="flex justify-center items-center">
