@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CodeEditorNavbar from "../../../components/Navbar/CodeEditorNavbar";
+import { useRouter } from "next/router";
 
 // This function gets called at build time
 export async function getStaticPaths() {
@@ -36,6 +37,7 @@ function slugFrontend({ code }) {
   const parsedCode = JSON.parse(code.code);
   const dispatch = useDispatch();
   const toast = useToast();
+  const router = useRouter();
   const auth = useSelector((state) => state.auth);
   const [html, setHtml] = useState(
     parsedCode ? parsedCode.html : "<h1>Hello World</h1>"

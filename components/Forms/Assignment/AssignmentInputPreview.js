@@ -61,9 +61,11 @@ const AssignmentInputPreview = () => {
             Duration:{" "}
             <b>{`${days} days, ${hours} hours, ${minutes} minutes`}</b>
           </p>
-          <p className="text-sm text-gray-500 my-2">
-            Questions: <span className="font-bold">{questions.length}</span>
-          </p>
+          {type === "quiz" && (
+            <p className="text-sm text-gray-500 my-2">
+              Questions: <span className="font-bold">{questions.length}</span>
+            </p>
+          )}
         </div>
       </LinkBox>
     </div>

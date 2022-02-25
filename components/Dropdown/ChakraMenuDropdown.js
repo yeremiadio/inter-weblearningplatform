@@ -19,7 +19,7 @@ const ChakraMenuDropdown = ({ selectedData = {}, mutate, quizzes }) => {
           duration: 3000,
         });
         mutate(
-          [...quizzes.filter((item) => item.slug !== selectedData?.slug)],
+          [...quizzes.filter((item) => item.slug !== selectedData.slug)],
           false
         );
       })
@@ -32,7 +32,7 @@ const ChakraMenuDropdown = ({ selectedData = {}, mutate, quizzes }) => {
           duration: 3000,
         });
       });
-  }, [selectedData?.slug]);
+  }, []);
 
   //   const router = useRouter();
   return (

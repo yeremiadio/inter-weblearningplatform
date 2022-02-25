@@ -78,7 +78,7 @@ export const updateCode = (data, router, toast) => async (dispatch) => {
         payload: res,
       });
       dispatch(setIsFetching(false));
-      router.push(`${res.slug}`);
+      router.push({ query: `${res.slug}`, shallow: true });
       toast({
         title: "Success",
         description: response.data.message,
