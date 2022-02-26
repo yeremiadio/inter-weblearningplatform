@@ -57,7 +57,7 @@ export default function assignments() {
             {!quizzes || error ? (
               <BlueSpinner />
             ) : quizzes?.length === 0 ? (
-              <EmptyDataComponent title="Kuis" href="assignments/create" />
+              <EmptyDataComponent href="assignments/create" />
             ) : (
               <>
                 <div className="flex justify-end mb-4">
@@ -82,7 +82,10 @@ export default function assignments() {
                       thumbnail={item.thumbnail}
                       endDate={item.end_date}
                       startDate={item.start_date}
-                      slug={item.slug}
+                      slug={{
+                        pathname: "assignments/play/[...params]",
+                        query: { params: [item.type, item.slug] },
+                      }}
                       duration={item.duration}
                       questionLength={item.questions.length}
                       isEditable={true}

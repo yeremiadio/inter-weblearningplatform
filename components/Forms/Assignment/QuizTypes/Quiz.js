@@ -65,7 +65,7 @@ const Quiz = ({ formValues, errors, setFieldValue, questions, options }) => {
                   <p className="text-red-500">{errorSingleQuestion(index)}</p>
                 )}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4 items-center">
-                <FieldArray name={`questions[${index}].options`}>
+                <FieldArray name={questions.name[index].options}>
                   {({ push, remove }) => (
                     <>
                       {item.options.map((option, i) => (

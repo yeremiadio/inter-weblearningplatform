@@ -21,7 +21,7 @@ import { useRouter } from "next/router";
 export default function createMaterialPage() {
   //Router
   const router = useRouter();
-  
+
   //DraftJs
   let initialEditorState = EditorState.createEmpty();
   const [editorState, setEditorState] = useState(initialEditorState);
@@ -154,10 +154,12 @@ export default function createMaterialPage() {
                 </div>
                 <div className="mt-4">
                   <FormLabel>Konten</FormLabel>
-                  <DraftJsEditor
-                    editorState={editorState}
-                    setEditorState={setEditorState}
-                  />
+                  <div className="border border-gray-200">
+                    <DraftJsEditor
+                      editorState={editorState}
+                      setEditorState={setEditorState}
+                    />
+                  </div>
                   {errors?.content && touched.content && (
                     <p className="text-red-500">{errors?.content}</p>
                   )}

@@ -36,8 +36,10 @@ function materialsPage() {
 
   return (
     <>
-      {error ? (
-        <EmptyDataComponent href="materials/create" title="Materi" />
+      {!materials || error ? (
+        <BlueSpinner />
+      ) : materials?.data.length === 0 ? (
+        <EmptyDataComponent href="materials/create" />
       ) : (
         <>
           <div className="flex justify-between items-center flex-col lg:flex-row mb-4">
@@ -47,10 +49,7 @@ function materialsPage() {
                   pointerEvents="none"
                   children={<SearchIcon className="text-gray-300 w-6 h-6" />}
                 />
-                <Input
-                  placeholder="Cari materimu..."
-                  onChange={(e) => onSearch(e)}
-                />
+                <Input placeholder="Cari materimu..." />
               </InputGroup>
             </div>
             <Button

@@ -59,8 +59,8 @@ const QuizzesCard = ({
           Questions: <b>{questionLength}</b>
         </span>
         <div className="flex w-full items-center justify-end gap-2">
-          {!isAllValuesObjectEmpty && (
-            <Link href={slug ? `assignments/play/${slug}` : "/"}>
+          {!isAllValuesObjectEmpty && new Date(endDate) > new Date() && (
+            <Link href={slug ? slug : ""}>
               <a className="w-full">
                 <Button colorScheme={"blue"} colorScheme="blue" isFullWidth>
                   Play
@@ -70,7 +70,7 @@ const QuizzesCard = ({
           )}
           {isEditable && (
             <ChakraMenuDropdown
-              selectedData={{ id: id, slug: slug }}
+              selectedData={{ id: id, slug: slug.query.params[1] }}
               quizzes={quizzes}
               mutate={mutate}
             />

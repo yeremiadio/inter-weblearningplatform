@@ -6,6 +6,7 @@ import instance from "../../utils/instance";
 import { useToast } from "@chakra-ui/toast";
 
 const ChakraMenuDropdown = ({ selectedData = {}, mutate, quizzes }) => {
+  console.log(selectedData);
   const toast = useToast();
   const deleteQuiz = useCallback(async () => {
     await instance()
@@ -20,7 +21,7 @@ const ChakraMenuDropdown = ({ selectedData = {}, mutate, quizzes }) => {
         });
         mutate(
           [...quizzes.filter((item) => item.slug !== selectedData.slug)],
-          false
+          true
         );
       })
       .catch((err) => {
