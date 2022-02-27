@@ -12,6 +12,7 @@ const QuizzesCard = ({
   type,
   startDate,
   endDate,
+  results,
   questionLength = 0,
   slug,
   quizzes,
@@ -58,15 +59,25 @@ const QuizzesCard = ({
         <span className="text-secondary leading-loose text-base line-clamp-3 mb-2">
           Questions: <b>{questionLength}</b>
         </span>
-        <div className="flex w-full items-center justify-end gap-2">
-          {!isAllValuesObjectEmpty && new Date(endDate) > new Date() && (
-            <Link href={slug ? slug : ""}>
-              <a className="w-full">
-                <Button colorScheme={"blue"} colorScheme="blue" isFullWidth>
-                  Play
-                </Button>
-              </a>
-            </Link>
+        <div
+          className={
+            "flex w-full items-center gap-2 " +
+            (results ? "justify-between" : "justify-end")
+          }
+        >
+          {results.length !== 0 ? (
+            <p className="text-md font-semibold">Score: {results[0]?.score}</p>
+          ) : (
+            !isAllValuesObjectEmpty &&
+            new Date(endDate) > new Date() && (
+              <Link href={slug ? slug : ""}>
+                <a className="w-full">
+                  <Button colorScheme={"blue"} colorScheme="blue" isFullWidth>
+                    Play
+                  </Button>
+                </a>
+              </Link>
+            )
           )}
           {isEditable && (
             <ChakraMenuDropdown

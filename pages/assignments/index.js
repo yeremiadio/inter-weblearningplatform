@@ -81,6 +81,7 @@ export default function assignments() {
                       type={item.type}
                       thumbnail={item.thumbnail}
                       endDate={item.end_date}
+                      results={item.results}
                       startDate={item.start_date}
                       slug={{
                         pathname: "assignments/play/[...params]",
