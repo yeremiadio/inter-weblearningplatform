@@ -85,7 +85,9 @@ const QuizzesCard = ({
             (results ? "justify-between" : "justify-end")
           }
         >
-          {!isAllValuesObjectEmpty && new Date(endDate) > new Date() ? (
+          {!isAllValuesObjectEmpty &&
+          new Date(endDate) > new Date() &&
+          results.length === 0 ? (
             <Link href={slug ? slug : ""}>
               <a className="w-full">
                 <Button colorScheme={"blue"} colorScheme="blue" isFullWidth>
