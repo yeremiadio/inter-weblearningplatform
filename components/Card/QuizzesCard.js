@@ -4,6 +4,8 @@ import React from "react";
 import Link from "next/link";
 import ChakraMenuDropdown from "../Dropdown/ChakraMenuDropdown";
 import { getTimeDiff } from "../../utils/getTimeDiff";
+import { converTimeToMs } from "../../utils/convertTimeToMs";
+import { useTimer } from "react-timer-hook";
 
 const QuizzesCard = ({
   id,
@@ -19,7 +21,18 @@ const QuizzesCard = ({
   mutate,
   isEditable = false,
 }) => {
-  const { days, hours, minutes } = getTimeDiff(startDate, endDate);
+  const {
+    days: daysDiff,
+    hours: hoursDiff,
+    minutes: minutesDiff,
+  } = getTimeDiff(startDate, endDate);
+  const time = new Date(startDate);
+  time.setSeconds(
+    time.getSeconds() + converTimeToMs(daysDiff, hoursDiff, minutesDiff)
+  );
+  const { days, hours, minutes } = useTimer({
+    expiryTimestamp: time,
+  });
   const isAllValuesObjectEmpty = Object.values({ days, hours, minutes }).every(
     (value) => {
       if (value === 0 || value === null) {
@@ -59,25 +72,40 @@ const QuizzesCard = ({
         <span className="text-secondary leading-loose text-base line-clamp-3 mb-2">
           Questions: <b>{questionLength}</b>
         </span>
+        <p className="text-md font-semibold mb-2">
+          {results.length !== 0 ? (
+            `Score: ${results[0]?.score}`
+          ) : (
+            <p className="text-red-500">No Score</p>
+          )}
+        </p>
         <div
           className={
             "flex w-full items-center gap-2 " +
             (results ? "justify-between" : "justify-end")
           }
         >
-          {results.length !== 0 ? (
-            <p className="text-md font-semibold">Score: {results[0]?.score}</p>
+          {!isAllValuesObjectEmpty && new Date(endDate) > new Date() ? (
+            <Link href={slug ? slug : ""}>
+              <a className="w-full">
+                <Button colorScheme={"blue"} colorScheme="blue" isFullWidth>
+                  Play
+                </Button>
+              </a>
+            </Link>
           ) : (
-            !isAllValuesObjectEmpty &&
-            new Date(endDate) > new Date() && (
-              <Link href={slug ? slug : ""}>
-                <a className="w-full">
-                  <Button colorScheme={"blue"} colorScheme="blue" isFullWidth>
-                    Play
-                  </Button>
-                </a>
-              </Link>
-            )
+            <Link href={"/"}>
+              <a className="w-full">
+                <Button
+                  colorScheme={"blue"}
+                  variant="ghost"
+                  colorScheme="blue"
+                  isFullWidth
+                >
+                  View Detail
+                </Button>
+              </a>
+            </Link>
           )}
           {isEditable && (
             <ChakraMenuDropdown

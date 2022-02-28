@@ -15,16 +15,16 @@ const CustomUploadButton = ({
     <div className="flex items-center gap-2">
       <Button
         variant={variant}
-        leftIcon={<CameraIcon className="w-5 h-5" /> ?? icon}
+        leftIcon={icon ? icon : <CameraIcon className="w-5 h-5" />}
         onClick={() => inputRef.current.click()}
       >
         Upload
         <input
           ref={inputRef}
           type="file"
-          name={name ?? "image"}
+          name={name ? name : "image"}
           hidden
-          accept={accept ?? "image/*"}
+          accept={accept ? accept : "image/*"}
           onChange={onChange}
         />
       </Button>

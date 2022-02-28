@@ -12,17 +12,21 @@ import {
   SearchIcon,
 } from "@heroicons/react/solid";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useSWR from "swr";
 import CustomCard from "../../components/Card/Card.js";
 import EmptyDataComponent from "../../components/EmptyData.js";
 import Admin from "../../layouts/Admin.js";
 import { fetcher } from "../../utils/fetcher.js";
 import BlueSpinner from "../../components/Spinner/BlueSpinner";
+import { getERrorSwr } from "../../utils/getErrorSwr.js";
+import { useToast } from "@chakra-ui/toast";
+import useErrorSwr from "../../utils/useErrorSwr.js";
 
 function materialsPage() {
   const router = useRouter();
   const [page, setPage] = useState(1);
+  const toast = useToast();
   const [search, setSearch] = useState("");
   const {
     data: materials,
@@ -31,12 +35,13 @@ function materialsPage() {
   } = useSWR([`api/materials/latest`], (url) => fetcher(url), {
     revalidateOnFocus: false,
   });
-
-  console.log(materials?.data);
+  const { errorMessage, errorStatus } = useErrorSwr(error);
 
   return (
     <>
-      {!materials || error ? (
+      {errorStatus ? (
+        <span className="text-md font-bold">{errorMessage}</span>
+      ) : !materials ? (
         <BlueSpinner />
       ) : materials?.data.length === 0 ? (
         <EmptyDataComponent href="materials/create" />

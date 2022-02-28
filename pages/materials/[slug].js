@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
-import Cookies from "js-cookie";
+import parse from "html-react-parser";
+import Admin from "../../layouts/Admin";
 
 // This function gets called at build time
 export async function getStaticPaths() {
@@ -28,8 +29,39 @@ export async function getStaticProps(ctx) {
   return { props: { material } };
 }
 
-function material() {
-  return <div>material</div>;
+function material({ material }) {
+  return (
+    <>
+      <img
+        src={
+          material[0].thumbnail ? material[0].thumbnail : "/imgPlaceholder.jpg"
+        }
+        alt=""
+        className="w-full lg:h-96 object-cover rounded-lg mb-4"
+      />
+      <div className="bg-section">
+        <h3 className="text-3xl my-4 font-extrabold text-primary">
+          {material[0].title}
+        </h3>
+        <div>
+          <span className="my-4 text-lg lg:text-xl font-bold text-primary">
+            Description
+          </span>
+          <p className="mb-4 text-secondary">{material[0].description}</p>
+        </div>
+        <div>
+          <span className="my-4 text-lg lg:text-xl font-bold text-primary">
+            Content
+          </span>
+          <div className="mb-4 text-secondary">
+            {parse(material[0].content)}
+          </div>
+        </div>
+      </div>
+    </>
+  );
 }
+
+material.layout = Admin;
 
 export default material;
