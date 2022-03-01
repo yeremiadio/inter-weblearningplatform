@@ -6,7 +6,6 @@ import instance from "../../utils/instance";
 import { useToast } from "@chakra-ui/toast";
 
 const ChakraMenuDropdown = ({ selectedData = {}, mutate, quizzes }) => {
-  console.log(selectedData);
   const toast = useToast();
   const deleteQuiz = useCallback(async () => {
     await instance()
@@ -34,20 +33,9 @@ const ChakraMenuDropdown = ({ selectedData = {}, mutate, quizzes }) => {
         });
       });
   }, []);
-
-  //   const router = useRouter();
   return (
-    <Menu>
-      <MenuButton
-        px={4}
-        py={2}
-        transition="all 0.2s"
-        borderRadius="md"
-        borderWidth="1px"
-        _hover={{ bg: "gray.400" }}
-        _expanded={{ bg: "blue.400" }}
-        _focus={{ boxShadow: "outline" }}
-      >
+    <Menu isLazy>
+      <MenuButton px={4} py={2} transition="all 0.2s" variant={"ghost"}>
         <DotsVerticalIcon className="w-5 h-5" />
       </MenuButton>
       <MenuList>

@@ -72,22 +72,24 @@ const QuizzesCard = ({
         <span className="text-secondary leading-loose text-base line-clamp-3 mb-2">
           Questions: <b>{questionLength}</b>
         </span>
-        <p className="text-md font-semibold mb-2">
+        <div className="mb-2">
           {results.length !== 0 ? (
-            `Score: ${results[0]?.score}`
+            <p className="text-md font-semibold">{`Score: ${results[0]?.score}`}</p>
           ) : (
             <p className="text-red-500">No Score</p>
           )}
-        </p>
+        </div>
         <div
           className={
             "flex w-full items-center gap-2 " +
             (results ? "justify-between" : "justify-end")
           }
         >
-          {!isAllValuesObjectEmpty &&
-          new Date(endDate) > new Date() &&
-          results.length === 0 ? (
+          {new Date() < new Date(startDate) ? (
+            <p className="text-secondary">Assignment has not started</p>
+          ) : !isAllValuesObjectEmpty &&
+            new Date(endDate) > new Date() &&
+            results.length === 0 ? (
             <Link href={slug ? slug : ""}>
               <a className="w-full">
                 <Button colorScheme={"blue"} colorScheme="blue" isFullWidth>
@@ -96,7 +98,12 @@ const QuizzesCard = ({
               </a>
             </Link>
           ) : (
-            <Link href={"/"}>
+            <Link
+              href={{
+                pathname: "assignments/result/[id]",
+                query: { id: results[0].id },
+              }}
+            >
               <a className="w-full">
                 <Button
                   colorScheme={"blue"}
@@ -104,7 +111,7 @@ const QuizzesCard = ({
                   colorScheme="blue"
                   isFullWidth
                 >
-                  View Detail
+                  View Result
                 </Button>
               </a>
             </Link>

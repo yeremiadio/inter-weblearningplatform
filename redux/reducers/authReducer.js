@@ -29,7 +29,7 @@ export default function authReducer(state = initialState, action) {
     case UPDATE_USER:
       return {
         ...state,
-        user: action.payload,
+        user: { user: action.payload, token: state.user.token },
         isAuthenticated: true,
       };
     case RESET_USER:

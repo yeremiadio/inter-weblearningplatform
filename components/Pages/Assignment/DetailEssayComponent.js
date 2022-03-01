@@ -20,7 +20,7 @@ const DetailEssayComponent = ({ data, mutate, error }) => {
     onSubmit: async (values) => {
       setIsLoading(true);
       const formData = jsonToFormData(values);
-      formData.append("question_id", data.id);
+      formData.append("question_id", data.questions[0].id);
       instance()
         .post(`api/result/${data.slug}/essay`, formData)
         .then((res) => {
