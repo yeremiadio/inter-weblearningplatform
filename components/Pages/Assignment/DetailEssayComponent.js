@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import parse from "html-react-parser";
 import { useFormik } from "formik";
 import { jsonToFormData } from "../../../utils/jsonToFormData";
@@ -6,25 +6,49 @@ import CustomUploadButton from "../../Buttons/CustomUploadButton";
 import { FolderAddIcon, PaperAirplaneIcon } from "@heroicons/react/solid";
 import { Button, FormControl, FormLabel, Textarea } from "@chakra-ui/react";
 import instance from "../../../utils/instance";
+import { useToast } from "@chakra-ui/toast";
+import { useRouter } from "next/router";
 const DetailEssayComponent = ({ data, mutate, error }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+  const toast = useToast();
   const formik = useFormik({
     initialValues: {
       file: data.file || "",
       comment: data.comment || "",
     },
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
+      setIsLoading(true);
       const formData = jsonToFormData(values);
       formData.append("question_id", data.id);
       instance()
         .post(`api/result/${data.slug}/essay`, formData)
-        .then((res) => alert("success"))
-        .catch((err) => alert("error"));
+        .then((res) => {
+          router.replace("/assignments");
+          toast({
+            title: "Success",
+            status: "success",
+            description: "Result submitted successfully",
+            isClosable: true,
+            duration: 3000,
+          });
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          toast({
+            title: "Error",
+            status: "error",
+            description: "Error submitting the quiz",
+            isClosable: true,
+            duration: 3000,
+          });
+          setIsLoading(false);
+        });
     },
   });
   const onChange = useCallback((e) => {
     let files = e.target.files || e.dataTransfer.files;
     if (!files.length) return;
-    // formik.
     formik.setFieldValue("file", files[0]);
   });
   return (
@@ -51,10 +75,10 @@ const DetailEssayComponent = ({ data, mutate, error }) => {
             </span>
             <form onSubmit={formik.handleSubmit}>
               <div className="mt-2">
-                <FormLabel>Upload Document</FormLabel>
+                <FormLabel>Upload PDF Document</FormLabel>
                 <CustomUploadButton
                   name="file"
-                  accept={"*"}
+                  accept={"application/pdf,application/vnd.ms-excel"}
                   value={formik.values.file}
                   onChange={onChange}
                   icon={<FolderAddIcon className="w-5 h-5" />}
@@ -78,6 +102,7 @@ const DetailEssayComponent = ({ data, mutate, error }) => {
                 variant="solid"
                 colorScheme={"blue"}
                 className="my-4"
+                isLoading={isLoading}
                 leftIcon={<PaperAirplaneIcon className="w-5 h-5 rotate-90" />}
               >
                 Submit Essay

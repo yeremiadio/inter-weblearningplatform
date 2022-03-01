@@ -4,11 +4,26 @@ import { useSelector } from "react-redux";
 import instance from "../utils/instance";
 import { useToast } from "@chakra-ui/toast";
 import Link from "next/link";
-import Cookies from "js-cookie";
+import { useRouter } from "next/router";
 
 function verifyEmail() {
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
   const toast = useToast();
+  const auth = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (auth.user.email_verified_at !== null) {
+      router.replace("dashboard");
+      toast({
+        title: "Information",
+        description: "Your email has been verified",
+        status: "info",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  }, [auth]);
 
   const onSubmit = useCallback(async () => {
     setLoading(true);

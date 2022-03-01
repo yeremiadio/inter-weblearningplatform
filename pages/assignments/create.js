@@ -63,10 +63,8 @@ function createAssignment() {
 
   const _submitForm = useCallback((values, actions) => {
     setLoading(true);
-    alert(JSON.stringify(values, null, 2));
     values.start_date = moment(values.start_date).format("YYYY-MM-DD HH:mm");
     values.end_date = moment(values.end_date).format("YYYY-MM-DD HH:mm");
-    console.log(values);
     const formData = jsonToFormData(values);
     instance()
       .post("api/quizzes/create", formData)
