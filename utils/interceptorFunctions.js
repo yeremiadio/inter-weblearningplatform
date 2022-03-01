@@ -1,6 +1,5 @@
 import { LOGOUT } from "../constants/types";
 import { store } from "../redux/store";
-import Cookies from "js-cookie";
 import { useToast } from "@chakra-ui/toast";
 
 const logOut = () => {
@@ -9,7 +8,6 @@ const logOut = () => {
       type: LOGOUT,
     });
     localStorage.clear();
-    Cookies.remove("personal_access_token");
   }
 };
 

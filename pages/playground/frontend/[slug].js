@@ -1,7 +1,6 @@
 import { useToast } from "@chakra-ui/toast";
 import axios from "axios";
 import Editor from "../../../components/CodePenEditor/Editor";
-import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CodeEditorNavbar from "../../../components/Navbar/CodeEditorNavbar";
@@ -54,8 +53,8 @@ function slugFrontend({ code }) {
     const ac = new AbortController();
     if (
       auth.isAuthenticated === false ||
-      Cookies.get("personal_access_token") === undefined ||
-      Cookies.get("personal_access_token") === ""
+      auth.user.token === undefined ||
+      auth.user.token === ""
     ) {
       dispatch({
         type: RESET_USER,
@@ -97,7 +96,7 @@ function slugFrontend({ code }) {
           type: "frontend",
           code: JSON.stringify({ html: html, css: css, js: js }),
         }}
-        auth={auth.user}
+        auth={auth.user.user}
       />
       <div className="mt-20 min-h-screen h-1/2">
         <div className="flex flex-col lg:flex-row border-t border-gray-700 py-4">

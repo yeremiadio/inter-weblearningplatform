@@ -75,7 +75,7 @@ function singleJsCodeEditorPage({ data }) {
           type: "js",
           code: code,
         }}
-        auth={auth.user}
+        auth={auth.user.user}
       />
       <div className="bg-gray-900 flex flex-col lg:flex-row mt-24">
         <Editor

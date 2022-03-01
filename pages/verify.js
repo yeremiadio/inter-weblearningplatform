@@ -13,7 +13,7 @@ function verifyEmail() {
   const auth = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (auth.user.email_verified_at !== null) {
+    if (auth.user.user.email_verified_at !== null) {
       router.replace("dashboard");
       toast({
         title: "Information",

@@ -14,7 +14,7 @@ function NavbarDefaultAdmin() {
           className="w-full md:w-1/4 object-cover cursor-pointer"
         />
       </div>
-      <UserDropdown user={auth.user} darkMode={false} />
+      <UserDropdown user={auth.user.user} darkMode={false} />
     </div>
   );
 }

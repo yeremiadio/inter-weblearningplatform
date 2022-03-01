@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "grapesjs/dist/css/grapes.min.css";
 import geditorConfig from "../../../utils/grapesjs/geditor_config";
 import { useDispatch, useSelector } from "react-redux";
-import Cookies from "js-cookie";
 import { RESET_ERRORS, RESET_USER } from "../../../constants/types";
 import { useToast } from "@chakra-ui/toast";
 import NavbarDefaultAdmin from "../../../components/Navbar/NavbarDefaultAdmin";
@@ -59,8 +58,8 @@ export default function singleWebPageBuilder({ data }) {
   useEffect(() => {
     if (
       auth.isAuthenticated === false ||
-      Cookies.get("personal_access_token") === undefined ||
-      Cookies.get("personal_access_token") === ""
+      auth.user.token === undefined ||
+      auth.user.token === ""
     ) {
       dispatch({
         type: RESET_USER,

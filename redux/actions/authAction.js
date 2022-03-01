@@ -6,7 +6,6 @@ import {
   LOGOUT,
 } from "../../constants/types";
 import instance from "../../utils/instance";
-import Cookies from "js-cookie";
 
 export const setIsFetching = (payload) => {
   return {
@@ -23,10 +22,9 @@ export const registerUser = (data, toast, router) => async (dispatch) => {
       const res = response.data;
       dispatch({
         type: SET_USER,
-        payload: res.data.user,
+        payload: res.data,
       });
       if (res.data.user.email_verified_at === null) router.push("verify");
-      Cookies.set("personal_access_token", res.data.token);
       dispatch(setIsFetching(false));
       toast({
         title: "Success",
@@ -65,9 +63,8 @@ export const loginUser = (data, toast, router) => async (dispatch) => {
           const res = response.data;
           dispatch({
             type: SET_USER,
-            payload: res.data.user,
+            payload: res.data,
           });
-          Cookies.set("personal_access_token", res.data.token);
           if (res.data.user.email_verified_at === null) {
             router.push("verify");
           }
@@ -115,7 +112,6 @@ export const logoutUser = (toast) => async (dispatch) => {
         type: REMOVE_ACCESS,
         payload: {},
       });
-      Cookies.remove("token");
       dispatch(setIsFetching(false));
       toast({
         title: "Success",
@@ -124,7 +120,6 @@ export const logoutUser = (toast) => async (dispatch) => {
         duration: 3000,
         isClosable: true,
       });
-      console.log(response);
     })
     .catch((error) => {
       dispatch(setIsFetching(false));
