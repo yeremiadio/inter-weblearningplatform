@@ -15,7 +15,7 @@ import moment from "moment";
 import { useToast } from "@chakra-ui/toast";
 import router from "next/router";
 
-function createAssignment() {
+function create() {
   const steps = ["Main Quiz", "Add Questions and Options"];
   const { formId, formField } = AssignmentFormModel;
   const [activeStep, setActiveStep] = useState(0);
@@ -176,6 +176,6 @@ function createAssignment() {
   );
 }
 
-createAssignment.layout = Admin;
+create.layout = Admin;
 
-export default createAssignment;
+export default create;

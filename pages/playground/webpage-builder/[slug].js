@@ -33,7 +33,7 @@ export async function getStaticProps(ctx) {
   return { props: { data } };
 }
 
-export default function singleWebPageBuilder({ data }) {
+export default function webpage({ data }) {
   const assets = [
     {
       type: "image",

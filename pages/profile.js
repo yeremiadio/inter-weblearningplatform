@@ -21,7 +21,7 @@ import { CameraIcon, PaperAirplaneIcon } from "@heroicons/react/solid";
 import { Input } from "@chakra-ui/input";
 import { SET_USER, UPDATE_USER } from "../constants/types.js";
 
-export default function profileConfiguration() {
+function profile() {
   const auth = useSelector((state) => state.auth);
   const toast = useToast();
   const dispatch = useDispatch();
@@ -202,4 +202,6 @@ export default function profileConfiguration() {
   );
 }
 
-profileConfiguration.layout = Admin;
+profile.layout = Admin;
+
+export default profile;

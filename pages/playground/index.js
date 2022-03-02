@@ -14,7 +14,7 @@ import { deleteCode } from "../../redux/actions/codeAction.js";
 import { useToast } from "@chakra-ui/toast";
 import { Modal } from "../../components/Modal/Modal.js";
 import CreateWebPageBuilderModal from "../../components/Modal/Components/Code/CreateWebPageBuilderModal.js";
-export default function playground() {
+function playground() {
   const router = useRouter();
   const dispatch = useDispatch();
   const toast = useToast();
@@ -201,3 +201,5 @@ export default function playground() {
 }
 
 playground.layout = Admin;
+
+export default playground;

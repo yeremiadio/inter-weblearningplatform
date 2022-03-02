@@ -10,7 +10,7 @@ import BlueSpinner from "../../../components/Spinner/BlueSpinner";
 import { fetcher } from "../../../utils/fetcher";
 import { useToast } from "@chakra-ui/toast";
 
-const playAssignment = () => {
+function play() {
   const router = useRouter();
   const { params } = router.query;
   const toast = useToast();
@@ -58,6 +58,6 @@ const playAssignment = () => {
   return <div>{renderQuizTypeComponent()}</div>;
 };
 
-playAssignment.layout = Admin;
+play.layout = Admin;
 
-export default playAssignment;
+export default play;

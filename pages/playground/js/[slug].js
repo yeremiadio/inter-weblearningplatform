@@ -33,7 +33,7 @@ export async function getStaticProps(ctx) {
   return { props: { data } };
 }
 
-function singleJsCodeEditorPage({ data }) {
+function javascripteditor({ data }) {
   const initialState = `/*    
   Write your first code...
 */`;
@@ -129,4 +129,4 @@ function singleJsCodeEditorPage({ data }) {
   );
 }
 
-export default singleJsCodeEditorPage;
+export default javascripteditor;

@@ -23,7 +23,7 @@ import { getERrorSwr } from "../../utils/getErrorSwr.js";
 import { useToast } from "@chakra-ui/toast";
 import useErrorSwr from "../../utils/useErrorSwr.js";
 
-function materialsPage() {
+function index() {
   const router = useRouter();
   const [page, setPage] = useState(1);
   const toast = useToast();
@@ -94,6 +94,6 @@ function materialsPage() {
   );
 }
 
-export default materialsPage;
+export default index;
 
-materialsPage.layout = Admin;
+index.layout = Admin;

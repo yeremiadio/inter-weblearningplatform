@@ -11,7 +11,7 @@ import { fetcher } from "../../../utils/fetcher";
 import { useToast } from "@chakra-ui/toast";
 import ResultComponent from "../../../components/Pages/Assignment/Result/ResultComponent";
 
-const singleIdResult = () => {
+function result() {
   const router = useRouter();
   const { id } = router.query;
   const toast = useToast();
@@ -49,8 +49,8 @@ const singleIdResult = () => {
       </div>
     </>
   );
-};
+}
 
-singleIdResult.layout = Admin;
+result.layout = Admin;
 
-export default singleIdResult;
+export default result;

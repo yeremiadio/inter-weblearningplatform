@@ -5,7 +5,7 @@ import Editor from "../../../components/CodePenEditor/Editor";
 import { useToast } from "@chakra-ui/toast";
 import CodeEditorNavbar from "../../../components/Navbar/CodeEditorNavbar";
 
-function frontendEditorPage() {
+function index() {
   const dispatch = useDispatch();
   const toast = useToast();
   const auth = useSelector((state) => state.auth);
@@ -109,4 +109,4 @@ function frontendEditorPage() {
   );
 }
 
-export default frontendEditorPage;
+export default index;

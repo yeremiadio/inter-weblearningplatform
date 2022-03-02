@@ -6,7 +6,7 @@ import { TrashIcon } from "@heroicons/react/solid";
 import CodeEditorNavbar from "../../../components/Navbar/CodeEditorNavbar";
 import { useSelector } from "react-redux";
 
-function JsCodeEditorPage() {
+function index() {
   const initialState = `/*    
   Write your first code...
 */`;
@@ -102,4 +102,4 @@ function JsCodeEditorPage() {
   );
 }
 
-export default JsCodeEditorPage;
+export default index;

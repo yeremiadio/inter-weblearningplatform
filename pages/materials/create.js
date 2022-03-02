@@ -18,7 +18,7 @@ import { jsonToFormData } from "../../utils/jsonToFormData";
 import instance from "../../utils/instance";
 import { useRouter } from "next/router";
 
-export default function createMaterialPage() {
+export default function create() {
   //Router
   const router = useRouter();
 
@@ -188,4 +188,4 @@ export default function createMaterialPage() {
   );
 }
 
-createMaterialPage.layout = Admin;
+create.layout = Admin;

@@ -32,7 +32,7 @@ export async function getStaticProps(ctx) {
   return { props: { code } };
 }
 
-function slugFrontend({ code }) {
+function frontend({ code }) {
   const parsedCode = JSON.parse(code.code);
   const dispatch = useDispatch();
   const toast = useToast();
@@ -134,4 +134,4 @@ function slugFrontend({ code }) {
   );
 }
 
-export default slugFrontend;
+export default frontend;

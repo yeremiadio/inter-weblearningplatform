@@ -6,7 +6,7 @@ import { useToast } from "@chakra-ui/toast";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-function verifyEmail() {
+function verify() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const toast = useToast();
@@ -76,4 +76,4 @@ function verifyEmail() {
   );
 }
 
-export default verifyEmail;
+export default verify;
