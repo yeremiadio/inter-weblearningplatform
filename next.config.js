@@ -3,8 +3,6 @@ const { PHASE_DEVELOPMENT_SERVER } = require("next/constants");
 module.exports = (phase, { defaultConfig }) => {
   if (phase === PHASE_DEVELOPMENT_SERVER) {
     return {
-      // reactStrictMode: true,
-      future: { webpack5: true },
       env: {
         baseUrl: process.env.LOCAL_API_URL,
       },
@@ -23,8 +21,6 @@ module.exports = (phase, { defaultConfig }) => {
   }
 
   return {
-    // reactStrictMode: true,
-    future: { webpack5: true },
     env: {
       baseUrl: process.env.API_URL,
     },
