@@ -28,26 +28,23 @@ const ReactPdfViewerComponent = ({ url }) => {
       </p>
       <div className="mt-2">
         <div className="flex gap-2 mt-2">
-          {pageNumber > numPages && (
-            <IconButton
-              rounded={"full"}
-              variant="ghost"
-              colorScheme={"blue"}
-              icon={<ChevronLeftIcon className="w-5 h-5" />}
-              onClick={() =>
-                pageNumber > numPages && setPageNumber((prev) => prev - 1)
-              }
-            />
-          )}
-          {pageNumber < numPages && (
-            <IconButton
-              rounded={"full"}
-              colorScheme={"blue"}
-              variant="ghost"
-              icon={<ChevronRightIcon className="w-5 h-5" />}
-              onClick={() => setPageNumber((prev) => prev + 1)}
-            />
-          )}
+          <IconButton
+            rounded={"full"}
+            variant="ghost"
+            colorScheme={"blue"}
+            icon={<ChevronLeftIcon className="w-5 h-5" />}
+            onClick={() =>
+              pageNumber > numPages && setPageNumber((prev) => prev - 1)
+            }
+          />
+
+          <IconButton
+            rounded={"full"}
+            colorScheme={"blue"}
+            variant="ghost"
+            icon={<ChevronRightIcon className="w-5 h-5" />}
+            onClick={() => setPageNumber((prev) => prev + 1)}
+          />
         </div>
         <a href={`${url}`} download="MyExampleDoc" target="_blank">
           <Button colorScheme={"blue"} size="md">

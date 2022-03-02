@@ -1,6 +1,7 @@
 import { Button } from "@chakra-ui/react";
 import { PlusIcon } from "@heroicons/react/solid";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 
 function EmptyDataComponent({
   title,
@@ -9,6 +10,7 @@ function EmptyDataComponent({
   isAddable = true,
 }) {
   const router = useRouter();
+  const auth = useSelector((state) => state.auth);
   return (
     <div className="z-50 flex flex-col justify-center items-center mt-16 lg:mt-24">
       <img
@@ -17,7 +19,7 @@ function EmptyDataComponent({
         className="object-cover w-3/4 lg:w-1/5 mb-4"
       />
       <h3 className="font-bold text-2xl mb-6">
-        {title ? title : `Oops data kosong`}
+        {title ? title : `Oops kosong dong`}
       </h3>
 
       <Button
@@ -25,7 +27,9 @@ function EmptyDataComponent({
         leftIcon={isAddable && <PlusIcon className="w-4 h-4" />}
         onClick={() => router.push(href)}
       >
-        {isAddable ? `Tambah` : "Back"}
+        {auth.user.user.roles[0].name !== "student" && isAddable
+          ? `Tambah`
+          : "Back"}
       </Button>
     </div>
   );

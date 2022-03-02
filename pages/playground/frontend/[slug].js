@@ -26,7 +26,7 @@ export async function getStaticProps(ctx) {
   const { params } = ctx;
   // Pass data to the page via props
   const res = await axios.get(
-    process.env.baseUrl + `/api/code/single/${params.slug}`
+    process.env.baseUrl + `/api/codes/single/${params.slug}`
   );
   const code = await res.data.data;
   return { props: { code } };

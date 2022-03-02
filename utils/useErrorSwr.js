@@ -25,8 +25,9 @@ const useErrorSwr = (error) => {
         });
       case 403:
         return toast({
+          
           ...initialStateToast,
-          description: "User doesn't have this permission",
+          description: "You don't have this permission or your email not verified",
         });
 
       default:
