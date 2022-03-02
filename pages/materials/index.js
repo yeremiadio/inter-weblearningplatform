@@ -22,12 +22,14 @@ import BlueSpinner from "../../components/Spinner/BlueSpinner";
 import { getERrorSwr } from "../../utils/getErrorSwr.js";
 import { useToast } from "@chakra-ui/toast";
 import useErrorSwr from "../../utils/useErrorSwr.js";
+import { useSelector } from "react-redux";
 
 function index() {
   const router = useRouter();
-  const [page, setPage] = useState(1);
-  const toast = useToast();
-  const [search, setSearch] = useState("");
+  // const [page, setPage] = useState(1);
+  // const toast = useToast();
+  // const [search, setSearch] = useState("");
+  const auth = useSelector((state) => state.auth.user);
   const {
     data: materials,
     mutate,
@@ -44,7 +46,10 @@ function index() {
       ) : !materials ? (
         <BlueSpinner />
       ) : materials?.data.length === 0 ? (
-        <EmptyDataComponent href="materials/create" />
+        <EmptyDataComponent
+          href="materials/create"
+          isAddable={auth.user.user.roles[0].name !== "student" && true}
+        />
       ) : (
         <>
           <div className="flex justify-between items-center flex-col lg:flex-row mb-4">
