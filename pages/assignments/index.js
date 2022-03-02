@@ -36,7 +36,10 @@ export default function assignments() {
       ) : !quizzes ? (
         <BlueSpinner />
       ) : quizzes.length === 0 ? (
-        <EmptyDataComponent href="assignments/create" isAddable={true} />
+        <EmptyDataComponent
+          href="assignments/create"
+          isAddable={auth.user.roles[0].name !== "student" && true}
+        />
       ) : (
         <Tab.Group>
           <Tab.List className={"bg-white mb-6 overflow-hidden rounded"}>
@@ -51,7 +54,7 @@ export default function assignments() {
             >
               Assignments
             </Tab>
-            {auth.user.roles[0].name !== "student" && (
+            {auth.user.roles[0]?.name !== "student" && (
               <Tab
                 className={({ selected }) =>
                   classNames(
