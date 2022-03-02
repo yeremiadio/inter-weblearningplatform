@@ -15,6 +15,8 @@ import Link from "next/link";
 import moment from "moment";
 import QuizzesCard from "../../components/Card/QuizzesCard.js";
 import useErrorSwr from "../../utils/useErrorSwr.js";
+import { useSelector } from "react-redux";
+import ResultTableComponent from "../../components/Pages/Assignment/Result/ResultTableComponent.js";
 
 export default function assignments() {
   const {
@@ -24,6 +26,7 @@ export default function assignments() {
   } = useSWR([`api/quizzes`], (url) => fetcher(url), {
     revalidateOnFocus: false,
   });
+  const auth = useSelector((state) => state.auth.user);
   const { errorMessage, errorStatus } = useErrorSwr(error);
   const router = useRouter();
   return (
@@ -48,6 +51,19 @@ export default function assignments() {
             >
               Assignments
             </Tab>
+            {auth.user.roles[0].name !== "student" && (
+              <Tab
+                className={({ selected }) =>
+                  classNames(
+                    "p-4 font-medium",
+                    "",
+                    selected ? "border-blue-500 border-b-2" : "text-gray-400"
+                  )
+                }
+              >
+                Submitted Results
+              </Tab>
+            )}
             <Tab
               className={({ selected }) =>
                 classNames(
@@ -104,8 +120,17 @@ export default function assignments() {
                 </>
               )}
             </Tab.Panel>
+            {auth.user.roles[0].name !== "student" && (
+              <Tab.Panel>
+                <div className="mt-4">
+                  <ResultTableComponent isAdmin={true} />
+                </div>
+              </Tab.Panel>
+            )}
             <Tab.Panel>
-              <div className="mt-4">data table</div>
+              <div className="mt-4">
+                <ResultTableComponent isAdmin={false} auth={auth} />
+              </div>
             </Tab.Panel>
           </Tab.Panels>
         </Tab.Group>

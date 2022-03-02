@@ -97,11 +97,11 @@ const QuizzesCard = ({
                 </Button>
               </a>
             </Link>
-          ) : (
+          ) : results.length !== 0 ? (
             <Link
               href={{
                 pathname: "assignments/result/[id]",
-                query: { id: results[0].id },
+                query: { id: results[0]?.id },
               }}
             >
               <a className="w-full">
@@ -115,6 +115,8 @@ const QuizzesCard = ({
                 </Button>
               </a>
             </Link>
+          ) : (
+            <p className="text-red-500 font-semibold">Not submitted</p>
           )}
           {isEditable && (
             <ChakraMenuDropdown
