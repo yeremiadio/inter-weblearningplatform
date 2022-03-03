@@ -42,20 +42,6 @@ const CustomCardTotal = ({ name = "", count = 0, icon = null, href = "" }) => {
 };
 
 export default function dashboard() {
-  // const [data, setData] = useState([]);
-  // useEffect(() => {
-  //   const ac = new AbortController();
-  //   instance()
-  //     .get("api/fetch-dashboard")
-  //     .then((res) => {
-  //       // setData(res.data.data);
-  //       console.log(res);
-  //     })
-  //     .catch((err) => console.log(err));
-  //   return () => {
-  //     ac.abort();
-  //   };
-  // }, []);
   const { data, error } = useSWR(
     [`api/fetch-dashboard`],
     (url) => fetcher(url),
@@ -63,8 +49,6 @@ export default function dashboard() {
       revalidateOnFocus: false,
     }
   );
-  // // const [allDataCount, setAllDataCount] = useState(data.all_data_count);
-  // console.log(data);
   const allDataCount = [
     {
       id: 1,
@@ -104,9 +88,6 @@ export default function dashboard() {
   ];
   return (
     <>
-      <Head>
-        <title>Dashboard - Web Learning Platform</title>
-      </Head>
       <h3 className="font-bold text-xl text-primary">Dashboard</h3>
       <p className="font-base tracking-wide text-secondary">
         Kelola aktivitasmu disini

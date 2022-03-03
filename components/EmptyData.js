@@ -25,11 +25,15 @@ function EmptyDataComponent({
       <Button
         colorScheme="blue"
         leftIcon={isAddable && <PlusIcon className="w-4 h-4" />}
-        onClick={() => router.push(href)}
+        onClick={() =>
+          auth.user.user.roles[0].name !== "student" && isAddable
+            ? router.push(href)
+            : router.replace("dashboard")
+        }
       >
         {auth.user.user.roles[0].name !== "student" && isAddable
           ? `Tambah`
-          : "Back"}
+          : "Back to Dashboard"}
       </Button>
     </div>
   );

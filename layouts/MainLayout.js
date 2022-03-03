@@ -8,9 +8,6 @@ function MainLayout({ children }) {
   const [open, setOpen] = useState(false);
   return (
     <div>
-      <Head>
-        <title>Web Learning Platform</title>
-      </Head>
       <MainSideBar open={open} setOpen={setOpen} />
       <Navbar open={open} setOpen={setOpen} />
       <main>

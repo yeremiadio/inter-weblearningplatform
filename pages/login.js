@@ -73,9 +73,6 @@ function Login() {
   };
   return (
     <>
-      <Head>
-        <title>Login - Web Learning Platform</title>
-      </Head>
       <div className="bg-white h-screen">
         <div className="mx-4 flex flex-col justify-center items-center h-full">
           <Link href="/">
