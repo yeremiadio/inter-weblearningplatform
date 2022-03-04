@@ -5,6 +5,7 @@ import instance from "../utils/instance";
 import { useToast } from "@chakra-ui/toast";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
 
 function verify() {
   const [loading, setLoading] = useState(false);
@@ -13,6 +14,7 @@ function verify() {
   const auth = useSelector((state) => state.auth);
 
   useEffect(() => {
+    const ac = new AbortController();
     if (auth.user.user.email_verified_at !== null) {
       router.replace("dashboard");
       toast({
@@ -22,6 +24,8 @@ function verify() {
         duration: 3000,
         isClosable: true,
       });
+    } else {
+      return ac.abort();
     }
   }, [auth]);
 

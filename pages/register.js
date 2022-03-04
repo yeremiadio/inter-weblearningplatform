@@ -10,7 +10,7 @@ import { Button } from "@chakra-ui/button";
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/react";
 import { useMediaQuery } from "@chakra-ui/media-query";
 import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid";
-import Head from "next/head";
+import { sleep } from "../utils/sleep";
 
 import { RESET_ERRORS, RESET_USER } from "../constants/types";
 
@@ -26,55 +26,25 @@ function Register() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const auth = useSelector((state) => state.auth);
-  const errors = useSelector((state) => state.errors);
-  const [errorEntries, setErrorEntries] = useState({});
+  const errors = useSelector((state) => state.errors.entries);
   const toast = useToast();
   const [isSmallestThan768] = useMediaQuery("(max-width: 768px)");
 
-  //Check if authenticated with role
   useEffect(() => {
-    const ac = new AbortController();
-    if (
-      auth.isAuthenticated === false ||
-      auth.user.token === undefined ||
-      auth.user.token === ""
-    ) {
-      dispatch({
-        type: RESET_USER,
-      });
-      dispatch({
-        type: RESET_ERRORS,
-      });
-    } else {
-      return ac.abort();
-    }
-  }, []);
+    auth.isAuthenticated &&
+      auth.user.token !== undefined &&
+      router.replace("dashboard");
+  }, [auth]);
 
-  // useEffect(() => {
-  //   auth.isAuthenticated ? auth.user.user.email_verified_at !== null :
-  //     ? router.replace("/dashboard")
-  //     : router.replace("verify");
-  // }, [auth]);
-
-  useEffect(() => {
-    const ac = new AbortController();
-    if (errors.isError == true) {
-      // Kalau errornya banyak
-      if (errors?.entries?.errors !== undefined) {
-        setErrorEntries(errors.entries.errors);
-        Object.keys(errors.entries).length > 0 &&
-          setTimeout(() => {
-            setErrorEntries({});
-          }, 3000);
-      }
-    }
-    return () => {
-      ac.abort();
-    };
-  }, [errors]);
   const onSubmit = async (values) => {
     values.password_confirmation = values.password;
     await dispatch(registerUser(values, toast, router));
+    if (errors) {
+      await sleep(3000);
+      dispatch({
+        type: "RESET_ERRORS",
+      });
+    }
   };
   return (
     <>
@@ -110,26 +80,39 @@ function Register() {
                   <Form>
                     <>
                       <div className="mt-4">
-                        <label className={errorEntries?.name && "text-red-500"}>
+                        <label className={errors?.name && "text-red-500"}>
                           Nama
                         </label>
                         <Field
                           as={Input}
-                          isInvalid={errorEntries?.name && true}
+                          isInvalid={errors.name && true}
                           size="lg"
                           variant="outline"
                           focusBorderColor="blue.600"
                           name="name"
                           placeholder="Masukkan Nama..."
                         />
+                        {errors?.name && (
+                          <Transition
+                            show={errors?.name && true}
+                            enter="transition-opacity duration-75"
+                            enterFrom="opacity-0"
+                            enterTo="opacity-100"
+                            leave="transition-opacity duration-150"
+                            leaveFrom="opacity-100"
+                            leaveTo="opacity-0"
+                          >
+                            <span className="text-red-500">{errors?.name}</span>
+                          </Transition>
+                        )}
                       </div>
                       <div className="mt-4">
-                        <label className={errorEntries?.name && "text-red-500"}>
+                        <label className={errors.name && "text-red-500"}>
                           Email
                         </label>
                         <Field
                           as={Input}
-                          isInvalid={errorEntries?.email && true}
+                          isInvalid={errors?.email && true}
                           size="lg"
                           variant="outline"
                           focusBorderColor="blue.600"
@@ -138,9 +121,9 @@ function Register() {
                           placeholder="Masukkan Email..."
                         />
                       </div>
-                      {errorEntries?.email && (
+                      {errors?.email && (
                         <Transition
-                          show={errorEntries?.email && true}
+                          show={errors?.email && true}
                           enter="transition-opacity duration-75"
                           enterFrom="opacity-0"
                           enterTo="opacity-100"
@@ -148,22 +131,18 @@ function Register() {
                           leaveFrom="opacity-100"
                           leaveTo="opacity-0"
                         >
-                          <span className="text-red-500">
-                            {errorEntries.email}
-                          </span>
+                          <span className="text-red-500">{errors?.email}</span>
                         </Transition>
                       )}
                       <div className="mt-4">
-                        <label
-                          className={errorEntries?.password && "text-red-500"}
-                        >
+                        <label className={errors?.password && "text-red-500"}>
                           Password
                         </label>
                         <InputGroup>
                           <Field
                             as={Input}
                             size="lg"
-                            isInvalid={errorEntries?.password && true}
+                            isInvalid={errors?.password && true}
                             variant="outline"
                             focusBorderColor="blue.600"
                             pr="4.5rem"
@@ -186,9 +165,9 @@ function Register() {
                           </InputRightElement>
                         </InputGroup>
                       </div>
-                      {errorEntries?.password && (
+                      {errors?.password && (
                         <Transition
-                          show={errorEntries?.password && true}
+                          show={errors?.password && true}
                           enter="transition-opacity duration-75"
                           enterFrom="opacity-0"
                           enterTo="opacity-100"
@@ -197,7 +176,7 @@ function Register() {
                           leaveTo="opacity-0"
                         >
                           <span className="text-red-500">
-                            {errorEntries.password}
+                            {errors?.password}
                           </span>
                         </Transition>
                       )}

@@ -48,7 +48,7 @@ function index() {
       ) : materials?.data.length === 0 ? (
         <EmptyDataComponent
           href="materials/create"
-          isAddable={auth.user.user.roles[0].name !== "student" && true}
+          isAddable={auth.user.roles[0].name !== "student" && true}
         />
       ) : (
         <>

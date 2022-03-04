@@ -15,22 +15,7 @@ const AssignmentInputPreview = () => {
   const { days, hours, minutes } = getTimeDiff(start_date, end_date);
   return (
     <div className="sticky top-0">
-      <p className="text-gray-500 text-sm mb-2">
-        Click the card for full preview
-      </p>
-      <LinkBox
-        as={"div"}
-        ref={buttonModalPreviewRef}
-        onClick={onOpen}
-        className="bg-white shadow-default-weblearning rounded-md overflow-hidden cursor-pointer"
-      >
-        <CustomModalChakra
-          ref={buttonModalPreviewRef}
-          isOpen={isOpen}
-          onClose={onClose}
-          onOpen={onOpen}
-          content={formValues}
-        />
+      <div className="bg-white shadow-default-weblearning rounded-md overflow-hidden">
         <RenderImageUpload
           imageValue={thumbnail ? thumbnail : "/imgPlaceholder.jpg"}
         />
@@ -67,7 +52,7 @@ const AssignmentInputPreview = () => {
             </p>
           )}
         </div>
-      </LinkBox>
+      </div>
     </div>
   );
 };

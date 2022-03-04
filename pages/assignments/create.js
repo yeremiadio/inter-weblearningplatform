@@ -22,7 +22,8 @@ function create() {
   const [isLoading, setLoading] = useState(false);
   const formikRef = useRef();
   const toast = useToast();
-  const currentValidationSchema = validationSchema[activeStep];
+  const [errors, setErrors] = useState();
+  // const currentValidationSchema = validationSchema[activeStep];
   const isLastStep = activeStep === steps.length - 1;
   const quizTypes = [
     {
@@ -53,7 +54,7 @@ function create() {
   function _renderStepContent(step) {
     switch (step) {
       case 0:
-        return <MainQuizForm formField={formField} />;
+        return <MainQuizForm formField={formField} errors={errors} />;
       case 1:
         return <QuizDetailForm formField={formField} />;
       default:
@@ -81,7 +82,9 @@ function create() {
         router.back();
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err.response.data.data);
+        setErrors(err.response.data.data);
+        setActiveStep(0);
         toast({
           title: "Error",
           status: "error",
@@ -113,7 +116,7 @@ function create() {
         onSubmit={handleSubmit}
         initialValues={initialValues}
         innerRef={formikRef}
-        validationSchema={currentValidationSchema}
+        // validationSchema={currentValidationSchema}
       >
         {(props) => (
           <Form id={formId}>
@@ -130,6 +133,7 @@ function create() {
                     onClick={() => {
                       props.resetForm();
                       setActiveStep(0);
+                      setErrors();
                     }}
                   >
                     Reset

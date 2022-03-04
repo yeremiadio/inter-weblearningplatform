@@ -8,7 +8,7 @@ import FormikNumberInputField from "../../Inputs/FormikNumberInputField";
 import FormikSelectInput from "../../Inputs/FormikSelectInput";
 import FormikUploadInput from "../../Inputs/FormikUploadInput";
 
-const MainQuizForm = ({ formField }) => {
+const MainQuizForm = ({ formField, errors }) => {
   const { title, start_date, end_date, type, thumbnail } = formField;
   const quizTypes = [
     {
@@ -23,19 +23,35 @@ const MainQuizForm = ({ formField }) => {
   return (
     <>
       <div className="mt-4">
-        <FormikInputField name={title.name} label={title.label} />
+        <FormikInputField
+          name={title.name}
+          label={title.label}
+          isInvalid={errors?.title && true}
+        />
+        {errors?.title && (
+          <p className="text-red-500 text-sm">{errors?.title}</p>
+        )}
       </div>
       <div className="mt-4">
         <FormikDatePickerInput
           name={start_date.name}
           label={start_date.label}
         />
+        {errors?.start_date && (
+          <p className="text-red-500 text-sm">{errors?.start_date}</p>
+        )}
       </div>
       <div className="mt-4">
         <FormikDatePickerInput name={end_date.name} label={end_date.label} />
+        {errors?.end_date && (
+          <p className="text-red-500 text-sm">{errors?.end_date}</p>
+        )}
       </div>
       <div className="mt-4">
         <FormikUploadInput name={thumbnail.name} label={thumbnail.label} />
+        {errors?.thumbnail && (
+          <p className="text-red-500 text-sm">{errors?.thumbnail}</p>
+        )}
       </div>
       <div className="mt-4 w-1/2 lg:w-32">
         <FormikSelectInput
@@ -49,4 +65,3 @@ const MainQuizForm = ({ formField }) => {
 };
 
 export default MainQuizForm;
-

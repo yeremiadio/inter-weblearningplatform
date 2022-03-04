@@ -4,6 +4,7 @@ import {
   SET_IS_FETCHING,
   REMOVE_ACCESS,
   LOGOUT,
+  UPDATE_USER,
 } from "../../constants/types";
 import instance from "../../utils/instance";
 
@@ -14,17 +15,16 @@ export const setIsFetching = (payload) => {
   };
 };
 
-export const registerUser = (data, toast, router) => async (dispatch) => {
+export const getAuthUserInfo = (toast) => async (dispatch) => {
   dispatch(setIsFetching(true));
   await instance()
-    .post(`api/register`, data)
+    .get(`api/me`)
     .then((response) => {
       const res = response.data;
       dispatch({
-        type: SET_USER,
+        type: UPDATE_USER,
         payload: res.data,
       });
-      if (res.data.user.email_verified_at === null) router.push("verify");
       dispatch(setIsFetching(false));
       toast({
         title: "Success",
@@ -45,7 +45,45 @@ export const registerUser = (data, toast, router) => async (dispatch) => {
       });
       dispatch({
         type: GET_ERRORS,
-        payload: error.response.data.data,
+        payload: error?.response?.data?.data,
+      });
+    });
+};
+
+export const registerUser = (data, toast, router) => async (dispatch) => {
+  dispatch(setIsFetching(true));
+  await instance()
+    .post(`api/register`, data)
+    .then((response) => {
+      const res = response.data;
+      dispatch({
+        type: SET_USER,
+        payload: res.data,
+      });
+      if (res.data.user.email_verified_at === null) {
+        router.push("verify");
+      }
+      dispatch(setIsFetching(false));
+      toast({
+        title: "Success",
+        description: response.data.message,
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+    })
+    .catch((error) => {
+      dispatch(setIsFetching(false));
+      toast({
+        title: "Error",
+        description: error?.response?.data?.message,
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      dispatch({
+        type: GET_ERRORS,
+        payload: error?.response?.data?.data,
       });
     });
 };

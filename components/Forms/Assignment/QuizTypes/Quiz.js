@@ -5,14 +5,14 @@ import {
   PlusIcon,
   TrashIcon,
 } from "@heroicons/react/solid";
-import { FieldArray, getIn } from "formik";
+import { FieldArray } from "formik";
 import React from "react";
 import { useCallback } from "react";
 import InputField from "../../../Inputs/FormikInputField";
 import FormikUploadInput from "../../../Inputs/FormikUploadInput";
 import RenderImageUpload from "../../../Others/RenderImageUpload";
 
-const Quiz = ({ formValues, errors, setFieldValue, questions, options }) => {
+const Quiz = ({ formValues, setFieldValue, questions, options }) => {
   const initialOption = { id: "", title: "", correct: 0 };
   const initialQuestion = {
     id: "",
@@ -20,8 +20,6 @@ const Quiz = ({ formValues, errors, setFieldValue, questions, options }) => {
     file: "",
     options: [{ id: "", title: "", correct: 0 }],
   };
-  const errorSingleQuestion = (index) =>
-    getIn(errors, `questions[${index}].question`);
 
   const setAnswerQuestionForm = useCallback(
     (options, questionIndex, prevQuestionIndex) => {
@@ -49,21 +47,30 @@ const Quiz = ({ formValues, errors, setFieldValue, questions, options }) => {
                 name={`questions[${index}].question`}
                 label={`Pertanyaan ${index + 1}`}
                 className="mb-2"
+                // isInvalid={errors?.questions[index]?.question && true}
               />
+              {/* {errors?.questions[index]?.question && (
+                <p className="text-red-500 text-sm">
+                  {errors?.questions[index]?.question}
+                </p>
+              )} */}
               <FormikUploadInput
                 name={`questions[${index}].file`}
                 label={"Image"}
               />
-              <div className="flex justify-center items-center">
-                <RenderImageUpload
-                  className="mt-4 rounded-md overflow-hidden"
-                  imageValue={item.file && item.file}
-                />
-              </div>
-              {errorSingleQuestion(index) &&
-                touched.questions[index].question && (
-                  <p className="text-red-500">{errorSingleQuestion(index)}</p>
-                )}
+              {item.file && (
+                <div className="flex justify-center items-center">
+                  <RenderImageUpload
+                    className="mt-4 rounded-md overflow-hidden"
+                    imageValue={item.file && item.file}
+                  />
+                  {/* {errors?.questions[index].file && (
+                    <p className="text-red-500 text-sm">
+                      {errors?.questions[index].file}
+                    </p>
+                  )} */}
+                </div>
+              )}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4 items-center">
                 <FieldArray name={`questions[${index}].options`}>
                   {({ push, remove }) => (
@@ -78,7 +85,16 @@ const Quiz = ({ formValues, errors, setFieldValue, questions, options }) => {
                             <InputField
                               name={`questions[${index}].options[${i}].title`}
                               label={`Opsi ${i + 1}`}
+                              // isInvalid={
+                              //   errors?.questions[index].options[i].title &&
+                              //   true
+                              // }
                             />
+                            {/* {errors?.questions[index].options[i].title && (
+                              <p className="text-red-500 text-sm">
+                                {errors?.questions[index].options[i].title}
+                              </p>
+                            )} */}
                             <div className="flex gap-2 mt-8">
                               <IconButton
                                 variant={

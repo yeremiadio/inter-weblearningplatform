@@ -10,9 +10,7 @@ import { Button } from "@chakra-ui/button";
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/react";
 import { useMediaQuery } from "@chakra-ui/media-query";
 import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid";
-import Head from "next/head";
-
-import { RESET_ERRORS, RESET_USER } from "../constants/types";
+import { sleep } from "../utils/sleep";
 
 function Login() {
   const initialValues = {
@@ -24,52 +22,24 @@ function Login() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const auth = useSelector((state) => state.auth);
-  const errors = useSelector((state) => state.errors);
-  const [errorEntries, setErrorEntries] = useState({});
+  const errors = useSelector((state) => state.errors.entries);
   const toast = useToast();
   const [isSmallestThan768] = useMediaQuery("(max-width: 768px)");
 
-  //Check if authenticated with role
   useEffect(() => {
-    const ac = new AbortController();
-    if (
-      auth.isAuthenticated === false ||
-      auth.user.token === undefined ||
-      auth.user.token === ""
-    ) {
-      dispatch({
-        type: RESET_USER,
-      });
-      dispatch({
-        type: RESET_ERRORS,
-      });
-    } else {
-      return ac.abort();
-    }
-  }, []);
-
-  useEffect(() => {
-    auth.isAuthenticated && router.replace("dashboard");
+    auth.isAuthenticated &&
+      auth.user.token !== undefined &&
+      router.replace("dashboard");
   }, [auth]);
 
-  useEffect(() => {
-    const ac = new AbortController();
-    if (errors.isError == true) {
-      // Kalau errornya banyak
-      if (errors?.entries?.errors !== undefined) {
-        setErrorEntries(errors.entries.errors);
-        Object.keys(errors.entries).length > 0 &&
-          setTimeout(() => {
-            setErrorEntries({});
-          }, 3000);
-      }
-    }
-    return () => {
-      ac.abort();
-    };
-  }, [errors]);
   const onSubmit = async (values) => {
     await dispatch(loginUser(values, toast, router));
+    if (errors) {
+      await sleep(3000);
+      dispatch({
+        type: "RESET_ERRORS",
+      });
+    }
   };
   return (
     <>
@@ -105,14 +75,12 @@ function Login() {
                   <Form>
                     <>
                       <div className="mt-4">
-                        <label
-                          className={errorEntries?.email && "text-red-500"}
-                        >
+                        <label className={errors?.email && "text-red-500"}>
                           Email
                         </label>
                         <Field
                           as={Input}
-                          isInvalid={errorEntries?.email && true}
+                          isInvalid={errors?.email && true}
                           size="lg"
                           variant="outline"
                           focusBorderColor="blue.600"
@@ -121,9 +89,9 @@ function Login() {
                           placeholder="Masukkan Email..."
                         />
                       </div>
-                      {errorEntries?.email && (
+                      {errors?.email && (
                         <Transition
-                          show={errorEntries?.email && true}
+                          show={errors?.email && true}
                           enter="transition-opacity duration-75"
                           enterFrom="opacity-0"
                           enterTo="opacity-100"
@@ -131,22 +99,18 @@ function Login() {
                           leaveFrom="opacity-100"
                           leaveTo="opacity-0"
                         >
-                          <span className="text-red-500">
-                            {errorEntries.email}
-                          </span>
+                          <span className="text-red-500">{errors.email}</span>
                         </Transition>
                       )}
                       <div className="mt-4">
-                        <label
-                          className={errorEntries?.password && "text-red-500"}
-                        >
+                        <label className={errors?.password && "text-red-500"}>
                           Password
                         </label>
                         <InputGroup>
                           <Field
                             as={Input}
                             size="lg"
-                            isInvalid={errorEntries?.password && true}
+                            isInvalid={errors?.password && true}
                             variant="outline"
                             focusBorderColor="blue.600"
                             pr="4.5rem"
@@ -169,9 +133,9 @@ function Login() {
                           </InputRightElement>
                         </InputGroup>
                       </div>
-                      {errorEntries?.password && (
+                      {errors?.password && (
                         <Transition
-                          show={errorEntries?.password && true}
+                          show={errors?.password && true}
                           enter="transition-opacity duration-75"
                           enterFrom="opacity-0"
                           enterTo="opacity-100"
@@ -180,7 +144,7 @@ function Login() {
                           leaveTo="opacity-0"
                         >
                           <span className="text-red-500">
-                            {errorEntries.password}
+                            {errors.password}
                           </span>
                         </Transition>
                       )}
