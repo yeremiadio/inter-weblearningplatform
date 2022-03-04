@@ -106,57 +106,41 @@ export default function dashboard() {
         </div>
         <div className="my-4 flex flex-col lg:flex-row text-primary gap-4">
           <div className="rounded-md p-4 hover:shadow-default-weblearning transition-all delay-75 flex-auto w-full bg-white border border-gray-300">
-            <h3 className="font-bold text-lg">Jumlah Materi per Bulan</h3>
+            <h3 className="font-bold text-lg">Skor Tugas Anda per Bulan</h3>
+            {/* <Chart type='donut' */}
             {!error && data !== undefined ? (
-              <Chart
-                type="bar"
-                options={{
-                  chart: {
-                    type: "bar",
-                    height: 350,
-                  },
-                  plotOptions: {
-                    bar: {
-                      horizontal: false,
-                      columnWidth: "55%",
-                      endingShape: "rounded",
+              <div>
+                <Chart
+                  type="area"
+                  options={{
+                    chart: {
+                      height: 640,
                     },
-                  },
-                  dataLabels: {
-                    enabled: false,
-                  },
-                  stroke: {
-                    show: true,
-                    width: 2,
-                    colors: ["transparent"],
-                  },
-                  xaxis: {
-                    categories: data?.data_materials_count_by_month?.months,
-                  },
-                  yaxis: {
-                    title: {
-                      text: "Jumlah Materi",
+                    dataLabels: {
+                      enabled: false,
                     },
-                  },
-                  fill: {
-                    opacity: 1,
-                  },
-                  tooltip: {
-                    y: {
-                      formatter: function (val) {
-                        return val;
+                    xaxis: {
+                      categories: data?.data_scores_count_by_month.months,
+                    },
+                    fill: {
+                      type: "gradient",
+                      gradient: {
+                        shadeIntensity: 1,
+                        opacityFrom: 0.7,
+                        opacityTo: 0.9,
+                        stops: [0, 90, 100],
                       },
                     },
-                  },
-                }}
-                series={[
-                  {
-                    name: "Materi",
-                    data: data?.data_materials_count_by_month?.month_count,
-                  },
-                ]}
-                width="100%"
-              />
+                  }}
+                  series={[
+                    {
+                      name: "Skor Tugas",
+                      data: data?.data_scores_count_by_month.scores_month_count,
+                    },
+                  ]}
+                  width="100%"
+                />
+              </div>
             ) : (
               <div className="flex justify-center items-center h-36">
                 <Spinner
@@ -196,7 +180,67 @@ export default function dashboard() {
           </div>
         </div>
         <div className="rounded-md p-4 hover:shadow-default-weblearning transition-all delay-75 flex-auto w-full bg-white border border-gray-300">
-          <p className="text-center">Data Center</p>
+          <h3 className="font-bold text-lg">Jumlah Materi per Bulan</h3>
+          {!error && data !== undefined ? (
+            <Chart
+              type="bar"
+              options={{
+                chart: {
+                  type: "bar",
+                  height: 350,
+                },
+                plotOptions: {
+                  bar: {
+                    horizontal: false,
+                    columnWidth: "55%",
+                    endingShape: "rounded",
+                  },
+                },
+                dataLabels: {
+                  enabled: false,
+                },
+                stroke: {
+                  show: true,
+                  width: 2,
+                  colors: ["transparent"],
+                },
+                xaxis: {
+                  categories: data?.data_materials_count_by_month?.months,
+                },
+                yaxis: {
+                  title: {
+                    text: "Jumlah Materi",
+                  },
+                },
+                fill: {
+                  opacity: 1,
+                },
+                tooltip: {
+                  y: {
+                    formatter: function (val) {
+                      return val;
+                    },
+                  },
+                },
+              }}
+              series={[
+                {
+                  name: "Materi",
+                  data: data?.data_materials_count_by_month?.month_count,
+                },
+              ]}
+              width="100%"
+            />
+          ) : (
+            <div className="flex justify-center items-center h-36">
+              <Spinner
+                color="blue.500"
+                thickness="3px"
+                emptyColor="gray.200"
+                size="lg"
+              />
+            </div>
+          )}
         </div>
       </div>
     </>
