@@ -2,8 +2,8 @@ import { Button } from "@chakra-ui/react";
 import Link from "next/link";
 export default function Home() {
   return (
-    <>
-      <div className="bg-blue-700 grid place-items-center h-screen">
+    <div>
+      <div className="grid place-items-center h-screen bg-gradient-to-r from-indigo-700 to-blue-900">
         <div className="bg-white h-2/4 w-full lg:w-2/5 p-6 border border-gray-200 rounded-lg flex flex-col lg:justify-start justify-center items-center">
           <img
             src="interWithText.svg"
@@ -24,6 +24,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
