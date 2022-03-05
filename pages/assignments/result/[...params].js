@@ -14,10 +14,14 @@ import { useSelector } from "react-redux";
 
 function result() {
   const router = useRouter();
-  const { id } = router.query;
+  const { params } = router.query;
   const auth = useSelector((state) => state.auth.user);
   const { data, mutate, error } = useSWR(
-    [`api/result/single/${id}/${auth.user.id}`],
+    [
+      `api/result/single/${params ? params[0] : ""}/${
+        params ? params[1] : auth.user.id
+      }`,
+    ],
     (url) => fetcher(url),
     {
       revalidateOnFocus: true,

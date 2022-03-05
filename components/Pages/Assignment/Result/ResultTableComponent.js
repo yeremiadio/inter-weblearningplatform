@@ -13,6 +13,7 @@ import { fetcher } from "../../../../utils/fetcher";
 import { SearchIcon } from "@heroicons/react/solid";
 import BlueSpinner from "../../../Spinner/BlueSpinner";
 import { CSVLink } from "react-csv";
+import { useRouter } from "next/router";
 const ResultTableComponent = ({ isAdmin = true, auth }) => {
   const {
     data: results,
@@ -25,10 +26,10 @@ const ResultTableComponent = ({ isAdmin = true, auth }) => {
       revalidateOnFocus: false,
     }
   );
-  const [selectedIndexData, setIndexData] = useState(0);
-  const [selectedData, setSelectedData] = useState();
+  // const [selectedIndexData, setIndexData] = useState(0);
+  // const [selectedData, setSelectedData] = useState();
   const [filterText, setFilterText] = useState("");
-  //   const { errorMessage, errorStatus } = useError(error);
+  const router = useRouter();
   const filteredResults = results?.filter(
     (item) =>
       item.quiz.title &&
@@ -72,6 +73,25 @@ const ResultTableComponent = ({ isAdmin = true, auth }) => {
         {
           name: "Submitted Date",
           selector: (row) => moment(row.created_at).format("L"),
+          sortable: true,
+        },
+        {
+          name: "Link",
+          selector: (row) => (
+            <div className="flex flex-col lg:flex-row py-2 gap-2">
+              <Button
+                size={"sm"}
+                onClick={() =>
+                  router.push({
+                    pathname: "assignments/results/[...params]",
+                    query: { params: [row.id, row.user.id] },
+                  })
+                }
+              >
+                Play
+              </Button>
+            </div>
+          ),
           sortable: true,
         },
       ]

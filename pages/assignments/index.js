@@ -106,6 +106,7 @@ export default function assignments() {
                         quizzes={quizzes}
                         mutate={mutate}
                         id={item.id}
+                        auth={auth}
                         title={item.title}
                         type={item.type}
                         thumbnail={item.thumbnail}

@@ -19,7 +19,6 @@ const ReactPdfViewerComponent = dynamic(
 const ResultComponent = ({ result }) => {
   const [isLoading, setIsLoading] = useState(false);
   const auth = useSelector((state) => state.auth);
-  console.log(auth);
   const router = useRouter();
   const toast = useToast();
   const formik = useFormik({

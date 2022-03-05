@@ -9,6 +9,7 @@ import { useTimer } from "react-timer-hook";
 
 const QuizzesCard = ({
   id,
+  auth,
   title,
   thumbnail,
   type,
@@ -100,8 +101,8 @@ const QuizzesCard = ({
           ) : results.length !== 0 ? (
             <Link
               href={{
-                pathname: "assignments/result/[id]",
-                query: { id: results[0]?.id },
+                pathname: "assignments/result/[...params]",
+                query: { params: [id, auth.user.id] },
               }}
             >
               <a className="w-full">
