@@ -45,15 +45,6 @@ function playground() {
       status: "live",
       href: "/playground/js",
     },
-    {
-      id: 3,
-      name: "Webpage Builder",
-      desc: "Webpage Builder merupakan fitur belajar web dengan drag and drop komponen",
-      image: "/webpage.jpg",
-      status: "development",
-      type: "webpage-builder",
-      href: "/playground/webpage-builder",
-    },
   ];
   const columns = [
     {
@@ -180,11 +171,11 @@ function playground() {
                     <p className="text-secondary leading-loose text-base line-clamp-3 my-2">
                       {item.desc}
                     </p>
-                    {item.status === "development" && (
+                    {/* {item.status === "development" && (
                       <Tag colorScheme={"red"} size="md">
                         Under Development
                       </Tag>
-                    )}
+                    )} */}
                   </div>
                 </div>
               ))}
