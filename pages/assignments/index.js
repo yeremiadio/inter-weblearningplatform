@@ -118,7 +118,9 @@ export default function assignments() {
                         }}
                         duration={item.duration}
                         questionLength={item.questions.length}
-                        isEditable={true}
+                        isEditable={
+                          auth?.user?.roles[0]?.name !== "student" && true
+                        }
                       />
                     ))}
                   </div>
