@@ -51,7 +51,7 @@ function index() {
         <span className="text-md font-bold">{errorMessage}</span>
       ) : !materials ? (
         <BlueSpinner />
-      ) : materials?.data.length === 0 ? (
+      ) : materials?.data?.length === 0 ? (
         <EmptyDataComponent
           href="materials/create"
           isAddable={auth.user.roles[0].name !== "student" && true}
@@ -95,11 +95,18 @@ function index() {
                   ) : (
                     filteredMaterials?.map((item) => (
                       <CustomCard
+                        data={materials?.data}
+                        mutate={mutate}
                         key={item.id}
-                        name={item.title}
+                        id={item.id}
+                        title={item.title}
+                        isEditable={true}
                         description={item.description}
                         thumbnail={item.thumbnail}
-                        slug={`materials/${item.slug}`}
+                        slug={{
+                          pathname: `materials/[slug]`,
+                          query: { slug: item.slug },
+                        }}
                       />
                     ))
                   )}

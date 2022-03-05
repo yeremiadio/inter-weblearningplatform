@@ -2,10 +2,14 @@ import React from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { Button } from "@chakra-ui/react";
+import ChakraMenuDropdown from "../Dropdown/ChakraMenuDropdown";
 
 const CustomCard = ({
+  id = 0,
+  data = [],
   thumbnail = "",
-  name = "",
+  mutate,
+  title = "",
   description = "",
   slug = "",
   isEditable = false,
@@ -19,28 +23,33 @@ const CustomCard = ({
       />
       <div className="p-4">
         <h3 className="text-primary text-xl lg:text-2xl font-bold line-clamp-2 mb-2">
-          {name}
+          {title}
         </h3>
         <p className="text-secondary leading-loose text-base line-clamp-3 my-2">
           {description}
         </p>
-        {isEditable ? (
-          "Editable"
-        ) : (
+        <div
+          className={
+            "flex w-full items-center gap-2 " +
+            (isEditable ? "justify-between" : "justify-end")
+          }
+        >
           <Link href={slug ? slug : "/"}>
-            <a>
-              <Button
-                colorScheme={"blue"}
-                size="sm"
-                colorScheme="blue"
-                variant="outline"
-                isFullWidth
-              >
-                Detail
+            <a className="w-full">
+              <Button colorScheme={"blue"} isFullWidth>
+                View Detail
               </Button>
             </a>
           </Link>
-        )}
+          {isEditable && (
+            <ChakraMenuDropdown
+              name={"materials"}
+              selectedData={{ id: id, slug: slug }}
+              data={data}
+              mutate={mutate}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

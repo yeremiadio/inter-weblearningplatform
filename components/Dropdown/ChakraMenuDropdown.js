@@ -5,11 +5,11 @@ import { DotsVerticalIcon } from "@heroicons/react/solid";
 import instance from "../../utils/instance";
 import { useToast } from "@chakra-ui/toast";
 
-const ChakraMenuDropdown = ({ selectedData = {}, mutate, quizzes }) => {
+const ChakraMenuDropdown = ({ selectedData = {}, mutate, name = "", data }) => {
   const toast = useToast();
   const deleteQuiz = useCallback(async () => {
     await instance()
-      .delete(`api/quizzes/${selectedData?.slug}/delete`)
+      .delete(`api/${name}/${selectedData?.id || selectedData?.slug}/delete`)
       .then((res) => {
         toast({
           title: "Success",
@@ -19,7 +19,12 @@ const ChakraMenuDropdown = ({ selectedData = {}, mutate, quizzes }) => {
           duration: 3000,
         });
         mutate(
-          [...quizzes.filter((item) => item.slug !== selectedData.slug)],
+          [
+            ...data.filter(
+              (item) =>
+                item.id || item.slug !== selectedData?.id || selectedData?.slug
+            ),
+          ],
           true
         );
       })
@@ -27,7 +32,7 @@ const ChakraMenuDropdown = ({ selectedData = {}, mutate, quizzes }) => {
         toast({
           title: "Error",
           status: "error",
-          description: "Error deleting quiz",
+          description: `Error deleting ${name}`,
           isClosable: true,
           duration: 3000,
         });
