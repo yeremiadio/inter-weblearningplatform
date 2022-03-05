@@ -42,7 +42,7 @@ function Admin({ children }) {
   }, []);
   return (
     <>
-      <div className="flex min-h-screen" style={{ background: "#f7fafc" }}>
+      <div className="bg-admin">
         <AdminSidebar open={open} setOpen={setOpen} />
         <div className="overflow-y-auto flex-1">
           <AdminNavbar user={auth.user.user} setOpen={setOpen} open={open} />

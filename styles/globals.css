@@ -28,6 +28,10 @@
   background-color: #a8bbbf;
 }
 
+.bg-admin {
+  @apply flex min-h-screen bg-gray-100 bg-opacity-50;
+}
+
 .bg-section {
   @apply bg-white p-6 rounded-lg shadow-default-weblearning;
 }

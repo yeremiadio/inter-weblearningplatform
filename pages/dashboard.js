@@ -14,6 +14,7 @@ import { useRouter } from "next/router";
 import { fetcher } from "../utils/fetcher.js";
 import useSWR from "swr";
 import dynamic from "next/dynamic";
+import { useSelector } from "react-redux";
 // import instance from "../utils/instance.js";
 
 const Chart = dynamic(() => import("react-apexcharts").then((mod) => mod), {
@@ -43,6 +44,7 @@ const CustomCardTotal = ({ name = "", count = 0, icon = null, href = "" }) => {
 };
 
 export default function dashboard() {
+  const auth = useSelector((state) => state.auth.user);
   const { data, error } = useSWR(
     [`api/fetch-dashboard`],
     (url) => fetcher(url),
@@ -83,7 +85,7 @@ export default function dashboard() {
       id: 5,
       name: "Tugas",
       count: data?.all_data_count?.quiz,
-      href: "assignment",
+      href: "assignments",
       icon: <PencilAltIcon className="w-6 h-6" />,
     },
   ];
@@ -100,7 +102,7 @@ export default function dashboard() {
               key={item.id}
               name={item.name}
               count={item.count}
-              href={item.href}
+              href={auth?.user?.roles[0]?.name !== "student" && item.href}
               icon={item.icon}
             />
           ))}
@@ -121,25 +123,10 @@ export default function dashboard() {
                       enabled: false,
                     },
                     xaxis: {
-                      // categories: [
-                      //   "January",
-                      //   "February",
-                      //   "March",
-                      //   "April",
-                      //   "May",
-                      //   "June",
-                      //   "July",
-                      //   "August",
-                      //   "September",
-                      //   "October",
-                      //   "November",
-                      //   "December",
-                      // ],
                       categories: data?.data_scores_count_by_month.data
                         .filter((item) => {
                           const date1 = new Date(item.created_at).getDate();
                           const date2 = new Date().getDate();
-                          // console.log(date1 <= date2);
                           return date1 === date2;
                         })
                         .map((item) =>
@@ -163,7 +150,6 @@ export default function dashboard() {
                         .filter((item) => {
                           const date1 = new Date(item.created_at).getDate();
                           const date2 = new Date().getDate();
-                          // console.log(date1 <= date2);
                           return date1 === date2;
                         })
                         .map((item) => item.score),
@@ -185,7 +171,6 @@ export default function dashboard() {
           </div>
           <div className="rounded-md p-4 hover:shadow-default-weblearning transition-all delay-75 flex-auto lg:w-4/6 bg-white border border-gray-300">
             <h3 className="font-bold text-lg">Jumlah Anggota</h3>
-            {/* <Chart type='donut' */}
             {!error && data !== undefined ? (
               <div className="grid place-items-center h-full">
                 <Chart
