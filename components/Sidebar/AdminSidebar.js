@@ -158,7 +158,7 @@ const AdminSidebar = ({ setOpen, open }) => {
                     className={
                       "items-center group text-blue-600 " +
                       (item.name === "Users" &&
-                        auth.user.roles[0].name === "student" &&
+                        auth.user?.roles[0]?.name === "student" &&
                         "hidden")
                     }
                     onClick={() => setOpen(false)}
@@ -212,7 +212,7 @@ const AdminSidebar = ({ setOpen, open }) => {
                 className={
                   "items-center group text-blue-600 " +
                   (item.name === "Users" &&
-                    auth.user.roles[0].name === "student" &&
+                  auth.user?.roles[0]?.name === "student" &&
                     "hidden")
                 }
                 onClick={() => setOpen(false)}

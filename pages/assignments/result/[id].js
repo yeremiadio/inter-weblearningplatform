@@ -10,13 +10,14 @@ import BlueSpinner from "../../../components/Spinner/BlueSpinner";
 import { fetcher } from "../../../utils/fetcher";
 import { useToast } from "@chakra-ui/toast";
 import ResultComponent from "../../../components/Pages/Assignment/Result/ResultComponent";
+import { useSelector } from "react-redux";
 
 function result() {
   const router = useRouter();
   const { id } = router.query;
-  const toast = useToast();
+  const auth = useSelector((state) => state.auth.user);
   const { data, mutate, error } = useSWR(
-    [`api/result/single/${id}`],
+    [`api/result/single/${id}/${auth.user.id}`],
     (url) => fetcher(url),
     {
       revalidateOnFocus: true,
