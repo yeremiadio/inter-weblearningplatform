@@ -7,15 +7,15 @@ import { PHASE_DEVELOPMENT_SERVER } from "next/constants";
 
 // With Devtools
 
-const store = createStore(
-  reducers,
-  PHASE_DEVELOPMENT_SERVER
-    ? composeWithDevTools(
+const store = PHASE_DEVELOPMENT_SERVER
+  ? createStore(
+      reducers,
+      composeWithDevTools(
         applyMiddleware(thunk)
         // other store enhancers if any
       )
-    : applyMiddleware(thunk)
-);
+    )
+  : createStore(reducers, applyMiddleware(thunk));
 
 const initializeStore = (initialState = {}) => {
   return store;
