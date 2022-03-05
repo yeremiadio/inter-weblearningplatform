@@ -4,7 +4,7 @@ import InputField from "../../../Inputs/FormikInputField";
 import { FormLabel } from "@chakra-ui/react";
 import FormikDraftJsInput from "../../../Inputs/FormikDraftJsInput";
 
-const EssayAssignment = ({ formValues, setFieldValue }) => {
+const EssayAssignment = ({ formValues, setFieldValue, errors }) => {
   return (
     <div>
       <FieldArray name="questions">
@@ -16,6 +16,11 @@ const EssayAssignment = ({ formValues, setFieldValue }) => {
               setFieldValue={setFieldValue}
               label={"Pertanyaan"}
             />
+            {errors && (
+              <p className="text-red-500 text-sm">
+                {errors[`questions.${0}.question`]}
+              </p>
+            )}
           </div>
         </>
       </FieldArray>

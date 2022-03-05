@@ -56,7 +56,7 @@ function create() {
       case 0:
         return <MainQuizForm formField={formField} errors={errors} />;
       case 1:
-        return <QuizDetailForm formField={formField} />;
+        return <QuizDetailForm formField={formField} errors={errors} />;
       default:
         return;
     }

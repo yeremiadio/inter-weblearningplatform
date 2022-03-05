@@ -87,16 +87,18 @@ export default function assignments() {
                 <EmptyDataComponent href="assignments/create" />
               ) : (
                 <>
-                  <div className="flex justify-end mb-4">
-                    <Button
-                      colorScheme="blue"
-                      className="ml-auto"
-                      onClick={() => router.push("assignments/create")}
-                      leftIcon={<PlusIcon className="w-4 h-4" />}
-                    >
-                      Tambah
-                    </Button>
-                  </div>
+                  {auth.user.roles[0].name !== "student" && (
+                    <div className="flex justify-end mb-4">
+                      <Button
+                        colorScheme="blue"
+                        className="ml-auto"
+                        onClick={() => router.push("assignments/create")}
+                        leftIcon={<PlusIcon className="w-4 h-4" />}
+                      >
+                        Tambah
+                      </Button>
+                    </div>
+                  )}
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                     {quizzes.map((item) => (
                       <QuizzesCard

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Admin from "../layouts/Admin.js";
 import Head from "next/head";
+import moment from "moment";
 import { Box, Spinner } from "@chakra-ui/react";
 import {
   AcademicCapIcon,
@@ -106,7 +107,7 @@ export default function dashboard() {
         </div>
         <div className="my-4 flex flex-col lg:flex-row text-primary gap-4">
           <div className="rounded-md p-4 hover:shadow-default-weblearning transition-all delay-75 flex-auto w-full bg-white border border-gray-300">
-            <h3 className="font-bold text-lg">Skor Tugas Anda per Bulan</h3>
+            <h3 className="font-bold text-lg">Skor Tugas Anda</h3>
             {/* <Chart type='donut' */}
             {!error && data !== undefined ? (
               <div>
@@ -120,7 +121,30 @@ export default function dashboard() {
                       enabled: false,
                     },
                     xaxis: {
-                      categories: data?.data_scores_count_by_month.months,
+                      // categories: [
+                      //   "January",
+                      //   "February",
+                      //   "March",
+                      //   "April",
+                      //   "May",
+                      //   "June",
+                      //   "July",
+                      //   "August",
+                      //   "September",
+                      //   "October",
+                      //   "November",
+                      //   "December",
+                      // ],
+                      categories: data?.data_scores_count_by_month.data
+                        .filter((item) => {
+                          const date1 = new Date(item.created_at).getDate();
+                          const date2 = new Date().getDate();
+                          // console.log(date1 <= date2);
+                          return date1 === date2;
+                        })
+                        .map((item) =>
+                          new Date(item.created_at).toLocaleTimeString()
+                        ),
                     },
                     fill: {
                       type: "gradient",
@@ -135,7 +159,14 @@ export default function dashboard() {
                   series={[
                     {
                       name: "Skor Tugas",
-                      data: data?.data_scores_count_by_month.scores_month_count,
+                      data: data?.data_scores_count_by_month.data
+                        .filter((item) => {
+                          const date1 = new Date(item.created_at).getDate();
+                          const date2 = new Date().getDate();
+                          // console.log(date1 <= date2);
+                          return date1 === date2;
+                        })
+                        .map((item) => item.score),
                     },
                   ]}
                   width="100%"

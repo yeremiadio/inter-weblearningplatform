@@ -28,7 +28,7 @@ function index() {
   const router = useRouter();
   // const [page, setPage] = useState(1);
   // const toast = useToast();
-  // const [search, setSearch] = useState("");
+  const [filterText, setFilterText] = useState("");
   const auth = useSelector((state) => state.auth.user);
   const {
     data: materials,
@@ -38,7 +38,13 @@ function index() {
     revalidateOnFocus: false,
   });
   const { errorMessage, errorStatus } = useErrorSwr(error);
-
+  const filteredMaterials = materials?.data?.filter(
+    (item) =>
+      (item.title &&
+        item.title.toLowerCase().includes(filterText.toLowerCase())) ||
+      (item.description &&
+        item.description.toLowerCase().includes(filterText.toLowerCase()))
+  );
   return (
     <>
       {errorStatus ? (
@@ -59,17 +65,22 @@ function index() {
                   pointerEvents="none"
                   children={<SearchIcon className="text-gray-300 w-6 h-6" />}
                 />
-                <Input placeholder="Cari materimu..." />
+                <Input
+                  placeholder="Cari judul materi..."
+                  onChange={(e) => setFilterText(e.target.value)}
+                />
               </InputGroup>
             </div>
-            <Button
-              colorScheme="blue"
-              className="ml-auto"
-              onClick={() => router.push("materials/create")}
-              leftIcon={<PlusIcon className="w-4 h-4" />}
-            >
-              Tambah
-            </Button>
+            {auth.user.roles[0].name !== "student" && (
+              <Button
+                colorScheme="blue"
+                className="ml-auto"
+                onClick={() => router.push("materials/create")}
+                leftIcon={<PlusIcon className="w-4 h-4" />}
+              >
+                Tambah
+              </Button>
+            )}
           </div>
           <div>
             {!materials?.data ? (
@@ -79,15 +90,19 @@ function index() {
             ) : (
               <>
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                  {materials?.data?.map((item) => (
-                    <CustomCard
-                      key={item.id}
-                      name={item.title}
-                      description={item.description}
-                      thumbnail={item.thumbnail}
-                      slug={`materials/${item.slug}`}
-                    />
-                  ))}
+                  {filteredMaterials?.length === 0 ? (
+                    <div>Data not found</div>
+                  ) : (
+                    filteredMaterials?.map((item) => (
+                      <CustomCard
+                        key={item.id}
+                        name={item.title}
+                        description={item.description}
+                        thumbnail={item.thumbnail}
+                        slug={`materials/${item.slug}`}
+                      />
+                    ))
+                  )}
                 </div>
                 <div className="flex justify-center items-center my-8 gap-2"></div>
               </>
