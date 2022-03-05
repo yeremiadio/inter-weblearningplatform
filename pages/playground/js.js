@@ -1,44 +1,16 @@
 import React, { useState } from "react";
-import Editor from "../../../components/CodeEditor/Editor";
+import Editor from "../../components/CodeEditor/Editor";
 import { Box, Button, Spinner } from "@chakra-ui/react";
-import instance from "../../../utils/instance";
+import instance from "../../utils/instance";
 import { TrashIcon } from "@heroicons/react/solid";
-import CodeEditorNavbar from "../../../components/Navbar/CodeEditorNavbar";
-import axios from "axios";
+import CodeEditorNavbar from "../../components/Navbar/CodeEditorNavbar";
 import { useSelector } from "react-redux";
 
-// This function gets called at build time
-export async function getStaticPaths() {
-  // Call an external API endpoint to get posts
-  const res = await axios.get(process.env.baseUrl + "/api/codes");
-  const codes = await res.data.data;
-
-  // Get the paths we want to pre-render based on posts
-  const paths = codes.map((item) => ({
-    params: { slug: item.slug },
-  }));
-
-  // We'll pre-render only these paths at build time.
-  // { fallback: false } means other routes should 404.
-  return { paths, fallback: false };
-}
-
-export async function getStaticProps(ctx) {
-  const { params } = ctx;
-  // Pass data to the page via props
-  const res = await axios.get(
-    process.env.baseUrl + `/api/code/single/${params.slug}`
-  );
-  const data = await res.data.data;
-  return { props: { data } };
-}
-
-function javascripteditor({ data }) {
+function index() {
   const initialState = `/*    
   Write your first code...
 */`;
-  const auth = useSelector((state) => state.auth);
-  const [code, setCode] = useState(data ? data.code : initialState);
+  const [code, setCode] = useState(initialState);
   const [outputData, setOutputData] = useState("");
   const [loading, setLoading] = useState("");
   const resetCode = () => {
@@ -70,12 +42,11 @@ function javascripteditor({ data }) {
   return (
     <div>
       <CodeEditorNavbar
-        isEdited={true}
+        isEdited={false}
         data={{
           type: "js",
           code: code,
         }}
-        auth={auth.user.user}
       />
       <div className="bg-gray-900 flex flex-col lg:flex-row mt-24">
         <Editor
@@ -129,4 +100,4 @@ function javascripteditor({ data }) {
   );
 }
 
-export default javascripteditor;
+export default index;

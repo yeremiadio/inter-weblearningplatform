@@ -42,7 +42,11 @@ export const storeCode = (data, router, toast) => async (dispatch) => {
         payload: res,
       });
       dispatch(setIsFetching(false));
-      router.push(`${res.type}/${res.slug}`);
+      router.push({
+        pathname: "/playground/play/[...params]",
+        query: { params: [res.type, res.slug] },
+      });
+      // router.push(`${res.type}/${res.slug}`);
       toast({
         title: "Success",
         description: response.data.message,
@@ -70,7 +74,7 @@ export const storeCode = (data, router, toast) => async (dispatch) => {
 export const updateCode = (data, router, toast) => async (dispatch) => {
   dispatch(setIsFetching(true));
   await instance()
-    .put(`api/code/${router?.query?.slug}/update`, data)
+    .put(`api/code/${router?.query?.params[1]}/update`, data)
     .then((response) => {
       const res = response.data.data;
       dispatch({
@@ -78,7 +82,10 @@ export const updateCode = (data, router, toast) => async (dispatch) => {
         payload: res,
       });
       dispatch(setIsFetching(false));
-      router.push(`${res.slug}`);
+      router.replace({
+        pathname: "/playground/play/[...params]",
+        query: { params: [res.type, res.slug] },
+      });
       toast({
         title: "Success",
         description: response.data.message,

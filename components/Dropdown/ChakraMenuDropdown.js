@@ -39,7 +39,7 @@ const ChakraMenuDropdown = ({ selectedData = {}, mutate, quizzes }) => {
         <DotsVerticalIcon className="w-5 h-5" />
       </MenuButton>
       <MenuList>
-        <MenuItem>Edit</MenuItem>
+        {/* <MenuItem>Edit</MenuItem> */}
         <MenuItem onClick={deleteQuiz}>Delete</MenuItem>
       </MenuList>
     </Menu>

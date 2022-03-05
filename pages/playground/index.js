@@ -97,7 +97,12 @@ function playground() {
         <div className="flex flex-col lg:flex-row py-2 gap-2">
           <Button
             size={"sm"}
-            onClick={() => router.push(`playground/${row.type}/${row.slug}`)}
+            onClick={() =>
+              router.push({
+                pathname: "playground/play/[...params]",
+                query: { params: [row.type, row.slug] },
+              })
+            }
           >
             Play
           </Button>

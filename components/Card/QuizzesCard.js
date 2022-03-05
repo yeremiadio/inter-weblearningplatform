@@ -92,7 +92,7 @@ const QuizzesCard = ({
             results.length === 0 ? (
             <Link href={slug ? slug : ""}>
               <a className="w-full">
-                <Button colorScheme={"blue"} colorScheme="blue" isFullWidth>
+                <Button colorScheme={"blue"} isFullWidth>
                   Play
                 </Button>
               </a>
@@ -105,12 +105,7 @@ const QuizzesCard = ({
               }}
             >
               <a className="w-full">
-                <Button
-                  colorScheme={"blue"}
-                  variant="ghost"
-                  colorScheme="blue"
-                  isFullWidth
-                >
+                <Button colorScheme={"blue"} variant="ghost" isFullWidth>
                   View Result
                 </Button>
               </a>

@@ -1,17 +1,15 @@
-import React, { useState } from "react";
-import Editor from "../../../components/CodeEditor/Editor";
 import { Box, Button, Spinner } from "@chakra-ui/react";
-import instance from "../../../utils/instance";
 import { TrashIcon } from "@heroicons/react/solid";
-import CodeEditorNavbar from "../../../components/Navbar/CodeEditorNavbar";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
+import instance from "../../../utils/instance";
+import Editor from "../../CodeEditor/Editor";
+import CodeEditorNavbar from "../../Navbar/CodeEditorNavbar";
 
-function index() {
+const JsEditorDetailComponent = ({ data, mutate, error }) => {
   const initialState = `/*    
   Write your first code...
 */`;
-  const auth = useSelector((state) => state.auth);
-  const [code, setCode] = useState(initialState);
+  const [code, setCode] = useState(data ? data.code : initialState);
   const [outputData, setOutputData] = useState("");
   const [loading, setLoading] = useState("");
   const resetCode = () => {
@@ -43,12 +41,11 @@ function index() {
   return (
     <div>
       <CodeEditorNavbar
-        isEdited={false}
+        isEdited={true}
         data={{
           type: "js",
           code: code,
         }}
-        auth={auth.user.user}
       />
       <div className="bg-gray-900 flex flex-col lg:flex-row mt-24">
         <Editor
@@ -100,6 +97,6 @@ function index() {
       </div>
     </div>
   );
-}
+};
 
-export default index;
+export default JsEditorDetailComponent;

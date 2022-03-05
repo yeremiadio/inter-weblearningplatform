@@ -5,19 +5,46 @@ import {
   EditablePreview,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UserDropdown from "../Dropdown/UserDropdown";
 import { useToast } from "@chakra-ui/toast";
 import { CloudIcon } from "@heroicons/react/solid";
 import { useDispatch, useSelector } from "react-redux";
 import { storeCode, updateCode } from "../../redux/actions/codeAction";
+import { RESET_ERRORS, RESET_USER } from "../../constants/types";
 
-function CodeEditorNavbar({ data = {}, auth = {}, isEdited = false }) {
+function CodeEditorNavbar({ data = {}, isEdited = false }) {
   const router = useRouter();
+  const auth = useSelector((state) => state.auth);
   const toast = useToast();
   const isFetching = useSelector((state) => state.code.isFetching);
   const code = useSelector((state) => state.code.data);
   const dispatch = useDispatch();
+  useEffect(() => {
+    const ac = new AbortController();
+    if (
+      auth?.isAuthenticated === false ||
+      auth?.user?.token === undefined ||
+      auth?.user?.token === ""
+    ) {
+      dispatch({
+        type: RESET_USER,
+      });
+      dispatch({
+        type: RESET_ERRORS,
+      });
+      router.replace("/login");
+      toast({
+        title: "Error",
+        description: "Not Authenticated",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    } else {
+      return ac.abort();
+    }
+  }, []);
   const [titleCode, setTitleCode] = useState(
     isEdited ? code.title : "untitled"
   );
@@ -60,7 +87,7 @@ function CodeEditorNavbar({ data = {}, auth = {}, isEdited = false }) {
         >
           Save
         </Button>
-        <UserDropdown user={auth} darkMode />
+        <UserDropdown user={auth?.user?.user} darkMode />
       </div>
     </nav>
   );

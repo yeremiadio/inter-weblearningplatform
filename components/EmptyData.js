@@ -3,12 +3,7 @@ import { PlusIcon } from "@heroicons/react/solid";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 
-function EmptyDataComponent({
-  title,
-
-  href = "/",
-  isAddable = true,
-}) {
+function EmptyDataComponent({ title, href = "/", isAddable = true }) {
   const router = useRouter();
   const auth = useSelector((state) => state.auth);
   return (
@@ -26,14 +21,14 @@ function EmptyDataComponent({
         colorScheme="blue"
         leftIcon={isAddable && <PlusIcon className="w-4 h-4" />}
         onClick={() =>
-          auth.user.user.roles[0].name !== "student" && isAddable
+          auth?.user?.user?.roles[0].name !== "student" && isAddable
             ? router.push(href)
-            : router.replace("dashboard")
+            : router.back()
         }
       >
-        {auth.user.user.roles[0].name !== "student" && isAddable
+        {auth?.user?.user?.roles[0].name !== "student" && isAddable
           ? `Tambah`
-          : "Back to Dashboard"}
+          : "Back"}
       </Button>
     </div>
   );
