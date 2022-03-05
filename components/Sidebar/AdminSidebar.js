@@ -14,9 +14,10 @@ import {
   ChevronDownIcon,
 } from "@heroicons/react/solid";
 import { Transition, Dialog } from "@headlessui/react";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Disclosure } from "@headlessui/react";
 const AdminSidebar = ({ setOpen, open }) => {
+  const auth = useSelector((state) => state.auth.user);
   const router = useRouter();
   const navigations = [
     {
@@ -37,7 +38,7 @@ const AdminSidebar = ({ setOpen, open }) => {
     },
     {
       id: 2,
-      name: "Assignments",
+      name: "Penugasan",
       href: "/assignments",
       icon: (
         <ClipboardIcon
@@ -53,7 +54,7 @@ const AdminSidebar = ({ setOpen, open }) => {
     },
     {
       id: 3,
-      name: "Playground",
+      name: "Code Playground",
       href: "/playground",
       icon: (
         <CodeIcon
@@ -86,7 +87,7 @@ const AdminSidebar = ({ setOpen, open }) => {
     },
     {
       id: 4,
-      name: "Materials",
+      name: "Materi",
       href: "/materials",
       icon: (
         <DocumentTextIcon
@@ -154,7 +155,12 @@ const AdminSidebar = ({ setOpen, open }) => {
               <ul className="md:flex-col md:min-w-screen flex flex-col list-none pt-2 mx-4 space-y-2">
                 {navigations.map((item) => (
                   <li
-                    className="items-center group text-blue-600"
+                    className={
+                      "items-center group text-blue-600 " +
+                      (item.name === "Users" &&
+                        auth.user.roles[0].name === "student" &&
+                        "hidden")
+                    }
                     onClick={() => setOpen(false)}
                     key={item.id}
                   >
@@ -203,7 +209,12 @@ const AdminSidebar = ({ setOpen, open }) => {
           <ul className="md:flex-col md:min-w-screen flex flex-col list-none pt-2 mx-4 space-y-2">
             {navigations.map((item) => (
               <li
-                className="items-center group text-blue-600"
+                className={
+                  "items-center group text-blue-600 " +
+                  (item.name === "Users" &&
+                    auth.user.roles[0].name === "student" &&
+                    "hidden")
+                }
                 onClick={() => setOpen(false)}
                 key={item.id}
               >
