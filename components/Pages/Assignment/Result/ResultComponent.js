@@ -83,7 +83,7 @@ const ResultComponent = ({ result }) => {
                   <p className="text-primary">
                     Your answer: {item.option.title}
                   </p>
-                  {item.correct === 1 ? (
+                  {item.correct === 1 || item.correct === true ? (
                     <span className="text-green-600 font-semibold">
                       Answer is correct
                     </span>
