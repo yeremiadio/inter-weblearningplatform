@@ -7,11 +7,14 @@ import { RESET_USER, RESET_ERRORS } from "../constants/types";
 import { motion } from "framer-motion";
 
 import { useToast } from "@chakra-ui/toast";
+import useCheckOs from "../utils/useCheckOs";
+import AdminBottomNavigation from "../components/Navbar/AdminBottomNavigation";
 
 function Admin({ children }) {
   const auth = useSelector((state) => state.auth);
   // const errors = useSelector((state) => state.errors);
   const toast = useToast();
+  const isMobile = useCheckOs();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const router = useRouter();
@@ -43,7 +46,15 @@ function Admin({ children }) {
   return (
     <>
       <div className="bg-admin">
-        <AdminSidebar open={open} setOpen={setOpen} />
+        {isMobile ? (
+          <AdminBottomNavigation
+            auth={auth.user}
+            router={router}
+            setOpen={setOpen}
+          />
+        ) : (
+          <AdminSidebar open={open} setOpen={setOpen} />
+        )}
         <div className="overflow-y-auto flex-1">
           <AdminNavbar user={auth.user.user} setOpen={setOpen} open={open} />
           <main className="wrapper">

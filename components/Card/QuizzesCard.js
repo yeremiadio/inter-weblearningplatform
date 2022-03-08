@@ -115,12 +115,14 @@ const QuizzesCard = ({
             <p className="text-red-500 font-semibold">Not submitted</p>
           )}
           {isEditable && (
-            <ChakraMenuDropdown
-              name={"quizzes"}
-              selectedData={{ id: id, slug: slug.query.params[1] }}
-              data={quizzes}
-              mutate={mutate}
-            />
+            <div>
+              <ChakraMenuDropdown
+                name={"quizzes"}
+                selectedData={{ id: id, slug: slug.query.params[1] }}
+                data={quizzes}
+                mutate={mutate}
+              />
+            </div>
           )}
         </div>
       </div>

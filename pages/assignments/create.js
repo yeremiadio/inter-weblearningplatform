@@ -1,7 +1,7 @@
 import { Box, Button } from "@chakra-ui/react";
 import { PaperAirplaneIcon } from "@heroicons/react/solid";
 import { Form, Formik } from "formik";
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import BackButton from "../../components/Buttons/BackButton";
 import Admin from "../../layouts/Admin";
 import MainQuizForm from "../../components/Forms/Assignment/MainQuizForm";
@@ -13,17 +13,18 @@ import { jsonToFormData } from "../../utils/jsonToFormData";
 import instance from "../../utils/instance";
 import moment from "moment";
 import { useToast } from "@chakra-ui/toast";
-import router from "next/router";
-
+import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 function create() {
   const steps = ["Main Quiz", "Add Questions and Options"];
+  const auth = useSelector((state) => state.auth.user);
+  const router = useRouter();
   const { formId, formField } = AssignmentFormModel;
   const [activeStep, setActiveStep] = useState(0);
   const [isLoading, setLoading] = useState(false);
   const formikRef = useRef();
   const toast = useToast();
   const [errors, setErrors] = useState();
-  // const currentValidationSchema = validationSchema[activeStep];
   const isLastStep = activeStep === steps.length - 1;
   const quizTypes = [
     {
@@ -50,6 +51,24 @@ function create() {
     ],
     thumbnail: "",
   };
+
+  useEffect(() => {
+    const ac = new AbortController();
+    if (auth.user?.roles[0]?.name === "student") {
+      router.replace("/dashboard");
+      return toast({
+        title: "Error",
+        status: "error",
+        description: "You don't have this permission",
+        duration: 3000,
+        isClosable: true,
+      });
+    } else {
+      return () => {
+        ac.abort();
+      };
+    }
+  }, []);
 
   function _renderStepContent(step) {
     switch (step) {

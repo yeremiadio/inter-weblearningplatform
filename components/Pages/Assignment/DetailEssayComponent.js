@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import parse from "html-react-parser";
 import { useFormik } from "formik";
 import { jsonToFormData } from "../../../utils/jsonToFormData";
@@ -8,43 +8,47 @@ import { Button, FormControl, FormLabel, Textarea } from "@chakra-ui/react";
 import instance from "../../../utils/instance";
 import { useToast } from "@chakra-ui/toast";
 import { useRouter } from "next/router";
+import { Modal } from "../../Modal/Modal";
 const DetailEssayComponent = ({ data, mutate, error }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const SubmitAssignmentRef = useRef();
   const router = useRouter();
   const toast = useToast();
+
+  const handleSubmit = async (values) => {
+    setIsLoading(true);
+    const formData = jsonToFormData(values);
+    formData.append("question_id", data.questions[0].id);
+    instance()
+      .post(`api/result/${data.slug}/essay`, formData)
+      .then((res) => {
+        router.replace("/assignments");
+        toast({
+          title: "Success",
+          status: "success",
+          description: "Result submitted successfully",
+          isClosable: true,
+          duration: 3000,
+        });
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        toast({
+          title: "Error",
+          status: "error",
+          description: "Error submitting the quiz",
+          isClosable: true,
+          duration: 3000,
+        });
+        setIsLoading(false);
+      });
+  };
   const formik = useFormik({
     initialValues: {
       file: data.file || "",
       comment: data.comment || "",
     },
-    onSubmit: async (values) => {
-      setIsLoading(true);
-      const formData = jsonToFormData(values);
-      formData.append("question_id", data.questions[0].id);
-      instance()
-        .post(`api/result/${data.slug}/essay`, formData)
-        .then((res) => {
-          router.replace("/assignments");
-          toast({
-            title: "Success",
-            status: "success",
-            description: "Result submitted successfully",
-            isClosable: true,
-            duration: 3000,
-          });
-          setIsLoading(false);
-        })
-        .catch((err) => {
-          toast({
-            title: "Error",
-            status: "error",
-            description: "Error submitting the quiz",
-            isClosable: true,
-            duration: 3000,
-          });
-          setIsLoading(false);
-        });
-    },
+    onSubmit: handleSubmit,
   });
   const onChange = useCallback((e) => {
     let files = e.target.files || e.dataTransfer.files;
@@ -98,15 +102,21 @@ const DetailEssayComponent = ({ data, mutate, error }) => {
                 </FormControl>
               </div>
               <Button
-                type="submit"
                 variant="solid"
                 colorScheme={"blue"}
+                onClick={() => SubmitAssignmentRef.current.open()}
                 className="my-4"
-                isLoading={isLoading}
                 leftIcon={<PaperAirplaneIcon className="w-5 h-5 rotate-90" />}
               >
-                Submit Essay
+                Submit
               </Button>
+              <Modal ref={SubmitAssignmentRef}>
+                <SubmitAssignmentRef
+                  parent={SubmitAssignmentRef}
+                  isLoading={isLoading}
+                  handleData={() => handleSubmit}
+                />
+              </Modal>
             </form>
           </div>
         </div>

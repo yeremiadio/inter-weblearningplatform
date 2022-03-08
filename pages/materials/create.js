@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Admin from "../../layouts/Admin";
 import DraftJsEditor from "../../components/RichTextEditor/DraftJsEditor";
 import { EditorState, convertToRaw } from "draft-js";
@@ -17,8 +17,12 @@ import { CameraIcon, PaperAirplaneIcon } from "@heroicons/react/solid";
 import { jsonToFormData } from "../../utils/jsonToFormData";
 import instance from "../../utils/instance";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 
 export default function create() {
+  //Auth
+  const auth = useSelector((state) => state.auth.user);
+
   //Router
   const router = useRouter();
 
@@ -49,12 +53,27 @@ export default function create() {
     description: Yup.string().required("Description is required").max(200),
   });
 
+  useEffect(() => {
+    const ac = new AbortController();
+    if (auth.user?.roles[0]?.name === "student") {
+      router.replace("/materials");
+      return toast({
+        title: "Error",
+        status: "error",
+        description: "You don't have this permission",
+        duration: 3000,
+        isClosable: true,
+      });
+    } else {
+      return () => {
+        ac.abort();
+      };
+    }
+  }, []);
+
   const onSubmit = useCallback(async (values) => {
     const formData = jsonToFormData(values);
     formData.append("content", markup);
-    // for (let pair of formData.entries()) {
-    //   console.log(pair[0] + ", " + pair[1]);
-    // }
     try {
       const res = await instance().post("api/materials/create", formData);
       toast({

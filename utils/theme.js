@@ -12,9 +12,9 @@ export const themeProvider = extendTheme({
   },
   colors: {
     ...chakraTheme.colors,
-    // orange: {
-    //   ...chakraTheme.colors.orange,
-    // },
+    cyan: {
+      ...chakraTheme.colors.cyan,
+    },
     // green: {
     //   ...chakraTheme.colors.green,
     // },

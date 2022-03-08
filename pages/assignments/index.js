@@ -131,7 +131,7 @@ export default function assignments() {
             {auth.user.roles[0].name !== "student" && (
               <Tab.Panel>
                 <div className="mt-4">
-                  <ResultTableComponent isAdmin={true} />
+                  <ResultTableComponent isAdmin={true} auth={auth} />
                 </div>
               </Tab.Panel>
             )}

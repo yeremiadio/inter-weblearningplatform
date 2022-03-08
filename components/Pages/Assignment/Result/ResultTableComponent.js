@@ -26,10 +26,9 @@ const ResultTableComponent = ({ isAdmin = true, auth }) => {
       revalidateOnFocus: false,
     }
   );
-  // const [selectedIndexData, setIndexData] = useState(0);
-  // const [selectedData, setSelectedData] = useState();
   const [filterText, setFilterText] = useState("");
   const router = useRouter();
+
   const filteredResults = results?.filter(
     (item) =>
       item.quiz.title &&
@@ -83,12 +82,12 @@ const ResultTableComponent = ({ isAdmin = true, auth }) => {
                 size={"sm"}
                 onClick={() =>
                   router.push({
-                    pathname: "assignments/results/[...params]",
-                    query: { params: [row.id, row.user.id] },
+                    pathname: "assignments/result/[...params]",
+                    query: { params: [row.quiz_id, row.user.id] },
                   })
                 }
               >
-                Play
+                View
               </Button>
             </div>
           ),

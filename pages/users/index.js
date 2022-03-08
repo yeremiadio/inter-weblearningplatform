@@ -5,7 +5,7 @@ import { Button } from "@chakra-ui/button";
 import { fetcher } from "../../utils/fetcher";
 import BlueSpinner from "../../components/Spinner/BlueSpinner";
 import moment from "moment";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useToast } from "@chakra-ui/toast";
 import DeleteUserModal from "../../components/Modal/Components/User/DeleteUserModal";
 import { Modal } from "../../components/Modal/Modal";
@@ -17,6 +17,7 @@ import { PlusIcon } from "@heroicons/react/solid";
 import { useSelector } from "react-redux";
 import { useMediaQuery } from "@chakra-ui/react";
 import { Tag } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 
 const index = () => {
   const auth = useSelector((state) => state.auth);
@@ -33,6 +34,26 @@ const index = () => {
   const [selectedIndexData, setIndexData] = useState(0);
   const [selectedData, setSelectedData] = useState();
   const toast = useToast();
+  const router = useRouter();
+
+  useEffect(() => {
+    const ac = new AbortController();
+    if (auth.user?.user?.roles[0]?.name === "student") {
+      router.replace("/dashboard");
+      return toast({
+        title: "Error",
+        status: "error",
+        description: "You don't have this permission",
+        duration: 3000,
+        isClosable: true,
+      });
+    } else {
+      return () => {
+        ac.abort();
+      };
+    }
+  }, []);
+
   const filteredUsers = users?.filter((item) => item.id !== auth.user.user.id);
   const [isSmallestThan768] = useMediaQuery("(max-width: 768px)");
   const columns = [

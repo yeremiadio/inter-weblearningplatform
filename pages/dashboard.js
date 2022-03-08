@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Admin from "../layouts/Admin.js";
-import Head from "next/head";
-import moment from "moment";
 import { Box, Spinner } from "@chakra-ui/react";
 import {
   AcademicCapIcon,
@@ -15,7 +13,6 @@ import { fetcher } from "../utils/fetcher.js";
 import useSWR from "swr";
 import dynamic from "next/dynamic";
 import { useSelector } from "react-redux";
-// import instance from "../utils/instance.js";
 
 const Chart = dynamic(() => import("react-apexcharts").then((mod) => mod), {
   ssr: false,
@@ -24,10 +21,7 @@ const Chart = dynamic(() => import("react-apexcharts").then((mod) => mod), {
 const CustomCardTotal = ({ name = "", count = 0, icon = null, href = "" }) => {
   const router = useRouter();
   return (
-    <div
-      className="bg-white px-6 py-4 border border-gray-300 text-primary rounded-md hover:shadow-default-weblearning transition-all delay-75 cursor-pointer"
-      onClick={() => router.push(href)}
-    >
+    <div className="bg-white px-6 py-4 border border-gray-200 text-primary rounded-md hover:shadow-default-weblearning transition-all delay-75">
       <Box
         display={"flex"}
         justifyContent={"space-between"}
@@ -57,35 +51,33 @@ export default function dashboard() {
       id: 1,
       name: "Materi",
       count: data?.all_data_count?.material,
-      href: "materials",
       icon: <BookOpenIcon className="w-6 h-6" />,
     },
     {
       id: 2,
       name: "User",
       count: data?.all_data_count?.user,
-      href: "users",
       icon: <AcademicCapIcon className="w-6 h-6" />,
     },
     {
       id: 3,
       name: "Role",
       count: data?.all_data_count?.role,
-      href: "users",
+
       icon: <UserGroupIcon className="w-6 h-6" />,
     },
     {
       id: 4,
       name: "Code Editor",
-      count: 3,
-      href: "playground",
+      count: 2,
+
       icon: <CodeIcon className="w-6 h-6" />,
     },
     {
       id: 5,
       name: "Tugas",
       count: data?.all_data_count?.quiz,
-      href: "assignments",
+
       icon: <PencilAltIcon className="w-6 h-6" />,
     },
   ];
@@ -108,7 +100,7 @@ export default function dashboard() {
           ))}
         </div>
         <div className="my-4 flex flex-col lg:flex-row text-primary gap-4">
-          <div className="rounded-md p-4 hover:shadow-default-weblearning transition-all delay-75 flex-auto w-full bg-white border border-gray-300">
+          <div className="rounded-md p-4 hover:shadow-default-weblearning transition-all delay-75 flex-auto w-full bg-white border border-gray-200">
             <h3 className="font-bold text-lg">Skor Tugas Anda</h3>
             {/* <Chart type='donut' */}
             {!error && data !== undefined ? (
@@ -169,7 +161,7 @@ export default function dashboard() {
               </div>
             )}
           </div>
-          <div className="rounded-md p-4 hover:shadow-default-weblearning transition-all delay-75 flex-auto lg:w-4/6 bg-white border border-gray-300">
+          <div className="rounded-md p-4 hover:shadow-default-weblearning transition-all delay-75 flex-auto lg:w-4/6 bg-white border border-gray-200">
             <h3 className="font-bold text-lg">Jumlah Anggota</h3>
             {!error && data !== undefined ? (
               <div className="grid place-items-center h-full">
@@ -195,7 +187,7 @@ export default function dashboard() {
             )}
           </div>
         </div>
-        <div className="rounded-md p-4 hover:shadow-default-weblearning transition-all delay-75 flex-auto w-full bg-white border border-gray-300">
+        <div className="rounded-md p-4 hover:shadow-default-weblearning transition-all delay-75 flex-auto w-full bg-white border border-gray-200">
           <h3 className="font-bold text-lg">Jumlah Materi per Bulan</h3>
           {!error && data !== undefined ? (
             <Chart

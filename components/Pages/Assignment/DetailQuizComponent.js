@@ -5,13 +5,16 @@ import {
   PaperAirplaneIcon,
 } from "@heroicons/react/solid";
 import { useRouter } from "next/router";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useTimer } from "react-timer-hook";
 import { getTimeDiff } from "../../../utils/getTimeDiff";
 import instance from "../../../utils/instance";
+import SubmitAssignmentModal from "../../Modal/Components/Assignment/SubmitAssignmentModal";
+import { Modal } from "../../Modal/Modal";
 
 function DetailQuizComponent({ data, mutate, error, toast }) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isLoading, setLoading] = useState(false);
   const [quiz, setQuiz] = useState(data ? data.questions : "");
   const { hours, minutes: minuteTimes } = getTimeDiff(
     data?.start_date,
@@ -19,6 +22,7 @@ function DetailQuizComponent({ data, mutate, error, toast }) {
   );
   const { thumbnail, question, options } = quiz[currentIndex];
   const router = useRouter();
+  const SubmitAssignmentRef = useRef();
   const { params } = router.query;
   const [score, setScore] = useState({
     correct: 0,
@@ -71,10 +75,12 @@ function DetailQuizComponent({ data, mutate, error, toast }) {
 
   const postResultQuiz = async (quiz) => {
     const data = JSON.stringify(quiz);
+    setLoading(true);
     console.log(data);
     instance()
       .post(`api/result/${params && params[1]}/quiz`, { data: data })
       .then((res) => {
+        setLoading(false);
         router.replace("/assignments");
         toast({
           title: "Success",
@@ -86,6 +92,7 @@ function DetailQuizComponent({ data, mutate, error, toast }) {
       })
       .catch((errors) => {
         console.log(error);
+        setLoading(false);
         toast({
           title: "Error",
           status: "error",
@@ -98,6 +105,13 @@ function DetailQuizComponent({ data, mutate, error, toast }) {
 
   return (
     <>
+      <Modal ref={SubmitAssignmentRef}>
+        <SubmitAssignmentModal
+          parent={SubmitAssignmentRef}
+          isLoading={isLoading}
+          handleData={() => postResultQuiz(quiz)}
+        />
+      </Modal>
       <div className="bg-section">
         <div className="my-4">
           Time Left:{" "}
@@ -173,8 +187,7 @@ function DetailQuizComponent({ data, mutate, error, toast }) {
           {quiz.length - 1 === currentIndex && (
             <Button
               colorScheme={"blue"}
-              onClick={() => postResultQuiz(quiz)}
-              type="submit"
+              onClick={() => SubmitAssignmentRef.current.open()}
               leftIcon={<PaperAirplaneIcon className="w-5 h-5 rotate-90" />}
             >
               Submit

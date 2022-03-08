@@ -39,7 +39,7 @@ const ChakraMenuDropdown = ({ selectedData = {}, mutate, name = "", data }) => {
       });
   }, []);
   return (
-    <Menu isLazy>
+    <Menu variant={"absolute"} className='z-50'>
       <MenuButton px={4} py={2} transition="all 0.2s" variant={"ghost"}>
         <DotsVerticalIcon className="w-5 h-5" />
       </MenuButton>
