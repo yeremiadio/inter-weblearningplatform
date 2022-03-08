@@ -12,7 +12,7 @@ const AdminBottomNavigation = ({ auth, router, setOpen }) => {
   const navigations = [
     {
       id: 1,
-      name: "Dashboard",
+      name: "Home",
       href: "/dashboard",
       icon: (
         <HomeIcon
@@ -28,7 +28,7 @@ const AdminBottomNavigation = ({ auth, router, setOpen }) => {
     },
     {
       id: 2,
-      name: "Penugasan",
+      name: "Tugas",
       href: "/assignments",
       icon: (
         <ClipboardIcon
@@ -44,7 +44,7 @@ const AdminBottomNavigation = ({ auth, router, setOpen }) => {
     },
     {
       id: 3,
-      name: "Playground",
+      name: "Code",
       href: "/playground",
       icon: (
         <CodeIcon
@@ -110,11 +110,19 @@ const AdminBottomNavigation = ({ auth, router, setOpen }) => {
   ];
   return (
     <div className="bg-white border border-t border-gray-200 z-40 fixed inset-x-0 bottom-0 mt-72">
-      <ul className="px-4 py-2 flex justify-center items-center gap-2">
+      <ul
+        className={
+          "px-4 py-2 space-x-3 grid place-items-center " +
+          (auth.user?.roles[0].name === "admin" ||
+          auth.user?.roles[0].name === "teacher"
+            ? `grid-cols-5`
+            : `grid-cols-4`)
+        }
+      >
         {navigations.map((item) => (
           <li
             className={
-              "flex justify-center items-center group text-blue-600 text-[12px] " +
+              "group text-blue-600 text-[12px] w-20 " +
               (item.name === "Users" &&
                 auth.user?.roles[0]?.name === "student" &&
                 "hidden")

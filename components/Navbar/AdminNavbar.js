@@ -7,9 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import instance from "../../utils/instance";
 import { getAuthUserInfo } from "../../redux/actions/authAction";
 import { useToast } from "@chakra-ui/toast";
-import checkMobileOs from "../../utils/checkMobileOs";
 import useCheckOs from "../../utils/useCheckOs";
-
+import NotificationDropdown from "../Dropdown/NotificationDropdown";
 const AdminNavbar = ({ setOpen, open, user }) => {
   const auth = useSelector((state) => state.auth);
   const isMobileOs = useCheckOs();
@@ -25,7 +24,7 @@ const AdminNavbar = ({ setOpen, open, user }) => {
     <>
       {isMobileOs ? (
         <>
-          <div className="flex justify-between p-4 lg:py-6 lg:px-8 bg-white mt-0 fixed w-full z-40 top-0 border-b border-gray-200">
+          <div className="flex justify-between p-4 lg:py-4 lg:px-8 bg-white mt-0 fixed w-full z-40 top-0 border-b border-gray-200">
             <div className="flex items-center flex-1">
               <img
                 src="/interWithText.svg"
@@ -44,14 +43,17 @@ const AdminNavbar = ({ setOpen, open, user }) => {
                   {auth.isFetching ? <Spinner /> : "Verify Your Email"}
                 </Tag>
               )}
-              <UserDropdown user={user} />
+              <div className="flex items-center gap-3">
+                <NotificationDropdown />
+                <UserDropdown user={user} />
+              </div>
             </>
           </div>
         </>
       ) : (
         <>
           {/* Wb or Mobile Viewport */}
-          <div className="flex justify-between p-4 lg:py-6 lg:px-8 bg-white mt-0 fixed w-full z-40 top-0 border-b border-gray-200">
+          <div className="flex justify-between p-4 lg:py-4 lg:px-8 bg-white mt-0 fixed w-full z-40 top-0 border-b border-gray-200">
             <div className="flex items-center flex-1">
               <button
                 onClick={() => setOpen(!open)}
@@ -71,7 +73,10 @@ const AdminNavbar = ({ setOpen, open, user }) => {
                   {auth.isFetching ? <Spinner /> : "Verify Your Email"}
                 </Tag>
               )}
-              <UserDropdown user={user} />
+              <div className="flex items-center gap-4">
+                <NotificationDropdown />
+                <UserDropdown user={user} />
+              </div>
             </>
           </div>
         </>
