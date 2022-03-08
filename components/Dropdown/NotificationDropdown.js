@@ -34,7 +34,7 @@ const NotificationDropdown = () => {
                       // to get a value that is either negative, positive, or zero.
                       return new Date(b.created_at) - new Date(a.created_at);
                     })[0]?.created_at
-                  ) === new Date() && (
+                  ) && (
                     <div className="w-2 h-2 bg-green-500 rounded-full absolute -right-1 top-[0.2px]" />
                   )}
 
