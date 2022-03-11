@@ -10,17 +10,30 @@ const CustomCard = ({
   thumbnail = "",
   mutate,
   title = "",
+  href = "",
   description = "",
   slug = "",
   isEditable = false,
 }) => {
   return (
     <div className="hover:shadow-default-weblearning transition-all delay-75 border border-gray-200 rounded-lg bg-white">
-      <img
-        src={thumbnail ? thumbnail : "/imgPlaceholder.jpg"}
-        alt=""
-        className="w-full h-60 object-cover rounded-lg rounded-b-none"
-      />
+      <div className="relative">
+        <img
+          src={thumbnail ? thumbnail : "/imgPlaceholder.jpg"}
+          alt=""
+          className="w-full h-60 object-cover rounded-lg rounded-b-none"
+        />
+        {isEditable && (
+          <div className="absolute top-4 right-2">
+            <ChakraMenuDropdown
+              name={"materials"}
+              selectedData={{ id: id, slug: slug }}
+              data={data}
+              mutate={mutate}
+            />
+          </div>
+        )}
+      </div>
       <div className="p-4">
         <h3 className="text-primary text-xl lg:text-2xl font-bold line-clamp-2 mb-2">
           {title}
@@ -34,21 +47,13 @@ const CustomCard = ({
             (isEditable ? "justify-between" : "justify-end")
           }
         >
-          <Link href={slug ? slug : "/"}>
+          <Link href={href ? href : "/"}>
             <a className="w-full">
               <Button colorScheme={"blue"} isFullWidth>
                 View Detail
               </Button>
             </a>
           </Link>
-          {isEditable && (
-            <ChakraMenuDropdown
-              name={"materials"}
-              selectedData={{ id: id, slug: slug }}
-              data={data}
-              mutate={mutate}
-            />
-          )}
         </div>
       </div>
     </div>

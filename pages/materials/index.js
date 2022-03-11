@@ -100,13 +100,16 @@ function index() {
                         key={item.id}
                         id={item.id}
                         title={item.title}
-                        isEditable={true}
-                        description={item.description}
-                        thumbnail={item.thumbnail}
-                        slug={{
+                        isEditable={
+                          auth?.user.roles[0].name !== "student" && true
+                        }
+                        href={{
                           pathname: `materials/[slug]`,
                           query: { slug: item.slug },
                         }}
+                        description={item.description}
+                        thumbnail={item.thumbnail}
+                        slug={item.slug}
                       />
                     ))
                   )}
