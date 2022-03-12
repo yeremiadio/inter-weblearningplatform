@@ -6,8 +6,9 @@ import instance from "../../utils/instance";
 import { useToast } from "@chakra-ui/toast";
 import { Menu, Transition } from "@headlessui/react";
 import Link from "next/link";
+import { IconButton } from "@chakra-ui/react";
 
-const ChakraMenuDropdown = ({ selectedData = {}, mutate, name = "", data }) => {
+const VerticalDotMenuDropdown = ({ selectedData = {}, mutate, name = "", data }) => {
   const toast = useToast();
   const deleteSelectedData = useCallback(async () => {
     await instance()
@@ -43,7 +44,16 @@ const ChakraMenuDropdown = ({ selectedData = {}, mutate, name = "", data }) => {
   return (
     <Menu as={"div"} className="relative px-2">
       <Menu.Button>
-        <DotsVerticalIcon className="w-5 h-5" arial-hidden="true" />
+        <IconButton
+          icon={
+            <DotsVerticalIcon
+              className="w-5 h-5 text-gray-600"
+              arial-hidden="true"
+            />
+          }
+          size={"sm"}
+          rounded={"full"}
+        />
       </Menu.Button>
       <Transition
         as={Fragment}
@@ -85,4 +95,4 @@ const ChakraMenuDropdown = ({ selectedData = {}, mutate, name = "", data }) => {
   );
 };
 
-export default ChakraMenuDropdown;
+export default VerticalDotMenuDropdown;

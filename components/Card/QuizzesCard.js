@@ -2,7 +2,7 @@ import { Button, Tag } from "@chakra-ui/react";
 import moment from "moment";
 import React from "react";
 import Link from "next/link";
-import ChakraMenuDropdown from "../Dropdown/ChakraMenuDropdown";
+import VerticalDotMenuDropdown from "../Dropdown/VerticalDotMenuDropdown";
 import { getTimeDiff } from "../../utils/getTimeDiff";
 import { converTimeToMs } from "../../utils/convertTimeToMs";
 import { useTimer } from "react-timer-hook";
@@ -116,7 +116,7 @@ const QuizzesCard = ({
           )}
           {isEditable && (
             <div>
-              <ChakraMenuDropdown
+              <VerticalDotMenuDropdown
                 name={"quizzes"}
                 selectedData={{ id: id, slug: slug.query.params[1] }}
                 data={quizzes}

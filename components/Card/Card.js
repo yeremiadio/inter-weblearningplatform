@@ -2,7 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { Button } from "@chakra-ui/react";
-import ChakraMenuDropdown from "../Dropdown/ChakraMenuDropdown";
+import VerticalDotMenuDropdown from "../Dropdown/VerticalDotMenuDropdown";
 
 const CustomCard = ({
   id = 0,
@@ -25,7 +25,7 @@ const CustomCard = ({
         />
         {isEditable && (
           <div className="absolute top-4 right-2">
-            <ChakraMenuDropdown
+            <VerticalDotMenuDropdown
               name={"materials"}
               selectedData={{ id: id, slug: slug }}
               data={data}
