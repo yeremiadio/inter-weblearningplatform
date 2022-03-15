@@ -1,5 +1,10 @@
 import { FormLabel } from "@chakra-ui/react";
-import { convertToRaw, EditorState } from "draft-js";
+import {
+  convertToRaw,
+  EditorState,
+  ContentState,
+  convertFromHTML,
+} from "draft-js";
 import draftToHtml from "draftjs-to-html";
 import { useField } from "formik";
 import React, { useState } from "react";
@@ -11,19 +16,23 @@ const FormikDraftJsInput = (props) => {
   const [editorState, setEditorState] = useState(initialEditorState);
   const rawContentState = convertToRaw(editorState.getCurrentContent());
   const markup = draftToHtml(rawContentState, { trigger: "#", separator: " " });
-  const { label, setFieldValue, ...rest } = props;
+  const { label, formValues, setFieldValue, ...rest } = props;
   const [field, meta, helper] = useField(props);
   const { touched, error } = meta;
   const { setValue } = helper;
   const { value } = field;
   const isError = touched && error && true;
-
   useEffect(() => {
-    setFieldValue(props.name, markup);
+    const ac = new AbortController();
+    setFieldValue(field.name, markup);
     if (value) {
       setValue(markup);
     }
-  }, [editorState, value]);
+    return () => {
+      ac.abort();
+    };
+  }, [editorState]);
+
   return (
     <>
       <FormLabel>{label}</FormLabel>
@@ -32,6 +41,7 @@ const FormikDraftJsInput = (props) => {
           editorState={editorState}
           setEditorState={setEditorState}
           {...rest}
+          // {...field}
         />
         {isError && <p className="text-sm text-red-500">{error}</p>}
       </div>

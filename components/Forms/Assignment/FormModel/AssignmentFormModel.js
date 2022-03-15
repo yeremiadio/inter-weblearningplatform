@@ -22,6 +22,11 @@ export default {
       label: "Questions",
       requiredErrorMsg: "Questions is required",
     },
+    essayQuestion: {
+      name: "questions.0.question",
+      label: "Essay",
+      requiredErrorMsg: "Questions is required",
+    },
     options: {
       name: "options",
       label: "Options",

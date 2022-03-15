@@ -81,7 +81,10 @@ function CodeEditorNavbar({ data = {}, isEdited = false }) {
         <Button
           className="text-white"
           colorScheme={"blue"}
-          onClick={onSubmitCode}
+          onClick={() => {
+            onSubmitCode();
+            getImage();
+          }}
           isLoading={isFetching}
           leftIcon={<CloudIcon className="w-6 h-6" />}
         >

@@ -2,8 +2,8 @@ import { useFormikContext } from "formik";
 import React from "react";
 import EssayAssignment from "./QuizTypes/Essay";
 import Quiz from "./QuizTypes/Quiz";
-const QuizDetailForm = ({ formField, errors }) => {
-  const { questions, options } = formField;
+const AssignmentDetailForm = ({ formField, errors }) => {
+  const { questions, options, essayQuestion } = formField;
   const { values: formValues, setFieldValue } = useFormikContext();
   return (
     <>
@@ -17,6 +17,8 @@ const QuizDetailForm = ({ formField, errors }) => {
         />
       ) : (
         <EssayAssignment
+          questions={questions}
+          essayQuestion={essayQuestion}
           formValues={formValues}
           setFieldValue={setFieldValue}
           errors={errors}
@@ -26,4 +28,4 @@ const QuizDetailForm = ({ formField, errors }) => {
   );
 };
 
-export default QuizDetailForm;
+export default AssignmentDetailForm;

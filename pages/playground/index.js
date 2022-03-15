@@ -8,24 +8,25 @@ import useSWR from "swr";
 import { fetcher } from "../../utils/fetcher.js";
 import BlueSpinner from "../../components/Spinner/BlueSpinner";
 import moment from "moment";
-import { Button, Tag, TagLabel } from "@chakra-ui/react";
-import { useDispatch } from "react-redux";
+import { Button, Spinner, Tag, TagLabel } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
 import { deleteCode } from "../../redux/actions/codeAction.js";
 import { useToast } from "@chakra-ui/toast";
-import { Modal } from "../../components/Modal/Modal.js";
-import CreateWebPageBuilderModal from "../../components/Modal/Components/Code/CreateWebPageBuilderModal.js";
 function playground() {
   const router = useRouter();
-  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth.user);
   const toast = useToast();
   const refCreateWebPageBuilder = useRef();
   const {
-    data: codehistories,
+    data: codes,
     mutate,
     error,
-  } = useSWR([`api/code/histories`], (url) => fetcher(url), {
+  } = useSWR([`api/codes`], (url) => fetcher(url), {
     revalidateOnFocus: false,
   });
+  const authUserCodeHistories = codes?.filter(
+    (item) => item.user_id === auth.user.id
+  );
   const items = [
     {
       id: 1,
@@ -100,7 +101,9 @@ function playground() {
           <Button
             size={"sm"}
             colorScheme={"red"}
-            onClick={() => deleteCode(row.id, codehistories, mutate, toast)}
+            onClick={() =>
+              deleteCode(row.id, authUserCodeHistories, mutate, toast)
+            }
           >
             Delete
           </Button>
@@ -112,17 +115,19 @@ function playground() {
 
   return (
     <>
-      <Modal ref={refCreateWebPageBuilder}>
-        <CreateWebPageBuilderModal
-          data={codehistories}
-          mutate={mutate}
-          router={router}
-          parent={refCreateWebPageBuilder}
-          toast={toast}
-        />
-      </Modal>
       <Tab.Group>
         <Tab.List className={"bg-white mb-6 overflow-hidden rounded"}>
+          <Tab
+            className={({ selected }) =>
+              classNames(
+                "p-4 font-medium",
+                "",
+                selected ? "border-blue-500 border-b-2" : "text-gray-400"
+              )
+            }
+          >
+            Collections
+          </Tab>
           <Tab
             className={({ selected }) =>
               classNames(
@@ -148,6 +153,24 @@ function playground() {
         </Tab.List>
         <Tab.Panels>
           <Tab.Panel>
+            {!codes && !error ? (
+              <Spinner />
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {codes?.map((item) => (
+                  <div key={item.id} className="flex flex-col">
+                    <div
+                      className={`aspect-[4/3] rounded-md overflow-hidden bg-blue-500 h-44`}
+                    ></div>
+                    <span className="mt-2 font-medium text-lg line-clamp-1">
+                      {item.title}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </Tab.Panel>
+          <Tab.Panel>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
               {items.map((item) => (
                 <div
@@ -171,11 +194,6 @@ function playground() {
                     <p className="text-secondary leading-loose text-base line-clamp-3 my-2">
                       {item.desc}
                     </p>
-                    {/* {item.status === "development" && (
-                      <Tag colorScheme={"red"} size="md">
-                        Under Development
-                      </Tag>
-                    )} */}
                   </div>
                 </div>
               ))}
@@ -186,7 +204,11 @@ function playground() {
               <BlueSpinner />
             ) : (
               <div className="mt-4">
-                <DataTable columns={columns} data={codehistories} pagination />
+                <DataTable
+                  columns={columns}
+                  data={authUserCodeHistories}
+                  pagination
+                />
               </div>
             )}
           </Tab.Panel>

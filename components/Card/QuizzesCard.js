@@ -45,11 +45,25 @@ const QuizzesCard = ({
   );
   return (
     <div className="hover:shadow-default-weblearning transition-all delay-75 border border-gray-200 rounded-lg bg-white">
-      <img
-        src={thumbnail ? thumbnail : "/imgPlaceholder.jpg"}
-        alt=""
-        className="w-full h-60 object-cover rounded-lg rounded-b-none"
-      />
+      <div className="relative">
+        <img
+          src={thumbnail ? thumbnail : "/imgPlaceholder.jpg"}
+          alt=""
+          className="w-full h-60 object-cover rounded-lg rounded-b-none"
+        />
+        {isEditable && (
+          <div className="absolute top-4 right-2">
+            <VerticalDotMenuDropdown
+              name={"quizzes"}
+              namePage="assignments"
+              selectedData={{ id: id, slug: slug.query.params[1] }}
+              data={quizzes}
+              mutate={mutate}
+            />
+          </div>
+        )}
+      </div>
+
       <div className="p-4">
         <h3 className="text-primary text-xl lg:text-2xl font-bold line-clamp-2 mb-2">
           {title}
@@ -113,16 +127,6 @@ const QuizzesCard = ({
             </Link>
           ) : (
             <p className="text-red-500 font-semibold">Not submitted</p>
-          )}
-          {isEditable && (
-            <div>
-              <VerticalDotMenuDropdown
-                name={"quizzes"}
-                selectedData={{ id: id, slug: slug.query.params[1] }}
-                data={quizzes}
-                mutate={mutate}
-              />
-            </div>
           )}
         </div>
       </div>

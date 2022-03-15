@@ -8,7 +8,13 @@ import { Menu, Transition } from "@headlessui/react";
 import Link from "next/link";
 import { IconButton } from "@chakra-ui/react";
 
-const VerticalDotMenuDropdown = ({ selectedData = {}, mutate, name = "", data }) => {
+const VerticalDotMenuDropdown = ({
+  selectedData = {},
+  mutate,
+  name = "",
+  namePage = "",
+  data,
+}) => {
   const toast = useToast();
   const deleteSelectedData = useCallback(async () => {
     await instance()
@@ -43,7 +49,7 @@ const VerticalDotMenuDropdown = ({ selectedData = {}, mutate, name = "", data })
   }, []);
   return (
     <Menu as={"div"} className="relative px-2">
-      <Menu.Button>
+      <Menu.Button as="div">
         <IconButton
           icon={
             <DotsVerticalIcon
@@ -72,7 +78,7 @@ const VerticalDotMenuDropdown = ({ selectedData = {}, mutate, name = "", data })
           <Menu.Item>
             <Link
               href={{
-                pathname: `materials/edit/[slug]`,
+                pathname: `${namePage}/edit/[slug]`,
                 query: { slug: selectedData.slug },
               }}
             >

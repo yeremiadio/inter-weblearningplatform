@@ -1,14 +1,10 @@
-import { FormLabel } from "@chakra-ui/react";
-import { useFormikContext } from "formik";
 import React from "react";
-import { useTimer } from "react-timer-hook";
 import FormikDatePickerInput from "../../Inputs/FormikDatePickerInput";
 import FormikInputField from "../../Inputs/FormikInputField";
-import FormikNumberInputField from "../../Inputs/FormikNumberInputField";
 import FormikSelectInput from "../../Inputs/FormikSelectInput";
 import FormikUploadInput from "../../Inputs/FormikUploadInput";
 
-const MainQuizForm = ({ formField, errors }) => {
+const MainAssignmentForm = ({ formField, isEditable, errors }) => {
   const { title, start_date, end_date, type, thumbnail } = formField;
   const quizTypes = [
     {
@@ -53,15 +49,17 @@ const MainQuizForm = ({ formField, errors }) => {
           <p className="text-red-500 text-sm">{errors?.thumbnail}</p>
         )}
       </div>
-      <div className="mt-4 w-1/2 lg:w-32">
-        <FormikSelectInput
-          name={type.name}
-          label={type.label}
-          data={quizTypes}
-        />
-      </div>
+      {!isEditable && (
+        <div className="mt-4 w-1/2 lg:w-32">
+          <FormikSelectInput
+            name={type.name}
+            label={type.label}
+            data={quizTypes}
+          />
+        </div>
+      )}
     </>
   );
 };
 
-export default MainQuizForm;
+export default MainAssignmentForm;

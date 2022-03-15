@@ -1,15 +1,8 @@
-import { useToast } from "@chakra-ui/toast";
-import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import Editor from "../../CodePenEditor/Editor";
 import CodeEditorNavbar from "../../Navbar/CodeEditorNavbar";
-
 const FrontendEditorDetailComponent = ({ code }) => {
   const parsedCode = JSON.parse(code.code);
-  const dispatch = useDispatch();
-  const toast = useToast();
-  const router = useRouter();
   const [html, setHtml] = useState(
     parsedCode ? parsedCode.html : "<h1>Hello World</h1>"
   );
@@ -37,6 +30,8 @@ const FrontendEditorDetailComponent = ({ code }) => {
   return (
     <div className="bg-gray-900">
       <CodeEditorNavbar
+        getImage={getImage}
+        image={image}
         isEdited={true}
         data={{
           type: "frontend",
@@ -64,7 +59,7 @@ const FrontendEditorDetailComponent = ({ code }) => {
             onChange={setJs}
           />
         </div>
-        <div className="h-screen bg-white">
+        <div className="h-screen bg-white" id="node-code" ref={codeRef}>
           <iframe
             srcDoc={srcDoc}
             title="output"

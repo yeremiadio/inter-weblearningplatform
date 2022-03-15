@@ -1,20 +1,18 @@
 import { FieldArray } from "formik";
 import React from "react";
 import InputField from "../../../Inputs/FormikInputField";
-import { FormLabel } from "@chakra-ui/react";
-import FormikDraftJsInput from "../../../Inputs/FormikDraftJsInput";
-
-const EssayAssignment = ({ formValues, setFieldValue, errors }) => {
+import FormikTextAreaInput from "../../../Inputs/FormikTextAreaInput";
+const EssayAssignment = ({ formValues, setFieldValue, questions, errors }) => {
+  console.log(formValues);
   return (
     <div>
-      <FieldArray name="questions">
+      <FieldArray name={questions.name}>
         <>
           <InputField name={"questions[0].id"} className="hidden" />
           <div className="mt-4">
-            <FormikDraftJsInput
-              name="questions[0].question"
-              setFieldValue={setFieldValue}
-              label={"Pertanyaan"}
+            <FormikTextAreaInput
+              name={`${questions.name}.0.question`}
+              label={questions.label}
             />
             {errors && (
               <p className="text-red-500 text-sm">

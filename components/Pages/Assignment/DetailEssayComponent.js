@@ -9,6 +9,7 @@ import instance from "../../../utils/instance";
 import { useToast } from "@chakra-ui/toast";
 import { useRouter } from "next/router";
 import { Modal } from "../../Modal/Modal";
+import SubmitAssignmentModal from "../../Modal/Components/Assignment/SubmitAssignmentModal";
 const DetailEssayComponent = ({ data, mutate, error }) => {
   const [isLoading, setIsLoading] = useState(false);
   const SubmitAssignmentRef = useRef();
@@ -111,10 +112,10 @@ const DetailEssayComponent = ({ data, mutate, error }) => {
                 Submit
               </Button>
               <Modal ref={SubmitAssignmentRef}>
-                <SubmitAssignmentRef
+                <SubmitAssignmentModal
                   parent={SubmitAssignmentRef}
                   isLoading={isLoading}
-                  handleData={() => handleSubmit}
+                  handleData={() => formik.handleSubmit}
                 />
               </Modal>
             </form>

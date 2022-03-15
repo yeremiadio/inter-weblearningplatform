@@ -27,6 +27,7 @@ const CustomCard = ({
           <div className="absolute top-4 right-2">
             <VerticalDotMenuDropdown
               name={"materials"}
+              namePage="materials"
               selectedData={{ id: id, slug: slug }}
               data={data}
               mutate={mutate}
