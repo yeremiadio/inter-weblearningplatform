@@ -1,15 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RESET_ERRORS, RESET_USER } from "../../constants/types";
 import Editor from "../../components/CodePenEditor/Editor";
 import { useToast } from "@chakra-ui/toast";
 import CodeEditorNavbar from "../../components/Navbar/CodeEditorNavbar";
-
+import FrameOutputPreviewComponent from "../../components/Pages/Playground/FrameOutputPreviewComponent";
+import parse from "html-react-parser";
+import { toPng } from "html-to-image";
 function index() {
-  const [html, setHtml] = useState("<h1>Hello World</h1>");
-  const [css, setCss] = useState("* { font-family: 'Arial'; }");
+  const [html, setHtml] = useState(
+    `<h1>Hello World</h1><button onClick="testWorld()">test</button>`
+  );
+  const [css, setCss] = useState(
+    "* { font-family: 'Arial'; font-weight: bold; }"
+  );
   const [js, setJs] = useState("function testWorld() { alert('test') }");
   const [srcDoc, setSrcDoc] = useState("");
+  const frontendCodeRef = useRef();
+  const [screenshotPage, setScreenshotPage] = useState();
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -30,14 +38,22 @@ function index() {
     
       `);
     }, 250);
-
+    if (frontendCodeRef) {
+      toPng(frontendCodeRef.current, {
+        cacheBust: true,
+        height: 640,
+      }).then((dataUrl) => {
+        setScreenshotPage(dataUrl);
+      });
+    }
     return () => clearTimeout(timeout);
   }, [html, css, js]);
 
   return (
-    <div className="bg-gray-900">
+    <div className="bg-gray-900" ref={frontendCodeRef}>
       <CodeEditorNavbar
         isEdited={false}
+        nodeScreenshot={screenshotPage}
         data={{
           type: "frontend",
           code: JSON.stringify({ html: html, css: css, js: js }),
@@ -68,7 +84,8 @@ function index() {
           <iframe
             srcDoc={srcDoc}
             title="output"
-            sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
+            allow="accelerometer; camera; encrypted-media; display-capture; geolocation; gyroscope; microphone; midi; clipboard-read; clipboard-write; web-share"
+            sandbox="allow-downloads allow-forms allow-modals allow-pointer-lock allow-popups allow-presentation allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
             frameBorder="0"
             width="100%"
             height="100%"

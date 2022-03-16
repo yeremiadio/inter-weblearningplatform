@@ -1,15 +1,11 @@
-import { useToast } from "@chakra-ui/toast";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React from "react";
 import useSWR from "swr";
-// import Admin from "../../../layouts/Admin";
 import { fetcher } from "../../../utils/fetcher";
 import BlueSpinner from "../../../components/Spinner/BlueSpinner";
 import EmptyDataComponent from "../../../components/EmptyData";
 import FrontendEditorDetailComponent from "../../../components/Pages/Playground/FrontendEditorDetailComponent";
 import JsEditorDetailComponent from "../../../components/Pages/Playground/JsEditorDetailComponent";
-import { useDispatch, useSelector } from "react-redux";
-import { RESET_ERRORS, RESET_USER } from "../../../constants/types";
 
 const play = () => {
   const router = useRouter();

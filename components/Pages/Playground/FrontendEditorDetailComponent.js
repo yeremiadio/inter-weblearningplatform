@@ -1,13 +1,21 @@
-import React, { useEffect, useState } from "react";
+import { toPng } from "html-to-image";
+import React, { useEffect, useRef, useState } from "react";
 import Editor from "../../CodePenEditor/Editor";
 import CodeEditorNavbar from "../../Navbar/CodeEditorNavbar";
+import FrameOutputPreviewComponent from "./FrameOutputPreviewComponent";
 const FrontendEditorDetailComponent = ({ code }) => {
   const parsedCode = JSON.parse(code.code);
+  const codeFrontendRef = useRef();
+  const [screenshotPage, setScreenshotPage] = useState();
   const [html, setHtml] = useState(
-    parsedCode ? parsedCode.html : "<h1>Hello World</h1>"
+    parsedCode
+      ? parsedCode.html
+      : `<h1>Hello World</h1><button onClick="testWorld()">test</button>`
   );
   const [css, setCss] = useState(
-    parsedCode ? parsedCode.css : "* { font-family: 'Arial'; }"
+    parsedCode
+      ? parsedCode.css
+      : "* { font-family: 'Arial'; font-weight: bold; }"
   );
   const [js, setJs] = useState(
     parsedCode ? parsedCode.js : "function testWorld() { alert('test') }"
@@ -24,14 +32,20 @@ const FrontendEditorDetailComponent = ({ code }) => {
           </html>
         `);
     }, 250);
-
+    if (codeFrontendRef) {
+      toPng(codeFrontendRef.current, {
+        cacheBust: true,
+        height: 640,
+      }).then((dataUrl) => {
+        setScreenshotPage(dataUrl);
+      });
+    }
     return () => clearTimeout(timeout);
   }, [html, css, js]);
   return (
-    <div className="bg-gray-900">
+    <div className="bg-gray-900" ref={codeFrontendRef}>
       <CodeEditorNavbar
-        getImage={getImage}
-        image={image}
+        nodeScreenshot={screenshotPage}
         isEdited={true}
         data={{
           type: "frontend",
@@ -59,7 +73,7 @@ const FrontendEditorDetailComponent = ({ code }) => {
             onChange={setJs}
           />
         </div>
-        <div className="h-screen bg-white" id="node-code" ref={codeRef}>
+        <div className="h-screen bg-white">
           <iframe
             srcDoc={srcDoc}
             title="output"

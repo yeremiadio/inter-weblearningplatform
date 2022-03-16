@@ -8,7 +8,7 @@ import useSWR from "swr";
 import { fetcher } from "../../utils/fetcher.js";
 import BlueSpinner from "../../components/Spinner/BlueSpinner";
 import moment from "moment";
-import { Button, Spinner, Tag, TagLabel } from "@chakra-ui/react";
+import { Box, Button, Spinner, Tag, TagLabel } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { deleteCode } from "../../redux/actions/codeAction.js";
 import { useToast } from "@chakra-ui/toast";
@@ -154,14 +154,31 @@ function playground() {
         <Tab.Panels>
           <Tab.Panel>
             {!codes && !error ? (
-              <Spinner />
+              <Box display={"flex"} alignItems="center">
+                <Spinner colorScheme={"blue"} />
+              </Box>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 cursor-pointer">
                 {codes?.map((item) => (
-                  <div key={item.id} className="flex flex-col">
+                  <div
+                    key={item.id}
+                    className="flex flex-col"
+                    onClick={() =>
+                      router.push({
+                        pathname: "playground/play/[...params]",
+                        query: { params: [item.type, item.slug] },
+                      })
+                    }
+                  >
                     <div
-                      className={`aspect-[4/3] rounded-md overflow-hidden bg-blue-500 h-44`}
-                    ></div>
+                      className={`aspect-[4/3] rounded-md bg-cover bg-center bg-no-repeat overflow-hidden h-44 border border-gray-300`}
+                    >
+                      <img
+                        src={item.screenshot}
+                        alt=""
+                        className="object-cover"
+                      />
+                    </div>
                     <span className="mt-2 font-medium text-lg line-clamp-1">
                       {item.title}
                     </span>

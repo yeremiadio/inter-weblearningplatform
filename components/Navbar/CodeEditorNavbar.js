@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { storeCode, updateCode } from "../../redux/actions/codeAction";
 import { RESET_ERRORS, RESET_USER } from "../../constants/types";
 
-function CodeEditorNavbar({ data = {}, isEdited = false }) {
+function CodeEditorNavbar({ nodeScreenshot, data = {}, isEdited = false }) {
   const router = useRouter();
   const auth = useSelector((state) => state.auth);
   const toast = useToast();
@@ -45,6 +45,7 @@ function CodeEditorNavbar({ data = {}, isEdited = false }) {
       return ac.abort();
     }
   }, []);
+
   const [titleCode, setTitleCode] = useState(
     isEdited ? code.title : "untitled"
   );
@@ -54,8 +55,16 @@ function CodeEditorNavbar({ data = {}, isEdited = false }) {
   const onSubmitCode = async () => {
     dispatch(
       isEdited
-        ? updateCode({ title: titleCode, ...data }, router, toast)
-        : storeCode({ title: titleCode, ...data }, router, toast)
+        ? updateCode(
+            { title: titleCode, screenshot: nodeScreenshot, ...data },
+            router,
+            toast
+          )
+        : storeCode(
+            { title: titleCode, screenshot: nodeScreenshot, ...data },
+            router,
+            toast
+          )
     );
   };
   return (
@@ -81,10 +90,7 @@ function CodeEditorNavbar({ data = {}, isEdited = false }) {
         <Button
           className="text-white"
           colorScheme={"blue"}
-          onClick={() => {
-            onSubmitCode();
-            getImage();
-          }}
+          onClick={onSubmitCode}
           isLoading={isFetching}
           leftIcon={<CloudIcon className="w-6 h-6" />}
         >
