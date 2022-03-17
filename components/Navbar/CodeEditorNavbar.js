@@ -67,7 +67,6 @@ function CodeEditorNavbar({ codeNode, data = {}, isEdited = false }) {
   }, [data, codeNode]);
 
   useEffect(() => {
-    console.log(codeNode);
     const ac = new AbortController();
     const timeout = setTimeout(() => {
       getScreenshotPage();
