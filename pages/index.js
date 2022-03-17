@@ -34,7 +34,7 @@ export default function Home() {
                 </a>
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link href={"register"}>
                 <a className="text-white text-opacity-50 text-sm hover:text-opacity-100 transition-all delay-75">
                   Penggunaan
@@ -47,7 +47,7 @@ export default function Home() {
                   Tentang Aplikasi
                 </a>
               </Link>
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>
