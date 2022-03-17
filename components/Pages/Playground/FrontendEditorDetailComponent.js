@@ -1,12 +1,11 @@
 import { toPng } from "html-to-image";
 import React, { useEffect, useRef, useState } from "react";
+import useScreenshotWebPage from "../../../utils/useScreenshotWebPage";
 import Editor from "../../CodePenEditor/Editor";
 import CodeEditorNavbar from "../../Navbar/CodeEditorNavbar";
 import FrameOutputPreviewComponent from "./FrameOutputPreviewComponent";
 const FrontendEditorDetailComponent = ({ code }) => {
   const parsedCode = JSON.parse(code.code);
-  const codeFrontendRef = useRef();
-  const [screenshotPage, setScreenshotPage] = useState();
   const [html, setHtml] = useState(
     parsedCode
       ? parsedCode.html
@@ -21,7 +20,7 @@ const FrontendEditorDetailComponent = ({ code }) => {
     parsedCode ? parsedCode.js : "function testWorld() { alert('test') }"
   );
   const [srcDoc, setSrcDoc] = useState("");
-
+  const [codeNodeElement, codeRef] = useScreenshotWebPage(html, css, js);
   useEffect(() => {
     const timeout = setTimeout(() => {
       setSrcDoc(`
@@ -32,20 +31,12 @@ const FrontendEditorDetailComponent = ({ code }) => {
           </html>
         `);
     }, 250);
-    if (codeFrontendRef) {
-      toPng(codeFrontendRef.current, {
-        cacheBust: true,
-        height: 640,
-      }).then((dataUrl) => {
-        setScreenshotPage(dataUrl);
-      });
-    }
     return () => clearTimeout(timeout);
   }, [html, css, js]);
   return (
-    <div className="bg-gray-900" ref={codeFrontendRef}>
+    <div className="bg-gray-900" ref={codeRef}>
       <CodeEditorNavbar
-        nodeScreenshot={screenshotPage}
+        codeNode={codeNodeElement}
         isEdited={true}
         data={{
           type: "frontend",

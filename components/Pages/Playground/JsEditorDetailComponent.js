@@ -3,6 +3,7 @@ import { TrashIcon } from "@heroicons/react/solid";
 import { toPng } from "html-to-image";
 import React, { useEffect, useRef, useState } from "react";
 import instance from "../../../utils/instance";
+import useScreenshotWebPage from "../../../utils/useScreenshotWebPage";
 import Editor from "../../CodeEditor/Editor";
 import CodeEditorNavbar from "../../Navbar/CodeEditorNavbar";
 import FrameOutputPreviewComponent from "./FrameOutputPreviewComponent";
@@ -12,10 +13,9 @@ const JsEditorDetailComponent = ({ data, mutate, error }) => {
   Write your first code...
 */`;
   const [code, setCode] = useState(data ? data.code : initialState);
-  const jsCodeRef = useRef();
   const [outputData, setOutputData] = useState("");
-  const [screenshotPage, setScreenshotPage] = useState();
   const [loading, setLoading] = useState("");
+  const [codeNodeElement, codeRef] = useScreenshotWebPage("", "", code);
   const resetCode = () => {
     setCode(initialState);
   };
@@ -42,32 +42,17 @@ const JsEditorDetailComponent = ({ data, mutate, error }) => {
     }
   };
 
-  useEffect(() => {
-    const ac = new AbortController();
-    if (jsCodeRef) {
-      toPng(jsCodeRef.current, {
-        cacheBust: true,
-        height: 640,
-      }).then((dataUrl) => {
-        setScreenshotPage(dataUrl);
-      });
-    }
-    return () => {
-      ac.abort();
-    };
-  }, [code]);
-
   return (
-    <div ref={jsCodeRef}>
+    <div ref={codeRef}>
       <CodeEditorNavbar
         isEdited={true}
-        nodeScreenshot={screenshotPage}
+        codeNode={codeNodeElement}
         data={{
           type: "js",
           code: code,
         }}
       />
-      <div ref={jsCodeRef}>
+      <div>
         <div className="bg-gray-900 flex flex-col lg:flex-row mt-24">
           <Editor
             language="javascript"

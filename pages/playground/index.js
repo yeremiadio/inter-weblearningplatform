@@ -171,7 +171,7 @@ function playground() {
                     }
                   >
                     <div
-                      className={`aspect-[4/3] rounded-md bg-cover bg-center bg-no-repeat overflow-hidden h-44 border border-gray-300`}
+                      className={`aspect-[16/9] rounded-lg bg-cover bg-center bg-no-repeat overflow-hidden h-56 lg:h-44 border border-gray-200`}
                     >
                       <img
                         src={item.screenshot}
@@ -179,9 +179,14 @@ function playground() {
                         className="object-cover"
                       />
                     </div>
-                    <span className="mt-2 font-medium text-lg line-clamp-1">
-                      {item.title}
-                    </span>
+                    <div className="mt-2 flex justify-between items-center">
+                      <span className="font-medium text-lg line-clamp-1">
+                        {item.title}
+                      </span>
+                      <span className="text-sm line-clamp-1">
+                        {item.user.name}
+                      </span>
+                    </div>
                   </div>
                 ))}
               </div>

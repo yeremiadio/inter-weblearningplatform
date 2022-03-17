@@ -1,12 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RESET_ERRORS, RESET_USER } from "../../constants/types";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Editor from "../../components/CodePenEditor/Editor";
-import { useToast } from "@chakra-ui/toast";
 import CodeEditorNavbar from "../../components/Navbar/CodeEditorNavbar";
-import FrameOutputPreviewComponent from "../../components/Pages/Playground/FrameOutputPreviewComponent";
-import parse from "html-react-parser";
-import { toPng } from "html-to-image";
+import useScreenshotWebPage from "../../utils/useScreenshotWebPage";
 function index() {
   const [html, setHtml] = useState(
     `<h1>Hello World</h1><button onClick="testWorld()">test</button>`
@@ -16,8 +11,8 @@ function index() {
   );
   const [js, setJs] = useState("function testWorld() { alert('test') }");
   const [srcDoc, setSrcDoc] = useState("");
-  const frontendCodeRef = useRef();
-  const [screenshotPage, setScreenshotPage] = useState();
+
+  const [codeNodeElement, codeRef] = useScreenshotWebPage(html, css, js);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -38,22 +33,15 @@ function index() {
     
       `);
     }, 250);
-    if (frontendCodeRef) {
-      toPng(frontendCodeRef.current, {
-        cacheBust: true,
-        height: 640,
-      }).then((dataUrl) => {
-        setScreenshotPage(dataUrl);
-      });
-    }
+
     return () => clearTimeout(timeout);
   }, [html, css, js]);
 
   return (
-    <div className="bg-gray-900" ref={frontendCodeRef}>
+    <div className="bg-gray-900" ref={codeRef}>
       <CodeEditorNavbar
         isEdited={false}
-        nodeScreenshot={screenshotPage}
+        codeNode={codeNodeElement}
         data={{
           type: "frontend",
           code: JSON.stringify({ html: html, css: css, js: js }),

@@ -1,12 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import Editor from "../../components/CodeEditor/Editor";
 import { Box, Button, Spinner } from "@chakra-ui/react";
 import instance from "../../utils/instance";
 import { TrashIcon } from "@heroicons/react/solid";
 import CodeEditorNavbar from "../../components/Navbar/CodeEditorNavbar";
-import { useSelector } from "react-redux";
-import FrameOutputPreviewComponent from "../../components/Pages/Playground/FrameOutputPreviewComponent";
-import { toPng } from "html-to-image";
+import useScreenshotWebPage from "../../utils/useScreenshotWebPage";
 
 function index() {
   const initialState = `/*    
@@ -14,8 +12,6 @@ function index() {
 */`;
   const [code, setCode] = useState(initialState);
   const [outputData, setOutputData] = useState("");
-  const jsCodeRef = useRef();
-  const [screenshotPage, setScreenshotPage] = useState();
   const [loading, setLoading] = useState("");
   const resetCode = () => {
     setCode(initialState);
@@ -42,37 +38,20 @@ function index() {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    const ac = new AbortController();
-    if (jsCodeRef) {
-      toPng(jsCodeRef.current, {
-        cacheBust: true,
-        height: 640,
-      }).then((dataUrl) => {
-        setScreenshotPage(dataUrl);
-      });
-    }
-    return () => {
-      ac.abort();
-    };
-  }, [code]);
+  const [codeNodeElement, codeRef] = useScreenshotWebPage(code);
 
   return (
-    <div>
+    <div ref={codeRef}>
       <CodeEditorNavbar
         isEdited={false}
-        nodeScreenshot={screenshotPage}
+        codeNode={codeNodeElement}
         data={{
           type: "js",
           code: code,
         }}
       />
-      <div ref={jsCodeRef}>
-        <div
-          className="flex flex-col lg:flex-row mt-24 bg-gray-900"
-          ref={jsCodeRef}
-        >
+      <div>
+        <div className="flex flex-col lg:flex-row mt-24 bg-gray-900">
           <Editor
             language="javascript"
             displayName="JS"

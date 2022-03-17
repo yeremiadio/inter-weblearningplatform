@@ -56,7 +56,7 @@ function Login() {
           </Link>
 
           {/* Card */}
-          <div className="bg-white border border-gray-100 p-4 rounded lg:shadow w-full sm:w-3/5 md:w-3/5 lg:w-4/12">
+          <div className="bg-white border border-gray-200 p-4 rounded sm:w-3/5 md:w-3/5 lg:w-4/12">
             <div className="text-center">
               <h3 className="text-primary text-lg font-bold tracking-wide">
                 Login

@@ -5,20 +5,22 @@ import {
   EditablePreview,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import UserDropdown from "../Dropdown/UserDropdown";
 import { useToast } from "@chakra-ui/toast";
 import { CloudIcon } from "@heroicons/react/solid";
 import { useDispatch, useSelector } from "react-redux";
 import { storeCode, updateCode } from "../../redux/actions/codeAction";
 import { RESET_ERRORS, RESET_USER } from "../../constants/types";
+import { toPng } from "html-to-image";
 
-function CodeEditorNavbar({ nodeScreenshot, data = {}, isEdited = false }) {
+function CodeEditorNavbar({ codeNode, data = {}, isEdited = false }) {
   const router = useRouter();
   const auth = useSelector((state) => state.auth);
   const toast = useToast();
   const isFetching = useSelector((state) => state.code.isFetching);
   const code = useSelector((state) => state.code.data);
+  const [screenShotPage, setScreenshotPage] = useState("");
   const dispatch = useDispatch();
   useEffect(() => {
     const ac = new AbortController();
@@ -52,16 +54,41 @@ function CodeEditorNavbar({ nodeScreenshot, data = {}, isEdited = false }) {
   const onChangeTitleProject = (value) => {
     setTitleCode(value);
   };
+
+  const getScreenshotPage = useCallback(() => {
+    if (codeNode) {
+      toPng(codeNode, {
+        cacheBust: true,
+        width: 320,
+        height: 640,
+        quality: 0.5,
+      }).then((dataUrl) => setScreenshotPage(dataUrl));
+    }
+  }, [data, codeNode]);
+
+  useEffect(() => {
+    console.log(codeNode);
+    const ac = new AbortController();
+    const timeout = setTimeout(() => {
+      getScreenshotPage();
+    }, 1500);
+
+    return () => {
+      ac.abort();
+      clearTimeout(timeout);
+    };
+  }, [data]);
+
   const onSubmitCode = async () => {
-    dispatch(
+    await dispatch(
       isEdited
         ? updateCode(
-            { title: titleCode, screenshot: nodeScreenshot, ...data },
+            { title: titleCode, screenshot: screenShotPage, ...data },
             router,
             toast
           )
         : storeCode(
-            { title: titleCode, screenshot: nodeScreenshot, ...data },
+            { title: titleCode, screenshot: screenShotPage, ...data },
             router,
             toast
           )
