@@ -158,7 +158,7 @@ function playground() {
                 <Spinner colorScheme={"blue"} />
               </Box>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 cursor-pointer">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {codes?.map((item) => (
                   <div
                     key={item.id}
@@ -171,7 +171,7 @@ function playground() {
                     }
                   >
                     <div
-                      className={`aspect-[16/9] rounded-lg bg-cover bg-center bg-no-repeat overflow-hidden h-56 lg:h-44 border border-gray-200`}
+                      className={`aspect-[16/9] cursor-pointer rounded-lg bg-cover bg-center bg-no-repeat overflow-hidden h-56 lg:h-44 border border-gray-200`}
                     >
                       <img
                         src={item.screenshot}
