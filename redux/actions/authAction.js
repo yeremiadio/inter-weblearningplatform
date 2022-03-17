@@ -131,7 +131,6 @@ export const loginUser = (data, toast, router) => async (dispatch) => {
             type: GET_ERRORS,
             payload: error?.response?.data,
           });
-          // console.log(error.response);
         });
     });
 };

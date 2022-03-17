@@ -24,7 +24,6 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 
 export default function createEditMaterial({ isEditable = false, data = {} }) {
-  console.log(data);
   //Auth
   const auth = useSelector((state) => state.auth.user);
   //Router
@@ -126,7 +125,6 @@ export default function createEditMaterial({ isEditable = false, data = {} }) {
         duration: 3000,
         isClosable: true,
       });
-      console.log(err);
     }
   });
 

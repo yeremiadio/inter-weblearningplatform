@@ -96,7 +96,6 @@ export const updateCode = (data, router, toast) => async (dispatch) => {
     })
     .catch((error) => {
       dispatch(setIsFetching(false));
-      console.log(error);
     });
 };
 

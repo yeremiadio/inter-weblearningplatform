@@ -7,7 +7,6 @@ import { useState, useCallback } from "react";
 
 function DeleteUserModal({ parent, id, userName, mutate, users, toast }) {
   const [isLoading, setLoading] = useState(false);
-  console.log(users);
   const deleteUser = useCallback(async () => {
     setLoading(true);
     await sleep(1000);

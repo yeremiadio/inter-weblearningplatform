@@ -3,7 +3,6 @@ import React from "react";
 import InputField from "../../../Inputs/FormikInputField";
 import FormikTextAreaInput from "../../../Inputs/FormikTextAreaInput";
 const EssayAssignment = ({ formValues, setFieldValue, questions, errors }) => {
-  console.log(formValues);
   return (
     <div>
       <FieldArray name={questions.name}>

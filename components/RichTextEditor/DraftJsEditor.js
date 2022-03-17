@@ -25,7 +25,6 @@ const TextEditor = ({ editorState, setEditorState, ...props }) => {
         instance()
           .post("api/upload", data)
           .then((res) => {
-            console.log(res);
             toast({
               title: "Success",
               duration: 3000,
@@ -36,7 +35,6 @@ const TextEditor = ({ editorState, setEditorState, ...props }) => {
             resolve({ data: { link: res.data } });
           })
           .catch((err) => {
-            console.log(err);
             toast({
               title: "Error",
               duration: 3000,

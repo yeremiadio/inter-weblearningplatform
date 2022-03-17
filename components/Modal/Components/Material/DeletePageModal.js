@@ -7,7 +7,6 @@ import { ExclamationIcon } from "@heroicons/react/solid";
 
 function DeletePageModal({ parent, slug, name, mutate, pages, toast }) {
   const [isLoading, setLoading] = useState(false);
-  console.log(pages);
   const deletePage = useCallback(async () => {
     setLoading(true);
     await sleep(1000);

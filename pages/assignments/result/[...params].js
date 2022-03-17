@@ -28,7 +28,6 @@ function result() {
     }
   );
 
-  console.log(data);
 
   if (!data && !error) {
     return <BlueSpinner />;

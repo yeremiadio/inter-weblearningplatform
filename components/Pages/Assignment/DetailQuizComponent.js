@@ -76,7 +76,6 @@ function DetailQuizComponent({ data, mutate, error, toast }) {
   const postResultQuiz = async (quiz) => {
     const data = JSON.stringify(quiz);
     setLoading(true);
-    console.log(data);
     instance()
       .post(`api/result/${params && params[1]}/quiz`, { data: data })
       .then((res) => {
@@ -91,7 +90,6 @@ function DetailQuizComponent({ data, mutate, error, toast }) {
         });
       })
       .catch((errors) => {
-        console.log(error);
         setLoading(false);
         toast({
           title: "Error",

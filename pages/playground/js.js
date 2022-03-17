@@ -34,7 +34,6 @@ function index() {
       setOutputData(res.data);
       setLoading(false);
     } catch (err) {
-      console.log(err);
       setLoading(false);
     }
   };

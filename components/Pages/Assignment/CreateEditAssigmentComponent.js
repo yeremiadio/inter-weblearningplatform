@@ -99,7 +99,6 @@ const CreateEditAssigmentComponent = ({ data, isEditable }) => {
         formData
       )
       .then((res) => {
-        console.log(res);
         toast({
           title: "Success",
           status: "success",

@@ -35,9 +35,7 @@ function UpdateUserModal({ parent, user, indexData, users, mutate, toast }) {
     async (values) => {
       const formData = jsonToFormData(values);
       formData.append("_method", "put");
-      // for (let pair of formData.entries()) {
-      //   console.log(pair[0] + ", " + pair[1]);
-      // }
+  
       await instance()
         .post(`api/users/${user.id}/update`, formData)
         .then((res) => {

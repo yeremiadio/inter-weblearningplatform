@@ -36,9 +36,7 @@ function AddUserModal({ parent, users, mutate, toast }) {
     async (values) => {
       values.password_confirmation = values.password;
       const formData = jsonToFormData(values);
-      for (let pair of formData.entries()) {
-        console.log(pair[0] + ", " + pair[1]);
-      }
+
       await instance()
         .post(`api/users/create`, formData)
         .then((res) => {
