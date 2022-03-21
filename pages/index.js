@@ -94,7 +94,7 @@ function Home() {
               Belajar sambil bermain
             </span>
             <h3 className="text-darkblue-inter font-bold text-4xl leading-tight my-4">
-              Mengerjakan tugas secara langsung melalui platform
+              Ngoding menjadi lebih cepat dan dapat disimpan di platform
             </h3>
             <p className="text-darkblue-inter text-opacity-50 text-base leading-relaxed my-4">
               Keunggulan dari Inter ini sendiri yakni terdapat fitur{" "}
