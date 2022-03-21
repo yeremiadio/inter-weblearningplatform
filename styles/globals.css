@@ -33,7 +33,7 @@
 }
 
 .bg-admin {
-  @apply flex min-h-screen bg-whiteboard;
+  @apply flex min-h-screen bg-blue-50 bg-opacity-50;
 }
 
 .bg-section {
