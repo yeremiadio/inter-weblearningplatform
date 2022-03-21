@@ -1,13 +1,13 @@
-import Navbar from "../components/Navbars/Navbar";
-import Head from "next/head";
+import Navbar from "../components/Navbar/Navbar";
+// import Head from "next/head";
 import { motion } from "framer-motion";
-import MainSideBar from "../components/Siderbars/MainSidebar";
+import MainSideBar from "../components/Sidebar/MainSidebar";
 import { useState } from "react";
 // import Head from '../'
 function MainLayout({ children }) {
   const [open, setOpen] = useState(false);
   return (
-    <div>
+    <div className="bg-wrapper">
       <MainSideBar open={open} setOpen={setOpen} />
       <Navbar open={open} setOpen={setOpen} />
       <main>
@@ -26,6 +26,11 @@ function MainLayout({ children }) {
           {children}
         </motion.div>
       </main>
+      <footer className="bottom-0 p-4 bg-blue-inter">
+        <p className="text-sm text-white text-center opacity-50">
+          Copyright - Inter "Web Learning Platform" {new Date().getFullYear()}
+        </p>
+      </footer>
     </div>
   );
 }

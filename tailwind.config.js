@@ -12,9 +12,15 @@ module.exports = {
         sans: ["Inter"],
       },
       colors: {
-        whiteboard: "#F8F9FA",
+        "blue-inter": "#3B82F6",
+        "darkblue-inter": "#061237",
+        "black-inter": "#1E1E1E",
+        whiteboard: "#FAFCFF",
       },
       textColor: {
+        "text-blue-inter": "#3B82F6",
+        "text-darkblue-inter": "#061237",
+        "text-black-inter": "#1E1E1E",
         primary: "#111d57",
         secondary: "rgba(17,29,87,.7)",
       },

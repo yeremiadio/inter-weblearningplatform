@@ -5,7 +5,6 @@ import codeReducer from "./codeReducer";
 import errorReducer from "./errorReducer";
 import storage from "redux-persist/lib/storage";
 import { encryptTransform } from "redux-persist-transform-encrypt";
-// import session from "redux-persist/lib/storage/session";
 
 const encryptor = encryptTransform({
   secretKey: "myKey",

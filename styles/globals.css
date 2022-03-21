@@ -28,6 +28,10 @@
   background-color: #a8bbbf;
 }
 
+.bg-wrapper {
+  @apply min-h-screen bg-whiteboard;
+}
+
 .bg-admin {
   @apply flex min-h-screen bg-gray-100 bg-opacity-50;
 }

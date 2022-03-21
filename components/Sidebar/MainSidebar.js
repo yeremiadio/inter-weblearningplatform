@@ -14,7 +14,7 @@ import { Transition, Dialog } from "@headlessui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@chakra-ui/button";
 import { useToast } from "@chakra-ui/toast";
-import { logoutUser } from "../../actions/auth/authAction";
+import { logoutUser } from "../../redux/actions/authAction";
 import { Box } from "@chakra-ui/layout";
 // import { logOut } from "../../utils/auth";
 const MainSideBar = ({ setOpen, open }) => {
@@ -31,7 +31,7 @@ const MainSideBar = ({ setOpen, open }) => {
   const navigations = [
     {
       href: "/",
-      name: "Home",
+      name: "Beranda",
       icon: (
         <HomeIcon
           style={{
@@ -47,7 +47,7 @@ const MainSideBar = ({ setOpen, open }) => {
     },
     {
       href: "/about",
-      name: "About",
+      name: "tentang",
       icon: (
         <IdentificationIcon
           style={{
@@ -62,25 +62,10 @@ const MainSideBar = ({ setOpen, open }) => {
       ),
     },
     {
-      href: "/products",
-      name: "Products",
+      href: "/developer",
+      name: "Pengembang",
       icon: (
         <CubeIcon
-          style={{
-            width: 24,
-            color:
-              router.pathname.indexOf("/products") == -1
-                ? "text-white"
-                : "text-secondary",
-          }}
-        />
-      ),
-    },
-    {
-      href: "/contact",
-      name: "Contact Us",
-      icon: (
-        <ChatAltIcon
           style={{
             width: 24,
             color:
@@ -122,14 +107,14 @@ const MainSideBar = ({ setOpen, open }) => {
 
             <div className="mb-10 mt-20 flex flex-col h-screen justify-between">
               <ul className="md:min-w-screen flex flex-col list-none pt-2 mx-4 space-y-1">
-                {auth.isAuthenticated && (
+                {auth?.isAuthenticated && (
                   <li className="items-center py-4">
                     <div className="flex gap-4 mx-2">
                       <>
                         <img
                           src={
-                            auth.user.user.avatar !== null
-                              ? `${process.env.baseUrl}/assets/images/user/avatar/${auth.user.user.avatar}`
+                            auth?.user?.user?.avatar !== null
+                              ? `${auth?.user?.user.avatar}`
                               : "/interWithText.svg"
                           }
                           onClick={() => router.replace("/dashboard")}
@@ -137,7 +122,7 @@ const MainSideBar = ({ setOpen, open }) => {
                         />
                         <div className="flex flex-col">
                           <h3 className="text-primary">
-                            Hello, {auth.user.user.name}
+                            Hello, {auth?.user?.user.name}
                           </h3>
                           <a
                             onClick={logOut}
@@ -169,7 +154,7 @@ const MainSideBar = ({ setOpen, open }) => {
                               : "text-secondary",
                         }}
                       />
-                      <span>Home</span>
+                      <span>Beranda</span>
                     </span>
                   </Link>
                 </li>
@@ -194,12 +179,12 @@ const MainSideBar = ({ setOpen, open }) => {
                               : "text-secondary",
                         }}
                       />
-                      <span>About</span>
+                      <span>Tentang</span>
                     </span>
                   </Link>
                 </li>
                 <li className="items-center" onClick={() => setOpen(false)}>
-                  <Link href="/products">
+                  <Link href="/developer">
                     <span
                       className={
                         "flex w-full my-1 transition-all delay-75 items-center space-x-3 py-3 px-4 rounded cursor-pointer " +
@@ -217,36 +202,11 @@ const MainSideBar = ({ setOpen, open }) => {
                               : "text-secondary",
                         }}
                       />
-                      <span>Products</span>
+                      <span>Pengembang</span>
                     </span>
                   </Link>
                 </li>
-                <li className="items-center" onClick={() => setOpen(false)}>
-                  <Link href="/contact">
-                    <span
-                      className={
-                        "flex w-full my-1 transition-all delay-75 items-center space-x-3 py-3 px-4 rounded cursor-pointer " +
-                        (router.asPath === "/contact" ||
-                        router.pathname === "/contact"
-                          ? "bg-blue-500 text-white font-medium"
-                          : "font-normal text-secondary")
-                      }
-                    >
-                      <ChatAltIcon
-                        style={{
-                          width: 24,
-                          color:
-                            router.asPath === "/contact" ||
-                            router.pathname === "/contact"
-                              ? "text-white"
-                              : "text-secondary",
-                        }}
-                      />
-                      <span>Contact Us</span>
-                    </span>
-                  </Link>
-                </li>
-                {auth.isAuthenticated === false && (
+                {!auth?.isAuthenticated && (
                   <li className="items-center py-4">
                     <div className="mx-2">
                       <Box display="flex" className="w-full gap-2 flex-col">
