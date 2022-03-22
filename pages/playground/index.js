@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import Admin from "../../layouts/Admin.js";
 import { Tab } from "@headlessui/react";
 import classNames from "../../utils/tailwindClassNames.js";
@@ -12,11 +12,12 @@ import { Box, Button, Spinner, Tag, TagLabel } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { deleteCode } from "../../redux/actions/codeAction.js";
 import { useToast } from "@chakra-ui/toast";
+import CustomSearchInput from "../../components/Inputs/CustomSearchInput.js";
 function playground() {
   const router = useRouter();
   const auth = useSelector((state) => state.auth.user);
   const toast = useToast();
-  const refCreateWebPageBuilder = useRef();
+  // const refCreateWebPageBuilder = useRef();
   const {
     data: codes,
     mutate,
@@ -24,8 +25,13 @@ function playground() {
   } = useSWR([`api/codes`], (url) => fetcher(url), {
     revalidateOnFocus: false,
   });
+  const [filterText, setFilterText] = useState("");
   const authUserCodeHistories = codes?.filter(
     (item) => item.user_id === auth.user.id
+  );
+  const filteredCodeHistories = codes?.filter(
+    (item) =>
+      item.title && item.title.toLowerCase().includes(filterText.toLowerCase())
   );
   const items = [
     {
@@ -153,42 +159,47 @@ function playground() {
         </Tab.List>
         <Tab.Panels>
           <Tab.Panel>
+            <div className="mb-4">
+              <CustomSearchInput
+                placeholder="Cari judul kode..."
+                setFilterText={setFilterText}
+              />
+            </div>
             {!codes && !error ? (
               <Box display={"flex"} alignItems="center">
                 <Spinner colorScheme={"blue"} />
               </Box>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {codes?.map((item) => (
-                  <div
-                    key={item.id}
-                    className="flex flex-col"
-                    onClick={() =>
-                      router.push({
-                        pathname: "playground/play/[...params]",
-                        query: { params: [item.type, item.slug] },
-                      })
-                    }
-                  >
-                    <div
-                      className={`aspect-[16/9] cursor-pointer rounded-lg bg-cover bg-center bg-no-repeat overflow-hidden h-56 lg:h-44 border border-gray-200`}
-                    >
-                      <img
-                        src={item.screenshot}
-                        alt=""
-                        className="object-cover"
-                      />
-                    </div>
-                    <div className="mt-2 flex justify-between items-center">
-                      <span className="font-medium text-lg line-clamp-1">
-                        {item.title}
-                      </span>
-                      <span className="text-sm line-clamp-1">
-                        {item.user.name}
-                      </span>
-                    </div>
-                  </div>
-                ))}
+                {filteredCodeHistories?.length === 0
+                  ? "Data Not Found"
+                  : filteredCodeHistories?.map((item) => (
+                      <div key={item.id} className="flex flex-col">
+                        <div
+                          className={`aspect-[16/9] cursor-pointer rounded-lg bg-cover bg-center bg-no-repeat overflow-hidden h-56 lg:h-44 border border-gray-200`}
+                          onClick={() =>
+                            router.push({
+                              pathname: "playground/play/[...params]",
+                              query: { params: [item.type, item.slug] },
+                            })
+                          }
+                        >
+                          <img
+                            src={item.screenshot}
+                            alt=""
+                            className="object-cover"
+                          />
+                        </div>
+                        <div className="mt-2 flex justify-between items-center">
+                          <span className="font-medium text-lg line-clamp-1">
+                            {item.title}
+                          </span>
+                          <span className="text-sm line-clamp-1">
+                            {item.user.name}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
               </div>
             )}
           </Tab.Panel>
@@ -225,13 +236,31 @@ function playground() {
             {error ? (
               <BlueSpinner />
             ) : (
-              <div className="mt-4">
-                <DataTable
-                  columns={columns}
-                  data={authUserCodeHistories}
-                  pagination
-                />
-              </div>
+              <>
+                <div className="mb-4">
+                  <CustomSearchInput
+                    placeholder="Cari judul kode..."
+                    setFilterText={setFilterText}
+                  />
+                </div>
+                <div className="mt-4">
+                  <DataTable
+                    columns={columns}
+                    data={
+                      authUserCodeHistories?.length === 0
+                        ? "Data Not Found"
+                        : authUserCodeHistories?.filter(
+                            (item) =>
+                              item.title &&
+                              item.title
+                                .toLowerCase()
+                                .includes(filterText.toLowerCase())
+                          )
+                    }
+                    pagination
+                  />
+                </div>
+              </>
             )}
           </Tab.Panel>
         </Tab.Panels>

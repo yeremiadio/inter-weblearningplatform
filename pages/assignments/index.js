@@ -1,5 +1,5 @@
 import { Tab } from "@headlessui/react";
-import React from "react";
+import React, { useState } from "react";
 import Admin from "../../layouts/Admin.js";
 import classNames from "../../utils/tailwindClassNames";
 import BlueSpinner from "../../components/Spinner/BlueSpinner";
@@ -17,6 +17,7 @@ import QuizzesCard from "../../components/Card/QuizzesCard.js";
 import useErrorSwr from "../../utils/useErrorSwr.js";
 import { useSelector } from "react-redux";
 import ResultTableComponent from "../../components/Pages/Assignment/Result/ResultTableComponent.js";
+import CustomSearchInput from "../../components/Inputs/CustomSearchInput.js";
 
 export default function assignments() {
   const {
@@ -28,6 +29,11 @@ export default function assignments() {
   });
   const auth = useSelector((state) => state.auth.user);
   const { errorMessage, errorStatus } = useErrorSwr(error);
+  const [filterText, setFilterText] = useState("");
+  const filteredQuizzes = quizzes?.filter(
+    (item) =>
+      item.title && item.title.toLowerCase().includes(filterText.toLowerCase())
+  );
   const router = useRouter();
   return (
     <>
@@ -99,31 +105,39 @@ export default function assignments() {
                       </Button>
                     </div>
                   )}
+                  <div className="mb-4">
+                    <CustomSearchInput
+                      setFilterText={setFilterText}
+                      placeholder="Cari judul kuismu..."
+                    />
+                  </div>
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                    {quizzes.map((item) => (
-                      <QuizzesCard
-                        key={item.id}
-                        quizzes={quizzes}
-                        mutate={mutate}
-                        id={item.id}
-                        auth={auth}
-                        title={item.title}
-                        type={item.type}
-                        thumbnail={item.thumbnail}
-                        endDate={item.end_date}
-                        results={item.results}
-                        startDate={item.start_date}
-                        slug={{
-                          pathname: "assignments/play/[...params]",
-                          query: { params: [item.type, item.slug] },
-                        }}
-                        duration={item.duration}
-                        questionLength={item.questions.length}
-                        isEditable={
-                          auth?.user?.roles[0]?.name !== "student" && true
-                        }
-                      />
-                    ))}
+                    {filteredQuizzes?.length === 0
+                      ? "Data not found"
+                      : filteredQuizzes?.map((item) => (
+                          <QuizzesCard
+                            key={item.id}
+                            quizzes={quizzes}
+                            mutate={mutate}
+                            id={item.id}
+                            auth={auth}
+                            title={item.title}
+                            type={item.type}
+                            thumbnail={item.thumbnail}
+                            endDate={item.end_date}
+                            results={item.results}
+                            startDate={item.start_date}
+                            slug={{
+                              pathname: "assignments/play/[...params]",
+                              query: { params: [item.type, item.slug] },
+                            }}
+                            duration={item.duration}
+                            questionLength={item.questions.length}
+                            isEditable={
+                              auth?.user?.roles[0]?.name !== "student" && true
+                            }
+                          />
+                        ))}
                   </div>
                 </>
               )}

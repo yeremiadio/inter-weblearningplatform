@@ -1,8 +1,5 @@
 import {
   Tag,
-  InputGroup,
-  Input,
-  InputLeftElement,
   Button,
 } from "@chakra-ui/react";
 import moment from "moment";
@@ -10,10 +7,10 @@ import React, { useState } from "react";
 import DataTable from "react-data-table-component";
 import useSWR from "swr";
 import { fetcher } from "../../../../utils/fetcher";
-import { SearchIcon } from "@heroicons/react/solid";
 import BlueSpinner from "../../../Spinner/BlueSpinner";
 import { CSVLink } from "react-csv";
 import { useRouter } from "next/router";
+import CustomSearchInput from "../../../Inputs/CustomSearchInput";
 const ResultTableComponent = ({ isAdmin = true, auth }) => {
   const {
     data: results,
@@ -192,16 +189,10 @@ const ResultTableComponent = ({ isAdmin = true, auth }) => {
   return (
     <>
       <div className="my-4">
-        <InputGroup className="bg-white">
-          <InputLeftElement
-            pointerEvents="none"
-            children={<SearchIcon className="text-gray-300 w-6 h-6" />}
-          />
-          <Input
-            onChange={(e) => setFilterText(e.target.value)}
-            placeholder="Cari judul kuis..."
-          />
-        </InputGroup>
+        <CustomSearchInput
+          setFilterText={setFilterText}
+          placeholder="Cari judul kuismu..."
+        />
       </div>
       <div className="my-4">
         <CSVLink {...exportCSVProps}>
