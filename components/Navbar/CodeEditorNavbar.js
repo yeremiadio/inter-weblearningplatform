@@ -20,7 +20,6 @@ function CodeEditorNavbar({ codeNode, data = {}, isEdited = false }) {
   const toast = useToast();
   const isFetching = useSelector((state) => state.code.isFetching);
   const code = useSelector((state) => state.code.data);
-  const [screenShotPage, setScreenshotPage] = useState("");
   const dispatch = useDispatch();
   useEffect(() => {
     const ac = new AbortController();
@@ -55,43 +54,34 @@ function CodeEditorNavbar({ codeNode, data = {}, isEdited = false }) {
     setTitleCode(value);
   };
 
-  const getScreenshotPage = useCallback(() => {
-    if (codeNode) {
-      toPng(codeNode, {
-        cacheBust: true,
-        width: 320,
-        height: 640,
-        quality: 0.5,
-      }).then((dataUrl) => setScreenshotPage(dataUrl));
-    }
-  }, [data, codeNode]);
-
-  useEffect(() => {
-    const ac = new AbortController();
-    const timeout = setTimeout(() => {
-      getScreenshotPage();
-    }, 1500);
-
-    return () => {
-      ac.abort();
-      clearTimeout(timeout);
-    };
-  }, [data]);
-
   const onSubmitCode = async () => {
-    await dispatch(
-      isEdited
-        ? updateCode(
-            { title: titleCode, screenshot: screenShotPage, ...data },
-            router,
-            toast
-          )
-        : storeCode(
-            { title: titleCode, screenshot: screenShotPage, ...data },
-            router,
-            toast
-          )
-    );
+    if (codeNode === null) {
+      return;
+    }
+    !isEdited
+      ? await toPng(codeNode, {
+          cacheBust: true,
+          width: 320,
+          height: 640,
+          quality: 0.5,
+        })
+          .then(async (dataUrl) => {
+            console.log({ title: titleCode, screenshot: dataUrl, ...data });
+            await dispatch(
+              storeCode(
+                { title: titleCode, screenshot: dataUrl, ...data },
+                router,
+                toast
+              )
+            );
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+      : // : console.log({ title: titleCode, ...data });
+        await dispatch(
+          updateCode({ title: titleCode, ...data }, router, toast)
+        );
   };
   return (
     <nav className="flex justify-between p-6 lg:py-6 lg:px-8 bg-gray-900 text-white mt-0 fixed w-full z-40 top-0 border-b border-gray-700">

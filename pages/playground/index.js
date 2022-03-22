@@ -246,17 +246,13 @@ function playground() {
                 <div className="mt-4">
                   <DataTable
                     columns={columns}
-                    data={
-                      authUserCodeHistories?.length === 0
-                        ? "Data Not Found"
-                        : authUserCodeHistories?.filter(
-                            (item) =>
-                              item.title &&
-                              item.title
-                                .toLowerCase()
-                                .includes(filterText.toLowerCase())
-                          )
-                    }
+                    data={authUserCodeHistories?.filter(
+                      (item) =>
+                        item.title &&
+                        item.title
+                          .toLowerCase()
+                          .includes(filterText.toLowerCase())
+                    )}
                     pagination
                   />
                 </div>
