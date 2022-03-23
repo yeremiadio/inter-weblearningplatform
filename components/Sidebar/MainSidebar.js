@@ -2,21 +2,17 @@ import React, { Fragment, useCallback } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import {
-  ChatAltIcon,
   CubeIcon,
   HomeIcon,
   IdentificationIcon,
   XIcon,
 } from "@heroicons/react/solid";
-// import Image from "next/image";
 import { Transition, Dialog } from "@headlessui/react";
-// import ActiveLink from "../ActiveLink";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@chakra-ui/button";
 import { useToast } from "@chakra-ui/toast";
 import { logoutUser } from "../../redux/actions/authAction";
 import { Box } from "@chakra-ui/layout";
-// import { logOut } from "../../utils/auth";
 const MainSideBar = ({ setOpen, open }) => {
   const auth = useSelector((state) => state.auth);
   const toast = useToast();
@@ -210,23 +206,27 @@ const MainSideBar = ({ setOpen, open }) => {
                   <li className="items-center py-4">
                     <div className="mx-2">
                       <Box display="flex" className="w-full gap-2 flex-col">
-                        <Button
-                          onClick={() => setOpen(false)}
-                          colorScheme="blue"
-                          variant="outline"
-                        >
-                          <Link href="/login">
-                            <a>Login</a>
-                          </Link>
-                        </Button>
-                        <Button
-                          onClick={() => setOpen(false)}
-                          colorScheme="gray"
-                        >
-                          <Link href="/register">
-                            <a>Register</a>
-                          </Link>
-                        </Button>
+                        <Link href="/login">
+                          <a>
+                            <Button
+                              onClick={() => setOpen(false)}
+                              colorScheme="blue"
+                              variant="outline"
+                            >
+                              Login
+                            </Button>
+                          </a>
+                        </Link>
+                        <Link href="/register">
+                          <a>
+                            <Button
+                              onClick={() => setOpen(false)}
+                              colorScheme="gray"
+                            >
+                              Register
+                            </Button>
+                          </a>
+                        </Link>
                       </Box>
                     </div>
                   </li>
