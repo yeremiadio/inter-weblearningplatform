@@ -85,7 +85,7 @@ function Register() {
                         </label>
                         <Field
                           as={Input}
-                          isInvalid={errors.name && true}
+                          isInvalid={errors?.name && true}
                           size="lg"
                           variant="outline"
                           focusBorderColor="blue.600"
@@ -107,7 +107,7 @@ function Register() {
                         )}
                       </div>
                       <div className="mt-4">
-                        <label className={errors.name && "text-red-500"}>
+                        <label className={errors?.name && "text-red-500"}>
                           Email
                         </label>
                         <Field
