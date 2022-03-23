@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Editor from "../../components/CodePenEditor/Editor";
 import CodeEditorNavbar from "../../components/Navbar/CodeEditorNavbar";
 import useScreenshotWebPage from "../../utils/useScreenshotWebPage";

@@ -5,7 +5,7 @@ import {
   EditablePreview,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import UserDropdown from "../Dropdown/UserDropdown";
 import { useToast } from "@chakra-ui/toast";
 import { CloudIcon } from "@heroicons/react/solid";
