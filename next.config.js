@@ -3,12 +3,7 @@ const withPWA = require("next-pwa");
 
 module.exports = (phase, { defaultConfig }) => {
   if (phase === PHASE_DEVELOPMENT_SERVER) {
-    return withPWA({
-      pwa: {
-        dest: "public",
-        register: true,
-        skipWaiting: true,
-      },
+    return {
       env: {
         baseUrl: process.env.LOCAL_API_URL,
       },
@@ -23,7 +18,7 @@ module.exports = (phase, { defaultConfig }) => {
       images: {
         domains: ["*"],
       },
-    });
+    };
   }
 
   return withPWA({
