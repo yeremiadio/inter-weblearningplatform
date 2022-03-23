@@ -27,6 +27,11 @@ module.exports = (phase, { defaultConfig }) => {
   }
 
   return withPWA({
+    pwa: {
+      dest: "public",
+      register: true,
+      skipWaiting: true,
+    },
     env: {
       baseUrl: process.env.API_URL,
     },
