@@ -6,6 +6,7 @@ import Link from "next/link";
 import { toPng } from "html-to-image";
 import useScreenshotWebPage from "../../utils/useScreenshotWebPage";
 import CarbonCodeEditor from "../../components/CodeEditor/CarbonCodeEditor";
+import { RESET_ERRORS, RESET_USER } from "../../constants/types";
 
 function carbon() {
   const defaultValue = `const pluckDeep = key => obj => key.split('.').reduce((accum, key) => accum[key], obj)
