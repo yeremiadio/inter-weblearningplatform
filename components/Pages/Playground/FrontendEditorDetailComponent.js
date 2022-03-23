@@ -9,15 +9,22 @@ const FrontendEditorDetailComponent = ({ code }) => {
   const [html, setHtml] = useState(
     parsedCode
       ? parsedCode.html
-      : `<h1>Hello World</h1><button onClick="testWorld()">test</button>`
+      : `<h1>Hello World</h1><button onClick="testWorld()">test</button>
+      
+      
+      `
   );
   const [css, setCss] = useState(
     parsedCode
       ? parsedCode.css
-      : "* { font-family: 'Arial'; font-weight: bold; }"
+      : `* { font-family: 'Arial'; font-weight: bold; }
+      
+      `
   );
   const [js, setJs] = useState(
-    parsedCode ? parsedCode.js : "function testWorld() { alert('test') }"
+    parsedCode ? parsedCode.js : `function testWorld() { alert('test') }
+    
+    `
   );
   const [srcDoc, setSrcDoc] = useState("");
   const [codeNodeElement, codeRef] = useScreenshotWebPage(html, css, js);
@@ -48,12 +55,14 @@ const FrontendEditorDetailComponent = ({ code }) => {
           <Editor
             language="xml"
             displayName="HTML"
+            className="overflow-y-scroll max-h-96"
             value={html}
             onChange={setHtml}
           />
           <Editor
             language="css"
             displayName="CSS"
+            className="overflow-y-scroll max-h-96"
             value={css}
             onChange={setCss}
           />
@@ -61,6 +70,7 @@ const FrontendEditorDetailComponent = ({ code }) => {
             language="javascript"
             displayName="JS"
             value={js}
+            className="overflow-y-scroll max-h-96"
             onChange={setJs}
           />
         </div>

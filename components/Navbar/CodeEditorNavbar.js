@@ -66,7 +66,7 @@ function CodeEditorNavbar({ codeNode, data = {}, isEdited = false }) {
           quality: 0.5,
         })
           .then(async (dataUrl) => {
-            console.log({ title: titleCode, screenshot: dataUrl, ...data });
+            // console.log({ title: titleCode, screenshot: dataUrl, ...data });
             await dispatch(
               storeCode(
                 { title: titleCode, screenshot: dataUrl, ...data },

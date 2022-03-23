@@ -52,6 +52,15 @@ function playground() {
       status: "live",
       href: "/playground/js",
     },
+    {
+      id: 3,
+      name: "Carbon Code Editor",
+      desc: "Carbon Code Editor merupakan fitur yang digunakan mempresentasikan kode menjadi lebih menarik",
+      image: "/carbon_(1).png",
+      type: "js",
+      status: "live",
+      href: "/playground/carbon",
+    },
   ];
   const columns = [
     {

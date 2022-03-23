@@ -8,8 +8,12 @@ import useScreenshotWebPage from "../../utils/useScreenshotWebPage";
 
 function index() {
   const initialState = `/*    
-  Write your first code...
-*/`;
+    Write your first code...
+*/
+  
+
+  
+  `;
   const [code, setCode] = useState(initialState);
   const [outputData, setOutputData] = useState("");
   const [loading, setLoading] = useState("");
@@ -54,6 +58,7 @@ function index() {
           <Editor
             language="javascript"
             displayName="JS"
+            className="overflow-y-scroll max-h-96"
             value={code}
             onChange={setCode}
           />

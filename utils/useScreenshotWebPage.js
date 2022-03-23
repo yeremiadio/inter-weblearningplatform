@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 
-function useScreenshotWebPage(html = "", css = "", js = "") {
+function useScreenshotWebPage(props) {
   const [codeNodeElement, setCodeNodeElement] = useState(null);
   const codeRef = useCallback(
     (node) => {
@@ -10,7 +10,7 @@ function useScreenshotWebPage(html = "", css = "", js = "") {
         return;
       }
     },
-    [html, css, js]
+    [props]
   );
   return [codeNodeElement, codeRef];
 }

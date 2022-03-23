@@ -11,7 +11,11 @@ import FrameOutputPreviewComponent from "./FrameOutputPreviewComponent";
 const JsEditorDetailComponent = ({ data, mutate, error }) => {
   const initialState = `/*    
   Write your first code...
-*/`;
+*/
+
+
+
+`;
   const [code, setCode] = useState(data ? data.code : initialState);
   const [outputData, setOutputData] = useState("");
   const [loading, setLoading] = useState("");
@@ -55,6 +59,7 @@ const JsEditorDetailComponent = ({ data, mutate, error }) => {
         <div className="bg-gray-900 flex flex-col lg:flex-row mt-24">
           <Editor
             language="javascript"
+            className="overflow-y-scroll max-h-96"
             displayName="JS"
             value={code}
             onChange={setCode}

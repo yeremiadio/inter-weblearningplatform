@@ -4,12 +4,18 @@ import CodeEditorNavbar from "../../components/Navbar/CodeEditorNavbar";
 import useScreenshotWebPage from "../../utils/useScreenshotWebPage";
 function index() {
   const [html, setHtml] = useState(
-    `<h1>Hello World</h1><button onClick="testWorld()">test</button>`
+    `<h1>Hello World</h1><button onClick="testWorld()">test</button>
+    
+    `
   );
   const [css, setCss] = useState(
-    "* { font-family: 'Arial'; font-weight: bold; }"
+    `* { font-family: 'Arial'; font-weight: bold; }
+   
+   `
   );
-  const [js, setJs] = useState("function testWorld() { alert('test') }");
+  const [js, setJs] = useState(`function testWorld() { alert('test') }
+  
+  `);
   const [srcDoc, setSrcDoc] = useState("");
 
   const [codeNodeElement, codeRef] = useScreenshotWebPage(html, css, js);
@@ -53,17 +59,20 @@ function index() {
             language="xml"
             displayName="HTML"
             value={html}
+            className="overflow-y-scroll max-h-96"
             onChange={setHtml}
           />
           <Editor
             language="css"
             displayName="CSS"
+            className="overflow-y-scroll max-h-96"
             value={css}
             onChange={setCss}
           />
           <Editor
             language="javascript"
             displayName="JS"
+            className="overflow-y-scroll max-h-96"
             value={js}
             onChange={setJs}
           />

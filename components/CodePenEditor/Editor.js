@@ -11,6 +11,7 @@ export default function CodeEditor(props) {
     CodeMirror = require("codemirror/lib/codemirror");
     require("codemirror/theme/material-ocean.css");
     require("codemirror/mode/xml/xml");
+    require("codemirror/addon/scroll/simplescrollbars");
     require("codemirror/mode/javascript/javascript");
     require("codemirror/mode/css/css");
   }
@@ -50,9 +51,10 @@ export default function CodeEditor(props) {
           <ControlledEditor
             onBeforeChange={handleChange}
             value={value}
+            autoScroll
             {...rest}
-            className={"break-words"}
             options={{
+              scrollbarStyle: "native",
               lint: true,
               mode: language,
               theme: "material-ocean",
