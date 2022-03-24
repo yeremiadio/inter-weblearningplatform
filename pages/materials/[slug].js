@@ -1,21 +1,66 @@
-import React from "react";
-import parse from "html-react-parser";
+import React, { useRef, useEffect, useState } from "react";
+import parse, { domToReact } from "html-react-parser";
 import Admin from "../../layouts/Admin";
 import useSWR from "swr";
 import { useRouter } from "next/router";
 import { fetcher } from "../../utils/fetcher";
 import BlueSpinner from "../../components/Spinner/BlueSpinner";
 import EmptyDataComponent from "../../components/EmptyData";
+import CarbonCodeEditor from "../../components/CodeEditor/CarbonCodeEditor";
 function material() {
   const router = useRouter();
   const { slug } = router.query;
   const {
     data: material,
-    mutate,
     error,
   } = useSWR([`api/materials/single/${slug}`], (url) => fetcher(url), {
-    revalidateOnFocus: true,
+    revalidateOnFocus: false,
   });
+  const contentRef = useRef();
+  function replaceCommaLine(data) {
+    //convert string to array and remove whitespace
+    let dataToArray = data.split(";").map((item) => item.trim());
+    //convert array to string replacing comma with new line
+    return dataToArray.join(";\n");
+  }
+  function parseWithCarbonCode(text) {
+    const options = {
+      replace: ({ name, attribs, children }) => {
+        if (name === "pre") {
+          const arr = [];
+          for (var i = 0; i < children.length; i++) {
+            if (children[i].data !== undefined) {
+              arr.push(children[i].data);
+            }
+          }
+          const text = arr.join(" ");
+          const dataCode = replaceCommaLine(text);
+          return (
+            <div className="mt-4">
+              <CarbonCodeEditor
+                code={dataCode}
+                className={"break-words"}
+                options={{
+                  lint: true,
+                  mode: "javascript",
+                  theme: "seti",
+                  lineWrapping: true,
+                  extraKeys: { "Ctrl-Space": "autocomplete" },
+                  lineNumbers: true,
+                  autocorrect: true,
+                  spellcheck: true,
+                  smartIndent: true,
+                }}
+              />
+            </div>
+          );
+        }
+      },
+    };
+
+    return parse(text, options);
+  }
+
   return (
     <>
       {!material && !error ? (
@@ -47,8 +92,12 @@ function material() {
               <span className="my-4 text-lg lg:text-xl font-bold text-primary">
                 Content
               </span>
-              <div className="mb-4 text-secondary">
-                {parse(material.content)}
+              <div
+                className="mb-4 text-secondary"
+                id="content"
+                ref={contentRef}
+              >
+                {parseWithCarbonCode(material.content)}
               </div>
             </div>
           </div>

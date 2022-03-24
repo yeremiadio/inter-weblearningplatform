@@ -1,12 +1,4 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import DraftJsEditor from "../../RichTextEditor/DraftJsEditor";
-import {
-  EditorState,
-  convertToRaw,
-  convertFromHTML,
-  ContentState,
-} from "draft-js";
-import draftToHtml from "draftjs-to-html";
 import { Field, Form, Formik } from "formik";
 import {
   Box,
@@ -22,39 +14,19 @@ import { jsonToFormData } from "../../../utils/jsonToFormData";
 import instance from "../../../utils/instance";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
+import dynamic from "next/dynamic";
+const QuillTextEditor = dynamic(
+  import("../../RichTextEditor/QuillTextEditor"),
+  {
+    ssr: false,
+  }
+);
 
 export default function createEditMaterial({ isEditable = false, data = {} }) {
   //Auth
   const auth = useSelector((state) => state.auth.user);
   //Router
   const router = useRouter();
-  //DraftJs
-
-  let initialEditorState = EditorState.createEmpty();
-  const [editorState, setEditorState] = useState(initialEditorState);
-
-  //Draft to HTML
-  const rawContentState = convertToRaw(editorState.getCurrentContent());
-  const markup = draftToHtml(rawContentState, { trigger: "#", separator: " " });
-
-  useEffect(() => {
-    const ac = new AbortController();
-    if (data?.content) {
-      //HTML to Draftjs
-      const blocksFromHTML = convertFromHTML(
-        data ? data?.content : "<p>Test</p>"
-      );
-      const stateBlock = ContentState.createFromBlockArray(
-        blocksFromHTML.contentBlocks,
-        blocksFromHTML.entityMap
-      );
-      setEditorState(EditorState.createWithContent(stateBlock));
-    }
-    return () => {
-      ac.abort();
-    };
-  }, [data]);
-
   const toast = useToast();
 
   //Formik
@@ -98,7 +70,7 @@ export default function createEditMaterial({ isEditable = false, data = {} }) {
 
   const onSubmit = useCallback(async (values) => {
     const formData = jsonToFormData(values);
-    formData.append("content", markup);
+    // formData.append("content", quillValue);
     isEditable && formData.append("_method", "put");
     try {
       const res = await instance().post(
@@ -198,17 +170,19 @@ export default function createEditMaterial({ isEditable = false, data = {} }) {
                 )}
               </div>
               <div className="mt-4">
-                <FormLabel>Konten</FormLabel>
-                <div className="border border-gray-200">
-                  <DraftJsEditor
-                    editorState={editorState}
-                    setEditorState={setEditorState}
-                  />
-                </div>
+                <Field name="content">
+                  {({ field }) => (
+                    <QuillTextEditor
+                      value={field.value}
+                      onChange={field.onChange(field.name)}
+                    />
+                  )}
+                </Field>
                 {errors?.content && touched.content && (
                   <p className="text-red-500">{errors?.content}</p>
                 )}
               </div>
+              {JSON.stringify(values)}
               <Box>
                 <Button
                   isLoading={isSubmitting}
