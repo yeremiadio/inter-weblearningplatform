@@ -108,7 +108,9 @@ const QuizzesCard = ({
             <Link href={slug ? slug : ""}>
               <a className="w-full">
                 <Button colorScheme={"blue"} isFullWidth>
-                  Play
+                  {auth?.user?.roles[0]?.name === "student"
+                    ? "Start"
+                    : "See Assignment"}
                 </Button>
               </a>
             </Link>

@@ -131,7 +131,7 @@ function playground() {
   return (
     <>
       <Tab.Group>
-        <Tab.List className={"bg-white mb-6 overflow-hidden rounded"}>
+        <Tab.List className={"flex bg-white mb-6 overflow-y-auto rounded"}>
           <Tab
             className={({ selected }) =>
               classNames(

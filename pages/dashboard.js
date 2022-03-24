@@ -69,7 +69,7 @@ export default function dashboard() {
     {
       id: 4,
       name: "Code Editor",
-      count: 2,
+      count: 3,
 
       icon: <CodeIcon className="w-6 h-6" />,
     },

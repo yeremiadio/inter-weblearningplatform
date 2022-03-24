@@ -1,5 +1,4 @@
 import React, { useCallback, useRef, useState } from "react";
-import parse from "html-react-parser";
 import { useFormik } from "formik";
 import { jsonToFormData } from "../../../utils/jsonToFormData";
 import CustomUploadButton from "../../Buttons/CustomUploadButton";
@@ -7,11 +6,13 @@ import { FolderAddIcon, PaperAirplaneIcon } from "@heroicons/react/solid";
 import { Button, FormControl, FormLabel, Textarea } from "@chakra-ui/react";
 import instance from "../../../utils/instance";
 import { useToast } from "@chakra-ui/toast";
+import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { Modal } from "../../Modal/Modal";
 import SubmitAssignmentModal from "../../Modal/Components/Assignment/SubmitAssignmentModal";
 import { parseHtmlWithCarbonCode } from "../../../utils/parseHtmlWithCarbonCode";
 const DetailEssayComponent = ({ data, mutate, error }) => {
+  const auth = useSelector((state) => state.auth.user);
   const [isLoading, setIsLoading] = useState(false);
   const SubmitAssignmentRef = useRef();
   const router = useRouter();
@@ -79,47 +80,49 @@ const DetailEssayComponent = ({ data, mutate, error }) => {
             <span className="my-4 text-lg lg:text-xl font-bold text-primary">
               Your Answer:
             </span>
-            <form onSubmit={formik.handleSubmit}>
-              <div className="mt-2">
-                <FormLabel>Upload PDF Document</FormLabel>
-                <CustomUploadButton
-                  name="file"
-                  accept={"application/pdf,application/vnd.ms-excel"}
-                  value={formik.values.file}
-                  onChange={onChange}
-                  icon={<FolderAddIcon className="w-5 h-5" />}
-                />
-              </div>
-              <div className="mt-4">
-                <FormControl>
-                  <FormLabel>Comment</FormLabel>
-                  <Textarea
-                    focusBorderColor="blue.600"
-                    name="comment"
-                    minH={150}
-                    onChange={formik.handleChange}
-                    value={formik.values.comment}
-                    placeholder="Masukkan komentar anda..."
+            {auth.user?.roles[0]?.name === "student" && (
+              <form onSubmit={formik.handleSubmit}>
+                <div className="mt-2">
+                  <FormLabel>Upload PDF Document</FormLabel>
+                  <CustomUploadButton
+                    name="file"
+                    accept={"application/pdf,application/vnd.ms-excel"}
+                    value={formik.values.file}
+                    onChange={onChange}
+                    icon={<FolderAddIcon className="w-5 h-5" />}
                   />
-                </FormControl>
-              </div>
-              <Button
-                variant="solid"
-                colorScheme={"blue"}
-                onClick={() => SubmitAssignmentRef.current.open()}
-                className="my-4"
-                leftIcon={<PaperAirplaneIcon className="w-5 h-5 rotate-90" />}
-              >
-                Submit
-              </Button>
-              <Modal ref={SubmitAssignmentRef}>
-                <SubmitAssignmentModal
-                  parent={SubmitAssignmentRef}
-                  isLoading={isLoading}
-                  handleData={() => formik.handleSubmit}
-                />
-              </Modal>
-            </form>
+                </div>
+                <div className="mt-4">
+                  <FormControl>
+                    <FormLabel>Comment</FormLabel>
+                    <Textarea
+                      focusBorderColor="blue.600"
+                      name="comment"
+                      minH={150}
+                      onChange={formik.handleChange}
+                      value={formik.values.comment}
+                      placeholder="Masukkan komentar anda..."
+                    />
+                  </FormControl>
+                </div>
+                <Button
+                  variant="solid"
+                  colorScheme={"blue"}
+                  onClick={() => SubmitAssignmentRef.current.open()}
+                  className="my-4"
+                  leftIcon={<PaperAirplaneIcon className="w-5 h-5 rotate-90" />}
+                >
+                  Submit
+                </Button>
+                <Modal ref={SubmitAssignmentRef}>
+                  <SubmitAssignmentModal
+                    parent={SubmitAssignmentRef}
+                    isLoading={isLoading}
+                    handleData={formik.handleSubmit}
+                  />
+                </Modal>
+              </form>
+            )}
           </div>
         </div>
       </div>

@@ -6,6 +6,7 @@ import {
 } from "@heroicons/react/solid";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import { useTimer } from "react-timer-hook";
 import { getTimeDiff } from "../../../utils/getTimeDiff";
 import instance from "../../../utils/instance";
@@ -13,6 +14,7 @@ import SubmitAssignmentModal from "../../Modal/Components/Assignment/SubmitAssig
 import { Modal } from "../../Modal/Modal";
 
 function DetailQuizComponent({ data, mutate, error, toast }) {
+  const auth = useSelector((state) => state.auth.user);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoading, setLoading] = useState(false);
   const [quiz, setQuiz] = useState(data ? data.questions : "");
@@ -70,7 +72,8 @@ function DetailQuizComponent({ data, mutate, error, toast }) {
 
   const { seconds, minutes } = useTimer({
     expiryTimestamp: time,
-    onExpire: () => postResultQuiz(quiz),
+    onExpire: () =>
+      auth.user?.roles[0]?.name === "student" && postResultQuiz(quiz),
   });
 
   const postResultQuiz = async (quiz) => {
@@ -112,10 +115,14 @@ function DetailQuizComponent({ data, mutate, error, toast }) {
       </Modal>
       <div className="bg-section">
         <div className="my-4">
-          Time Left:{" "}
-          <b>
-            {minutes}:{seconds}
-          </b>
+          {auth.user?.roles[0]?.name === "student" && (
+            <>
+              Time Left:{" "}
+              <b>
+                {minutes}:{seconds}
+              </b>
+            </>
+          )}
         </div>
         <div className="flex lg:flex-row items-center justify-center flex-1 flex-wrap gap-2 mb-2">
           {quiz.map((item, index) => (
@@ -147,20 +154,33 @@ function DetailQuizComponent({ data, mutate, error, toast }) {
           </h3>
         </div>
         <div className="grid grid-flow-row grid-cols-1 lg:grid-cols-2 my-4 place-content-center auto-rows-max gap-4">
-          {options.map((item, index) => (
-            <div
-              key={item.id}
-              className={
-                "text-white rounded-full transition-all delay-75 flex flex-col items-center justify-center lg:h-16 cursor-pointer p-2 text-center " +
-                (item?.selected
-                  ? "bg-green-600"
-                  : "border-2 border-green-600 text-green-600")
+          {options
+            .filter((item) => {
+              if (auth.user?.roles[0]?.name !== "student") {
+                return item.correct === 1;
+              } else {
+                return item;
               }
-              onClick={() => selectOption(currentIndex, index)}
-            >
-              <span className="text-base">{item.title}</span>
-            </div>
-          ))}
+            })
+            .map((item, index) => (
+              <div
+                key={item.id}
+                className={
+                  (auth.user?.roles[0]?.name === "student" &&
+                    "cursor-pointer") +
+                  " text-white rounded-full transition-all delay-75 flex flex-col items-center justify-center lg:h-16 p-2 text-center " +
+                  (item?.selected
+                    ? "bg-green-600"
+                    : "border-2 border-green-600 text-green-600")
+                }
+                onClick={() =>
+                  auth.user?.roles[0]?.name === "student" &&
+                  selectOption(currentIndex, index)
+                }
+              >
+                <span className="text-base">{item.title}</span>
+              </div>
+            ))}
         </div>
         <div className="flex items-center justify-center gap-2">
           {currentIndex !== 0 && quiz.length - 1 !== currentIndex && (
@@ -182,15 +202,16 @@ function DetailQuizComponent({ data, mutate, error, toast }) {
               onClick={() => setCurrentIndex((prev) => prev + 1)}
             />
           )}
-          {quiz.length - 1 === currentIndex && (
-            <Button
-              colorScheme={"blue"}
-              onClick={() => SubmitAssignmentRef.current.open()}
-              leftIcon={<PaperAirplaneIcon className="w-5 h-5 rotate-90" />}
-            >
-              Submit
-            </Button>
-          )}
+          {quiz.length - 1 === currentIndex &&
+            auth.user?.roles[0]?.name === "student" && (
+              <Button
+                colorScheme={"blue"}
+                onClick={() => SubmitAssignmentRef.current.open()}
+                leftIcon={<PaperAirplaneIcon className="w-5 h-5 rotate-90" />}
+              >
+                Submit
+              </Button>
+            )}
         </div>
       </div>
     </>

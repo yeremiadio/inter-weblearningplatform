@@ -48,7 +48,11 @@ export default function assignments() {
         />
       ) : (
         <Tab.Group>
-          <Tab.List className={"bg-white mb-6 overflow-hidden rounded"}>
+          <Tab.List
+            className={
+              "bg-white mb-6 flex overflow-y-auto rounded"
+            }
+          >
             <Tab
               className={({ selected }) =>
                 classNames(
