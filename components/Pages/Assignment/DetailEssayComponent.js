@@ -10,6 +10,7 @@ import { useToast } from "@chakra-ui/toast";
 import { useRouter } from "next/router";
 import { Modal } from "../../Modal/Modal";
 import SubmitAssignmentModal from "../../Modal/Components/Assignment/SubmitAssignmentModal";
+import { parseHtmlWithCarbonCode } from "../../../utils/parseHtmlWithCarbonCode";
 const DetailEssayComponent = ({ data, mutate, error }) => {
   const [isLoading, setIsLoading] = useState(false);
   const SubmitAssignmentRef = useRef();
@@ -72,7 +73,7 @@ const DetailEssayComponent = ({ data, mutate, error }) => {
             Quest:
           </span>
           <div className="mb-4 text-secondary">
-            {parse(data.questions[0].question)}
+            {parseHtmlWithCarbonCode(data.questions[0].question)}
           </div>
           <div>
             <span className="my-4 text-lg lg:text-xl font-bold text-primary">

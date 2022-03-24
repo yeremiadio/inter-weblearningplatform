@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { Field, Form, Formik } from "formik";
 import {
   Box,
@@ -28,7 +28,6 @@ export default function createEditMaterial({ isEditable = false, data = {} }) {
   //Router
   const router = useRouter();
   const toast = useToast();
-
   //Formik
   const formikRef = useRef();
   const thumbnailRef = useRef();
@@ -70,7 +69,6 @@ export default function createEditMaterial({ isEditable = false, data = {} }) {
 
   const onSubmit = useCallback(async (values) => {
     const formData = jsonToFormData(values);
-    // formData.append("content", quillValue);
     isEditable && formData.append("_method", "put");
     try {
       const res = await instance().post(
@@ -86,7 +84,6 @@ export default function createEditMaterial({ isEditable = false, data = {} }) {
         duration: 3000,
         isClosable: true,
       });
-      setEditorState(initialEditorState);
       formikRef.current.resetForm();
       router.back();
     } catch (err) {
@@ -182,7 +179,6 @@ export default function createEditMaterial({ isEditable = false, data = {} }) {
                   <p className="text-red-500">{errors?.content}</p>
                 )}
               </div>
-              {JSON.stringify(values)}
               <Box>
                 <Button
                   isLoading={isSubmitting}
