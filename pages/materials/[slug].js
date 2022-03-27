@@ -37,7 +37,7 @@ function material() {
             alt=""
             className="w-full lg:h-96 object-cover rounded-lg mb-4"
           />
-          <div className="bg-section">
+          <div className="bg-section my-4">
             <h3 className="text-3xl my-4 font-extrabold text-gray-900">
               {material?.title}
             </h3>
