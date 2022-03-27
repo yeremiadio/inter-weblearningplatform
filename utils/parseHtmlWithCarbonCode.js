@@ -1,5 +1,39 @@
-import CarbonCodeEditor from "../components/CodeEditor/CarbonCodeEditor";
 import parse, { domToReact } from "html-react-parser";
+import { UnControlled as UnControlledEditor } from "react-codemirror2";
+
+import React from "react";
+
+const CodeEditor = (props) => {
+  const { value, rest } = props;
+  let CodeMirror = null;
+  if (
+    typeof window !== "undefined" &&
+    typeof window.navigator !== "undefined"
+  ) {
+    CodeMirror = require("codemirror/lib/codemirror");
+    require("codemirror/theme/seti.css");
+    require("codemirror/mode/jsx/jsx");
+  }
+  return (
+    <div className="bg-[#282A36] p-3 overflow-hidden rounded-md">
+      <UnControlledEditor
+        value={value}
+        {...rest}
+        options={{
+          readOnly: true,
+          mode: "jsx",
+          theme: "seti",
+          // lineWrapping: true,
+        }}
+        onChange={(editor, data, value) => {
+          return;
+        }}
+      />
+    </div>
+  );
+};
+
+export default CodeEditor;
 
 export function parseHtmlWithCarbonCode(text) {
   function replaceCommaLine(data) {
@@ -35,21 +69,7 @@ export function parseHtmlWithCarbonCode(text) {
         const dataCode = replaceCommaLine(text);
         return (
           <div className="mt-4">
-            <CarbonCodeEditor
-              code={dataCode}
-              className={"break-words"}
-              options={{
-                lint: true,
-                mode: "javascript",
-                theme: "seti",
-                lineWrapping: true,
-                extraKeys: { "Ctrl-Space": "autocomplete" },
-                lineNumbers: true,
-                autocorrect: true,
-                spellcheck: true,
-                smartIndent: true,
-              }}
-            />
+            <CodeEditor value={dataCode} />
           </div>
         );
       }

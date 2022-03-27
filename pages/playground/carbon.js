@@ -51,6 +51,10 @@ function carbon() {
 
   const codeLang = [
     {
+      name: "Javascript",
+      value: "javascript",
+    },
+    {
       name: "HTML/XML",
       value: "xml",
     },
@@ -58,15 +62,11 @@ function carbon() {
       name: "CSS",
       value: "css",
     },
-    {
-      name: "Javascript",
-      value: "javascript",
-    },
   ];
 
   const [code, setCode] = useState(defaultValue);
   const [codeNodeElement, codeRef] = useScreenshotWebPage(code);
-  const [languages, setLanguages] = useState(codeLang[2].value);
+  const [languages, setLanguages] = useState(codeLang[0].value);
 
   function handleChangeLanguage(e) {
     setLanguages(e.target.value);
