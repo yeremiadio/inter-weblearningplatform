@@ -38,15 +38,12 @@ function material() {
             className="w-full lg:h-96 object-cover rounded-lg mb-4"
           />
           <div className="bg-section my-4">
-            <h3 className="text-3xl my-4 font-extrabold text-gray-900">
+            <h1 className="text-4xl my-4 font-extrabold text-gray-900">
               {material?.title}
-            </h3>
-            <div>
-              <span className="my-4 text-lg lg:text-xl font-bold text-gray-900">
-                Description
-              </span>
-              <p className="mb-4 text-gray-800">{material?.description}</p>
-            </div>
+            </h1>
+            <p className="mt-2 mb-4 text-gray-800">
+              {material?.description}
+            </p>
           </div>
           <div className="bg-section">
             <div className="mb-4 text-gray-800" id="content" ref={contentRef}>
