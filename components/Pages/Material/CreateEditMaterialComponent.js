@@ -15,14 +15,7 @@ import instance from "../../../utils/instance";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import dynamic from "next/dynamic";
-import Quill from "quill";
 
-//Text direction
-Quill.register(Quill.import("attributors/style/direction"), true);
-//Alignment
-Quill.register(Quill.import("attributors/style/align"), true);
-//Size
-Quill.register(Quill.import("attributors/style/size"), true);
 
 const QuillTextEditor = dynamic(
   import("../../RichTextEditor/QuillTextEditor"),

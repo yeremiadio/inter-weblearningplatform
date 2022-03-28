@@ -8,6 +8,9 @@ module.exports = {
   mode: "jit",
   theme: {
     extend: {
+      aspectRatio: {
+        "video": "16 / 9",
+      },
       fontFamily: {
         sans: ["Inter"],
       },

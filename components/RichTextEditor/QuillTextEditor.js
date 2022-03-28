@@ -3,6 +3,11 @@ import React, { useRef, useMemo } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import instance from "../../utils/instance";
+import Quill from "quill";
+//Text direction
+Quill.register(Quill.import("attributors/style/direction"), true);
+//Alignment
+Quill.register(Quill.import("attributors/style/align"), true);
 
 const QuillTextEditor = ({ setValue, placeholder, ...rest }) => {
   const toast = useToast();

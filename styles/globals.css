@@ -69,6 +69,10 @@
   /* min-height: 300px; */
 }
 
+.ql-video {
+  @apply w-full h-full md:h-[640px] aspect-w-video aspect-h-video;
+}
+
 /* html,
 body {
   padding: 0;
