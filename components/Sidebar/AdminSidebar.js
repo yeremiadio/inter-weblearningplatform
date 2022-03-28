@@ -2,20 +2,15 @@ import React, { Fragment } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import {
-  CubeIcon,
   HomeIcon,
-  PuzzleIcon,
   UserGroupIcon,
   XIcon,
   DocumentTextIcon,
   ClipboardIcon,
   CodeIcon,
-  ChevronUpIcon,
-  ChevronDownIcon,
 } from "@heroicons/react/solid";
 import { Transition, Dialog } from "@headlessui/react";
 import { useSelector } from "react-redux";
-import { Disclosure } from "@headlessui/react";
 const AdminSidebar = ({ setOpen, open }) => {
   const auth = useSelector((state) => state.auth.user);
   const router = useRouter();

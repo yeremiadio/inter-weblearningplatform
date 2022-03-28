@@ -1,6 +1,5 @@
 import { Button } from "@chakra-ui/react";
 import { CalendarIcon } from "@heroicons/react/solid";
-import moment from "moment";
 import { forwardRef } from "react";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";

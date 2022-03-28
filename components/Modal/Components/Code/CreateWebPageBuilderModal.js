@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from "react";
+import { useState, useCallback } from "react";
 
 import instance from "../../../../utils/instance";
 import { FormControl, FormLabel } from "@chakra-ui/react";
@@ -6,11 +6,6 @@ import { Box } from "@chakra-ui/layout";
 import { Field, Form, Formik } from "formik";
 import { Button } from "@chakra-ui/button";
 import { Input } from "@chakra-ui/input";
-// import { jsonToFormData } from "../../../../utils/jsonToFormData";
-// import { PaperAirplaneIcon, CameraIcon } from "@heroicons/react/solid";
-// import { Select } from "@chakra-ui/select";
-// import BlueSpinner from "../../../Spinner/BlueSpinner";
-// import { FormErrorMessage } from "@chakra-ui/form-control";
 
 function CreateWebPageBuilderModal({ parent, data, mutate, router, toast }) {
   const initialValues = {

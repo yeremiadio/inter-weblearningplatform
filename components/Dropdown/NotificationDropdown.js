@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-// import { useRouter } from 'next/router';
 import NotificationIlustration from "../SvgComponents/NotificationIlustration";
 import { Popover, Transition } from "@headlessui/react";
 import { BellIcon as BellSolidIcon } from "@heroicons/react/solid";
@@ -8,7 +7,7 @@ import useSWR from "swr";
 import { fetcher } from "../../utils/fetcher";
 import { Spinner } from "@chakra-ui/react";
 import moment from "moment";
-import { now } from "moment";
+
 const NotificationDropdown = () => {
   const {
     data: notifications,

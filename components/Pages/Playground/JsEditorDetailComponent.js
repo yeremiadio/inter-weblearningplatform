@@ -1,13 +1,10 @@
 import { Box, Button, Spinner } from "@chakra-ui/react";
 import { TrashIcon } from "@heroicons/react/solid";
-import { toPng } from "html-to-image";
-import React, { useEffect, useRef, useState } from "react";
+import React, {  useState } from "react";
 import instance from "../../../utils/instance";
 import useScreenshotWebPage from "../../../utils/useScreenshotWebPage";
-import Editor from "../../CodeEditor/Editor";
 import MonacoCodeEditor from "../../CodeEditor/MonacoCodeEditor";
 import CodeEditorNavbar from "../../Navbar/CodeEditorNavbar";
-import FrameOutputPreviewComponent from "./FrameOutputPreviewComponent";
 
 const JsEditorDetailComponent = ({ data, mutate, error }) => {
   const initialState = `/*    

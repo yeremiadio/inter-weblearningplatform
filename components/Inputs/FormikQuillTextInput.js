@@ -1,7 +1,7 @@
 import { FormLabel } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/toast";
 import { useField } from "formik";
-import React, { useRef, useMemo, useEffect, useState } from "react";
+import React, { useRef, useMemo } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import instance from "../../utils/instance";

@@ -5,7 +5,6 @@ import {
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
-  FormLabel,
 } from "@chakra-ui/react";
 import { useField } from "formik";
 

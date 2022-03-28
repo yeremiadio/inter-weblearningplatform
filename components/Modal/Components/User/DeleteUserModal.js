@@ -1,6 +1,5 @@
 import { Button } from "@chakra-ui/button";
 import { ExclamationIcon } from "@heroicons/react/solid";
-
 import instance from "../../../../utils/instance";
 import { sleep } from "../../../../utils/sleep";
 import { useState, useCallback } from "react";

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Editor from "../../components/CodeEditor/Editor";
 import { Box, Button, Spinner } from "@chakra-ui/react";
 import instance from "../../utils/instance";
 import { TrashIcon } from "@heroicons/react/solid";

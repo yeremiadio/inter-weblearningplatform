@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import UserDropdown from "../Dropdown/UserDropdown";
 import { MenuIcon } from "@heroicons/react/solid";
-import { Badge, Spinner, Tag } from "@chakra-ui/react";
+import {Spinner, Tag } from "@chakra-ui/react";
 import router from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import instance from "../../utils/instance";

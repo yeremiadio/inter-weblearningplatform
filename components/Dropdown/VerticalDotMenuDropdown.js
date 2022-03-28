@@ -1,5 +1,3 @@
-// import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
-import { useRouter } from "next/router";
 import React, { Fragment, useCallback } from "react";
 import { DotsVerticalIcon } from "@heroicons/react/solid";
 import instance from "../../utils/instance";

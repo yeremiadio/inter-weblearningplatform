@@ -1,9 +1,8 @@
 import React, { useCallback } from "react";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
-
 import { Menu, Transition } from "@headlessui/react";
-import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/solid";
+import { ChevronDownIcon } from "@heroicons/react/solid";
 import { logoutUser } from "../../redux/actions/authAction";
 import { useToast } from "@chakra-ui/toast";
 
