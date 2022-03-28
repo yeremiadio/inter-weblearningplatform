@@ -1,12 +1,10 @@
-import React, { useRef, useEffect, useState } from "react";
-import parse, { domToReact } from "html-react-parser";
+import React, { useRef } from "react";
 import Admin from "../../layouts/Admin";
 import useSWR from "swr";
 import { useRouter } from "next/router";
 import { fetcher } from "../../utils/fetcher";
 import BlueSpinner from "../../components/Spinner/BlueSpinner";
 import EmptyDataComponent from "../../components/EmptyData";
-import CarbonCodeEditor from "../../components/CodeEditor/CarbonCodeEditor";
 import { parseHtmlWithCarbonCode } from "../../utils/parseHtmlWithCarbonCode";
 function material() {
   const router = useRouter();
