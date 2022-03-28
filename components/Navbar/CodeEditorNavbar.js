@@ -9,11 +9,11 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import UserDropdown from "../Dropdown/UserDropdown";
 import { useToast } from "@chakra-ui/toast";
-import { CloudIcon, SaveAsIcon, SaveIcon } from "@heroicons/react/solid";
 import { useDispatch, useSelector } from "react-redux";
 import { storeCode, updateCode } from "../../redux/actions/codeAction";
 import { RESET_ERRORS, RESET_USER } from "../../constants/types";
 import { toPng } from "html-to-image";
+import { SaveIcon } from "@heroicons/react/solid";
 
 function CodeEditorNavbar({ codeNode, data = {}, isEdited = false }) {
   const router = useRouter();

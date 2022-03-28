@@ -5,6 +5,7 @@ import instance from "../../utils/instance";
 import { TrashIcon } from "@heroicons/react/solid";
 import CodeEditorNavbar from "../../components/Navbar/CodeEditorNavbar";
 import useScreenshotWebPage from "../../utils/useScreenshotWebPage";
+import MonacoCodeEditor from "../../components/CodeEditor/MonacoCodeEditor";
 
 function index() {
   const initialState = `/*    
@@ -55,12 +56,11 @@ function index() {
       />
       <div>
         <div className="flex flex-col lg:flex-row mt-24 bg-gray-900">
-          <Editor
+          <MonacoCodeEditor
+            height="50vh"
             language="javascript"
-            displayName="JS"
-            className="overflow-y-scroll max-h-96"
             value={code}
-            onChange={setCode}
+            setValue={setCode}
           />
         </div>
         <div className="m-4">

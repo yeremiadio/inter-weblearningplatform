@@ -5,6 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 import instance from "../../../utils/instance";
 import useScreenshotWebPage from "../../../utils/useScreenshotWebPage";
 import Editor from "../../CodeEditor/Editor";
+import MonacoCodeEditor from "../../CodeEditor/MonacoCodeEditor";
 import CodeEditorNavbar from "../../Navbar/CodeEditorNavbar";
 import FrameOutputPreviewComponent from "./FrameOutputPreviewComponent";
 
@@ -57,12 +58,11 @@ const JsEditorDetailComponent = ({ data, mutate, error }) => {
       />
       <div>
         <div className="bg-gray-900 flex flex-col lg:flex-row mt-24">
-          <Editor
+          <MonacoCodeEditor
+            height="50vh"
             language="javascript"
-            className="overflow-y-scroll max-h-96"
-            displayName="JS"
             value={code}
-            onChange={setCode}
+            setValue={setCode}
           />
         </div>
         <div className="m-4">
