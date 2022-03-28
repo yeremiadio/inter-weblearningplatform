@@ -196,7 +196,6 @@ export default function createEditMaterial({ isEditable = false, data = {} }) {
                     />
                   )}
                 </Field>
-                {JSON.stringify(values.content)}
                 {errors?.content && touched.content && (
                   <p className="text-red-500">{errors?.content}</p>
                 )}
