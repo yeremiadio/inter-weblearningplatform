@@ -3,12 +3,13 @@ import {
   Editable,
   EditableInput,
   EditablePreview,
+  IconButton,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import UserDropdown from "../Dropdown/UserDropdown";
 import { useToast } from "@chakra-ui/toast";
-import { CloudIcon } from "@heroicons/react/solid";
+import { CloudIcon, SaveAsIcon, SaveIcon } from "@heroicons/react/solid";
 import { useDispatch, useSelector } from "react-redux";
 import { storeCode, updateCode } from "../../redux/actions/codeAction";
 import { RESET_ERRORS, RESET_USER } from "../../constants/types";
@@ -83,6 +84,7 @@ function CodeEditorNavbar({ codeNode, data = {}, isEdited = false }) {
           updateCode({ title: titleCode, ...data }, router, toast)
         );
   };
+
   return (
     <nav className="flex justify-between p-6 lg:py-6 lg:px-8 bg-gray-900 text-white mt-0 fixed w-full z-40 top-0 border-b border-gray-700">
       <div className="hidden w-1/4 md:flex items-center">
@@ -103,15 +105,14 @@ function CodeEditorNavbar({ codeNode, data = {}, isEdited = false }) {
         <EditableInput />
       </Editable>
       <div className="flex items-center gap-4">
-        <Button
-          className="text-white"
-          colorScheme={"blue"}
-          onClick={onSubmitCode}
+        <IconButton
+          icon={<SaveIcon className="w-6 h-6" />}
+          variant="ghost"
+          _hover={{ color: "white" }}
           isLoading={isFetching}
-          leftIcon={<CloudIcon className="w-6 h-6" />}
-        >
-          Save
-        </Button>
+          onClick={onSubmitCode}
+        />
+
         <UserDropdown user={auth?.user?.user} darkMode />
       </div>
     </nav>

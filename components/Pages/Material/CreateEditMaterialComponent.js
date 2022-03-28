@@ -156,14 +156,26 @@ export default function createEditMaterial({ isEditable = false, data = {} }) {
                     />
                   </Button>
                 </div>
-                {values?.thumbnail && typeof values?.thumbnail === "object" && (
-                  <Box className="w-full mt-4 lg:w-80 rounded-md p-4 border border-gray-200">
-                    <img
-                      src={URL.createObjectURL(values.thumbnail)}
-                      alt=""
-                      className="w-full object-cover"
-                    />
-                  </Box>
+                {values?.thumbnail ? (
+                  typeof values?.thumbnail === "object" ? (
+                    <Box className="w-full mt-4 lg:w-80 rounded-md p-4 border border-gray-200">
+                      <img
+                        src={URL.createObjectURL(values.thumbnail)}
+                        alt=""
+                        className="w-full object-cover"
+                      />
+                    </Box>
+                  ) : (
+                    <Box className="w-full mt-4 lg:w-80 rounded-md p-4 border border-gray-200">
+                      <img
+                        src={values.thumbnail}
+                        alt=""
+                        className="w-full object-cover"
+                      />
+                    </Box>
+                  )
+                ) : (
+                  ""
                 )}
               </div>
               <div className="mt-4">
