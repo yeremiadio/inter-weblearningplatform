@@ -68,8 +68,8 @@ export default function dashboard() {
     },
     {
       id: 4,
-      name: "Code Editor",
-      count: 3,
+      name: "Kode",
+      count: data?.all_data_count?.code_histories,
 
       icon: <CodeIcon className="w-6 h-6" />,
     },

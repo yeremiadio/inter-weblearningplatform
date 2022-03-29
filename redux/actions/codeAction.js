@@ -95,6 +95,13 @@ export const updateCode = (data, router, toast) => async (dispatch) => {
       });
     })
     .catch((error) => {
+      toast({
+        title: "error",
+        description: "You are not authorized",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
       dispatch(setIsFetching(false));
     });
 };
