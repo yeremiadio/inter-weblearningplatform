@@ -52,6 +52,7 @@ const FrontendEditorDetailComponent = ({ code }) => {
         data={{
           type: "frontend",
           code: JSON.stringify({ html: html, css: css, js: js }),
+          userId: code.user_id,
         }}
       />
       <div className="min-h-screen h-1/2 mt-24">

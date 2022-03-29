@@ -8,7 +8,8 @@ import Quill from "quill";
 Quill.register(Quill.import("attributors/style/direction"), true);
 //Alignment
 Quill.register(Quill.import("attributors/style/align"), true);
-
+//Fonts
+Quill.register(Quill.import("attributors/class/font"), true);
 const QuillTextEditor = ({ setValue, placeholder, ...rest }) => {
   const toast = useToast();
   const quillRef = useRef();

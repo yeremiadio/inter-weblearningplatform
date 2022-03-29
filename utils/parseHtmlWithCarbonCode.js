@@ -11,7 +11,7 @@ const CodeEditor = (props) => {
     typeof window.navigator !== "undefined"
   ) {
     CodeMirror = require("codemirror/lib/codemirror");
-    require("codemirror/theme/seti.css");
+    require("codemirror/theme/dracula.css");
     require("codemirror/mode/jsx/jsx");
   }
   return (
@@ -22,7 +22,7 @@ const CodeEditor = (props) => {
         options={{
           readOnly: true,
           mode: "jsx",
-          theme: "seti",
+          theme: "dracula",
           // lineWrapping: true,
         }}
         onChange={(editor, data, value) => {

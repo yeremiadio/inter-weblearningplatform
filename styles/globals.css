@@ -66,11 +66,19 @@
 
 .CodeMirror {
   height: 100%;
-  /* min-height: 300px; */
 }
 
 .ql-video {
   @apply w-full h-full md:h-[640px] aspect-w-video aspect-h-video;
+}
+
+.ql-font-monospace {
+  font-family: "Liberation Mono", "Courier New", monospace;
+  background: #f4f4f5;
+  padding-inline: 0.2em;
+}
+.cm-s-dracula.CodeMirror {
+  padding: 8px;
 }
 
 /* html,

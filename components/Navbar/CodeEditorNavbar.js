@@ -104,13 +104,15 @@ function CodeEditorNavbar({ codeNode, data = {}, isEdited = false }) {
         <EditableInput />
       </Editable>
       <div className="flex items-center gap-4">
-        <IconButton
-          icon={<SaveIcon className="w-6 h-6" />}
-          variant="ghost"
-          _hover={{ color: "white" }}
-          isLoading={isFetching}
-          onClick={onSubmitCode}
-        />
+        {data?.userId === auth?.user?.user?.id && (
+          <IconButton
+            icon={<SaveIcon className="w-6 h-6" />}
+            variant="ghost"
+            _hover={{ color: "white" }}
+            isLoading={isFetching}
+            onClick={onSubmitCode}
+          />
+        )}
 
         <UserDropdown user={auth?.user?.user} darkMode />
       </div>

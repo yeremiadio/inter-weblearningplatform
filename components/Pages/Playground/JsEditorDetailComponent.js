@@ -1,6 +1,6 @@
 import { Box, Button, Spinner } from "@chakra-ui/react";
 import { TrashIcon } from "@heroicons/react/solid";
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import instance from "../../../utils/instance";
 import useScreenshotWebPage from "../../../utils/useScreenshotWebPage";
 import MonacoCodeEditor from "../../CodeEditor/MonacoCodeEditor";
@@ -51,6 +51,7 @@ const JsEditorDetailComponent = ({ data, mutate, error }) => {
         data={{
           type: "js",
           code: code,
+          userId: code.user_id,
         }}
       />
       <div>

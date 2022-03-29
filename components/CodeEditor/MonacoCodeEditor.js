@@ -7,6 +7,7 @@ const MonacoCodeEditor = ({
   theme = "",
   language = "",
   setValue,
+  readOnly = false,
   value,
   ...rest
 }) => {
@@ -48,7 +49,7 @@ const MonacoCodeEditor = ({
         overviewRulerLanes: 2,
         quickSuggestions: true,
         quickSuggestionsDelay: 100,
-        readOnly: false,
+        readOnly: readOnly,
         renderControlCharacters: false,
         renderFinalNewline: true,
         renderIndentGuides: true,
@@ -65,15 +66,6 @@ const MonacoCodeEditor = ({
         showFoldingControls: "mouseover",
         smoothScrolling: true,
         suggestOnTriggerCharacters: true,
-        wordBasedSuggestions: true,
-        wordSeparators: "~!@#$%^&*()-=+[{]}|;:'\",.<>/?",
-        wordWrap: "wordWrapColumn",
-        wordWrapBreakAfterCharacters: "\t})]?|&,;",
-        wordWrapBreakBeforeCharacters: "{([+",
-        wordWrapBreakObtrusiveCharacters: ".",
-        wordWrapColumn: 80,
-        wordWrapMinified: true,
-        wrappingIndent: "deepIndent",
       }}
       onChange={handleChange}
       defaultLanguage={language}

@@ -8,7 +8,7 @@ const CarbonCodeEditor = ({ code, setCode, ...rest }) => {
     typeof window.navigator !== "undefined"
   ) {
     CodeMirror = require("codemirror/lib/codemirror");
-    require("codemirror/theme/seti.css");
+    require("codemirror/theme/dracula.css");
     require("codemirror/mode/xml/xml");
     require("codemirror/mode/javascript/javascript");
     require("codemirror/mode/css/css");
@@ -18,17 +18,9 @@ const CarbonCodeEditor = ({ code, setCode, ...rest }) => {
     setCode(value);
   }
   return (
-    <div
-      className="bg-[#0E1112] rounded-lg overflow-hidden"
-      style={{ minHeight: "400px" }}
-    >
+    <div className="bg-[#0E1112] rounded-lg overflow-hidden">
       <img src="/macos-buttons.svg" className="w-10 h-10 ml-4" alt="" />
-      <ControlledEditor
-        onBeforeChange={handleChange}
-        value={code}
-        className={"break-words"}
-        {...rest}
-      />
+      <ControlledEditor onBeforeChange={handleChange} value={code} {...rest} />
     </div>
   );
 };
