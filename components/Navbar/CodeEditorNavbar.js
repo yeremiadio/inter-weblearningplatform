@@ -122,7 +122,7 @@ function CodeEditorNavbar({ codeNode, data = {}, isEdited = false }) {
       var blob = new Blob([data.code], {
         type: "text/plain;charset=utf-8",
       });
-      saveAs(blob, `${titleCode}.js`);
+      saveAs(blob, `script.js`);
     } else {
       return;
     }
