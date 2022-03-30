@@ -109,9 +109,9 @@ function CodeEditorNavbar({ codeNode, data = {}, isEdited = false }) {
         if (index === 2) {
           zip.file("script.js", item);
         }
-        zip.generateAsync({ type: "blob" }).then(function (content) {
-          saveAs(content, "code.zip");
-        });
+      });
+      zip.generateAsync({ type: "blob" }).then(function (content) {
+        saveAs(content, "code.zip");
       });
     }
     if (data.type === "js") {
