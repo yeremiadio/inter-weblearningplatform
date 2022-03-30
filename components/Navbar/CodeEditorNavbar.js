@@ -18,6 +18,7 @@ import { storeCode, updateCode } from "../../redux/actions/codeAction";
 import { RESET_ERRORS, RESET_USER } from "../../constants/types";
 import { toPng } from "html-to-image";
 import { saveAs } from "file-saver";
+import JSZip from "jszip";
 import {
   CloudDownloadIcon,
   DotsVerticalIcon,
@@ -96,26 +97,21 @@ function CodeEditorNavbar({ codeNode, data = {}, isEdited = false }) {
   };
 
   const downloadCode = async () => {
+    let zip = new JSZip();
     if (data.type === "frontend") {
       await Object.values(JSON.parse(data.code)).forEach((item, index) => {
         if (index === 0) {
-          var blob = new Blob([item], {
-            type: "text/plain;charset=utf-8",
-          });
-          saveAs(blob, `index.html`);
+          zip.file("index.html", item);
         }
         if (index === 1) {
-          var blob = new Blob([item], {
-            type: "text/plain;charset=utf-8",
-          });
-          saveAs(blob, `style.css`);
+          zip.file("style.css", item);
         }
         if (index === 2) {
-          var blob = new Blob([item], {
-            type: "text/plain;charset=utf-8",
-          });
-          saveAs(blob, `script.js`);
+          zip.file("script.js", item);
         }
+        zip.generateAsync({ type: "blob" }).then(function (content) {
+          saveAs(content, "code.zip");
+        });
       });
     }
     if (data.type === "js") {
