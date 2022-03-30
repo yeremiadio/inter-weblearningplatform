@@ -3,6 +3,11 @@ import {
   EditableInput,
   EditablePreview,
   IconButton,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  useMediaQuery,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -12,9 +17,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { storeCode, updateCode } from "../../redux/actions/codeAction";
 import { RESET_ERRORS, RESET_USER } from "../../constants/types";
 import { toPng } from "html-to-image";
-import { SaveIcon } from "@heroicons/react/solid";
+import { saveAs } from "file-saver";
+import {
+  CloudDownloadIcon,
+  DotsVerticalIcon,
+  InboxInIcon,
+} from "@heroicons/react/solid";
 
 function CodeEditorNavbar({ codeNode, data = {}, isEdited = false }) {
+  const [isSmallestThan768] = useMediaQuery("(max-width: 768px)");
   const router = useRouter();
   const auth = useSelector((state) => state.auth);
   const toast = useToast();
@@ -84,6 +95,39 @@ function CodeEditorNavbar({ codeNode, data = {}, isEdited = false }) {
         );
   };
 
+  const downloadCode = async () => {
+    if (data.type === "frontend") {
+      await Object.values(JSON.parse(data.code)).forEach((item, index) => {
+        if (index === 0) {
+          var blob = new Blob([item], {
+            type: "text/plain;charset=utf-8",
+          });
+          saveAs(blob, `index.html`);
+        }
+        if (index === 1) {
+          var blob = new Blob([item], {
+            type: "text/plain;charset=utf-8",
+          });
+          saveAs(blob, `style.css`);
+        }
+        if (index === 2) {
+          var blob = new Blob([item], {
+            type: "text/plain;charset=utf-8",
+          });
+          saveAs(blob, `script.js`);
+        }
+      });
+    }
+    if (data.type === "js") {
+      var blob = new Blob([data.code], {
+        type: "text/plain;charset=utf-8",
+      });
+      saveAs(blob, `${titleCode}.js`);
+    } else {
+      return;
+    }
+  };
+
   return (
     <nav className="flex justify-between p-6 lg:py-6 lg:px-8 bg-gray-900 text-white mt-0 fixed w-full z-40 top-0 border-b border-gray-700">
       <div className="hidden w-1/4 md:flex items-center">
@@ -104,13 +148,36 @@ function CodeEditorNavbar({ codeNode, data = {}, isEdited = false }) {
         <EditableInput />
       </Editable>
       <div className="flex items-center gap-4">
-        <IconButton
-          icon={<SaveIcon className="w-6 h-6" />}
-          variant="ghost"
-          _hover={{ color: "white" }}
-          isLoading={isFetching}
-          onClick={onSubmitCode}
-        />
+        {!isSmallestThan768 ? (
+          <>
+            <IconButton
+              icon={<InboxInIcon className="w-6 h-6" />}
+              variant="ghost"
+              _hover={{ color: "white" }}
+              onClick={downloadCode}
+            />
+            <IconButton
+              icon={<CloudDownloadIcon className="w-6 h-6" />}
+              variant="ghost"
+              _hover={{ color: "white" }}
+              isLoading={isFetching}
+              onClick={onSubmitCode}
+            />
+          </>
+        ) : (
+          <Menu>
+            <MenuButton
+              as={IconButton}
+              icon={<DotsVerticalIcon className="w-6 h-6" />}
+              variant="ghost"
+              colorScheme={"blue"}
+            />
+            <MenuList textColor={"black"}>
+              <MenuItem onClick={downloadCode}>Download</MenuItem>
+              <MenuItem>Save to Cloud</MenuItem>
+            </MenuList>
+          </Menu>
+        )}
         <UserDropdown user={auth?.user?.user} darkMode />
       </div>
     </nav>
