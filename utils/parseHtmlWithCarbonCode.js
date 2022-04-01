@@ -44,6 +44,13 @@ export function parseHtmlWithCarbonCode(text) {
   }
   const options = {
     replace: ({ name, attribs, children }) => {
+      if (name === "h1") {
+        return (
+          <h1 className="text-4xl font-bold">
+            {domToReact(children, options)}
+          </h1>
+        );
+      }
       if (name === "ol") {
         return (
           <ol type="1" style={{ listStyleType: "decimal", paddingLeft: 24 }}>
