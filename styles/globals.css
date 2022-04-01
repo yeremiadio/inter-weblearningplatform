@@ -66,6 +66,8 @@
 
 .CodeMirror {
   height: 100%;
+  /* height: fit-content; */
+  min-height: fit-content;
 }
 
 .ql-video {

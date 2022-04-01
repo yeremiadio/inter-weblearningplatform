@@ -15,23 +15,21 @@ const CodeEditor = (props) => {
     require("codemirror/mode/jsx/jsx");
   }
   return (
-    <div className="bg-[#282A36] p-3 overflow-hidden rounded-md">
+    <div className="bg-[#0E1112] rounded-lg overflow-hidden">
+      <img src="/macos-buttons.svg" className="w-10 h-10 ml-4" alt="" />
       <UnControlledEditor
         value={value}
         {...rest}
         options={{
-          readOnly: true,
+          readOnly: false,
           mode: "jsx",
           theme: "dracula",
           lint: true,
-          lineNumbers: false,
           lineWiseCopyCut: true,
           pasteLinesPerSelection: true,
           lineWrapping: true,
-          extraKeys: { "Ctrl-Space": "autocomplete" },
           autocorrect: true,
           spellcheck: true,
-          smartIndent: true,
         }}
         onChange={(editor, data, value) => {
           return;
@@ -44,7 +42,7 @@ const CodeEditor = (props) => {
 export default CodeEditor;
 
 export function parseHtmlWithCarbonCode(text) {
-  function replaceCommaLine(data) {
+  function replaceCommaLine(data = []) {
     //convert string to array and remove whitespace
     let dataToArray = data.split(";").map((item) => item.trim());
     //convert array to string replacing comma with new line
@@ -95,6 +93,7 @@ export function parseHtmlWithCarbonCode(text) {
           }
         }
         const text = arr.join(" ");
+        console.log(text);
         const dataCode = replaceCommaLine(text);
         return (
           <div className="mt-4">
