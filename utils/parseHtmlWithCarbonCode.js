@@ -23,7 +23,15 @@ const CodeEditor = (props) => {
           readOnly: true,
           mode: "jsx",
           theme: "dracula",
-          // lineWrapping: true,
+          lint: true,
+          lineNumbers: false,
+          lineWiseCopyCut: true,
+          pasteLinesPerSelection: true,
+          lineWrapping: true,
+          extraKeys: { "Ctrl-Space": "autocomplete" },
+          autocorrect: true,
+          spellcheck: true,
+          smartIndent: true,
         }}
         onChange={(editor, data, value) => {
           return;
@@ -46,9 +54,23 @@ export function parseHtmlWithCarbonCode(text) {
     replace: ({ name, attribs, children }) => {
       if (name === "h1") {
         return (
-          <h1 className="text-4xl font-bold">
+          <h1 className="text-4xl font-extrabold mb-2">
             {domToReact(children, options)}
           </h1>
+        );
+      }
+      if (name === "h2") {
+        return (
+          <h2 className="text-3xl font-bold mb-2">
+            {domToReact(children, options)}
+          </h2>
+        );
+      }
+      if (name === "h3") {
+        return (
+          <h3 className="text-2xl font-bold mb-2">
+            {domToReact(children, options)}
+          </h3>
         );
       }
       if (name === "ol") {
