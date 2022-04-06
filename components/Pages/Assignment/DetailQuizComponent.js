@@ -30,7 +30,22 @@ function DetailQuizComponent({ data, mutate, error, toast }) {
     correct: 0,
     false: 0,
   });
-  useEffect(() => {
+
+  function hoursToMs(hours) {
+    var ms = parseInt(hours * 3600); // 3,600 seconds in 1 hour
+    return ms;
+  }
+
+  const MINUTES = hoursToMs(hours);
+  const time = new Date(data.start_date);
+  time.setSeconds(time.getSeconds() + MINUTES);
+
+  const { seconds, minutes } = useTimer({
+    expiryTimestamp: time,
+    onExpire: () => router.replace("/assignments"),
+  });
+
+  const checkScore = () => {
     const questionAnswered = quiz.filter((item) => item.selected);
     const questionCorrect = questionAnswered.filter((item) =>
       item.options.find(
@@ -41,6 +56,10 @@ function DetailQuizComponent({ data, mutate, error, toast }) {
       correct: questionCorrect.length,
       false: quiz.length - questionCorrect.length,
     });
+  };
+
+  useEffect(() => {
+    checkScore();
   }, [quiz]);
 
   const selectOption = (indexSelected, indexOptionSelected) => {
@@ -60,20 +79,6 @@ function DetailQuizComponent({ data, mutate, error, toast }) {
       )
     );
   };
-
-  function hoursToMs(hours) {
-    var ms = parseInt(hours * 3600); // 3,600 seconds in 1 hour
-    return ms;
-  }
-
-  const MINUTES = hoursToMs(hours);
-  const time = new Date(data?.start_date);
-  time.setSeconds(time.getSeconds() + MINUTES);
-
-  const { seconds, minutes } = useTimer({
-    expiryTimestamp: time,
-    onExpire: () => router.replace("/assignments"),
-  });
 
   const postResultQuiz = async (quiz) => {
     const data = JSON.stringify(quiz);
