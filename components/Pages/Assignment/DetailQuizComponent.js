@@ -42,7 +42,6 @@ function DetailQuizComponent({ data, mutate, error, toast }) {
 
   const { seconds, minutes } = useTimer({
     expiryTimestamp: time,
-    onExpire: () => router.replace("/assignments"),
   });
 
   const checkScore = () => {
