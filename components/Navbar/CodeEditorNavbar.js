@@ -7,6 +7,7 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  Spinner,
   useMediaQuery,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
@@ -179,18 +180,24 @@ function CodeEditorNavbar({ codeNode, data = {}, isEdited = false }) {
             />
           </>
         ) : (
-          <Menu>
-            <MenuButton
-              as={IconButton}
-              icon={<DotsVerticalIcon className="w-6 h-6" />}
-              variant="ghost"
-              colorScheme={"blue"}
-            />
-            <MenuList textColor={"black"}>
-              <MenuItem onClick={downloadCode}>Download</MenuItem>
-              <MenuItem>Save to Cloud</MenuItem>
-            </MenuList>
-          </Menu>
+          <>
+            {isFetching ? (
+              <Spinner />
+            ) : (
+              <Menu>
+                <MenuButton
+                  as={IconButton}
+                  icon={<DotsVerticalIcon className="w-6 h-6" />}
+                  variant="ghost"
+                  colorScheme={"blue"}
+                />
+                <MenuList textColor={"black"}>
+                  <MenuItem onClick={downloadCode}>Download</MenuItem>
+                  <MenuItem onClick={onSubmitCode}>Save to Cloud</MenuItem>
+                </MenuList>
+              </Menu>
+            )}
+          </>
         )}
         <UserDropdown user={auth?.user?.user} darkMode />
       </div>
