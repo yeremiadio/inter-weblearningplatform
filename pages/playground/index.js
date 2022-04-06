@@ -204,7 +204,7 @@ function playground() {
                             {item.title}
                           </span>
                           <span className="text-sm line-clamp-1">
-                            {item.user.name}
+                            {item.user?.name}
                           </span>
                         </div>
                       </div>
