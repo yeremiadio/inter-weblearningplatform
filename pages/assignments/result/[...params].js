@@ -17,17 +17,12 @@ function result() {
   const { params } = router.query;
   const auth = useSelector((state) => state.auth.user);
   const { data, mutate, error } = useSWR(
-    [
-      `api/result/single/${params ? params[0] : ""}/${
-        params ? params[1] : auth.user.id
-      }`,
-    ],
+    [`api/result/single/${params && params[0]}/${params && params[1]}`],
     (url) => fetcher(url),
     {
       revalidateOnFocus: true,
     }
   );
-
 
   if (!data && !error) {
     return <BlueSpinner />;
