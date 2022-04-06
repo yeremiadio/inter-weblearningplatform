@@ -118,14 +118,14 @@ function DetailQuizComponent({ data, mutate, error, toast }) {
       </Modal>
       <div className="bg-section">
         <div className="my-4">
-          {auth.user?.roles[0]?.name === "student" && (
+          {
             <>
               Time Left:{" "}
               <b>
                 {minutes}:{seconds}
               </b>
             </>
-          )}
+          }
         </div>
         <div className="flex lg:flex-row items-center justify-center flex-1 flex-wrap gap-2 mb-2">
           {quiz.map((item, index) => (
