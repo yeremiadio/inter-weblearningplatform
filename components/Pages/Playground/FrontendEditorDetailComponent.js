@@ -50,6 +50,7 @@ const FrontendEditorDetailComponent = ({ code }) => {
         codeNode={codeNodeElement}
         isEdited={true}
         data={{
+          title: code.title,
           type: "frontend",
           code: JSON.stringify({ html: html, css: css, js: js }),
           userId: code.user_id,

@@ -49,6 +49,7 @@ const JsEditorDetailComponent = ({ data, mutate, error }) => {
         isEdited={true}
         codeNode={codeNodeElement}
         data={{
+          title: data.title,
           type: "js",
           code: code,
           userId: code.user_id,

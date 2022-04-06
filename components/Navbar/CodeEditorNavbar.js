@@ -32,7 +32,7 @@ function CodeEditorNavbar({ codeNode, data = {}, isEdited = false }) {
   const auth = useSelector((state) => state.auth);
   const toast = useToast();
   const isFetching = useSelector((state) => state.code.isFetching);
-  const code = useSelector((state) => state.code.data);
+  // const code = useSelector((state) => state.code.data);
   const dispatch = useDispatch();
   useEffect(() => {
     const ac = new AbortController();
@@ -61,7 +61,7 @@ function CodeEditorNavbar({ codeNode, data = {}, isEdited = false }) {
   }, []);
 
   const [titleCode, setTitleCode] = useState(
-    isEdited ? code?.title : "untitled"
+    isEdited ? data.title : "untitled"
   );
   const onChangeTitleProject = (value) => {
     setTitleCode(value);
