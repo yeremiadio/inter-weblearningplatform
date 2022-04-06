@@ -61,7 +61,7 @@ function CodeEditorNavbar({ codeNode, data = {}, isEdited = false }) {
   }, []);
 
   const [titleCode, setTitleCode] = useState(
-    isEdited ? code.title : "untitled"
+    isEdited ? code?.title : "untitled"
   );
   const onChangeTitleProject = (value) => {
     setTitleCode(value);
