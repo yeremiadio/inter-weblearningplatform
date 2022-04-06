@@ -18,6 +18,7 @@ import { useSelector } from "react-redux";
 import { useMediaQuery } from "@chakra-ui/react";
 import { Tag } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import CustomSearchInput from "../../components/Inputs/CustomSearchInput";
 
 const index = () => {
   const auth = useSelector((state) => state.auth);
@@ -54,7 +55,17 @@ const index = () => {
     }
   }, []);
 
-  const filteredUsers = users?.filter((item) => item.id !== auth.user.user.id);
+  const [filterText, setFilterText] = useState("");
+
+  const filteredUsers = users?.filter(
+    (item) =>
+      item.id !== auth.user.user.id &&
+      item.name &&
+      item.name &&
+      item.email &&
+      item.email.toLowerCase().includes(filterText.toLowerCase())
+  );
+
   const [isSmallestThan768] = useMediaQuery("(max-width: 768px)");
   const columns = [
     {
@@ -143,6 +154,12 @@ const index = () => {
           toast={toast}
         />
       </Modal>
+      <div className="mb-4">
+        <CustomSearchInput
+          placeholder="Cari nama user..."
+          setFilterText={setFilterText}
+        />
+      </div>
       <div className="bg-section">
         <div className="flex items-center flex-col lg:flex-row">
           <div>
