@@ -66,14 +66,13 @@ function DetailQuizComponent({ data, mutate, error, toast }) {
     return ms;
   }
 
-  const MINUTES = hours !== 0 ? hoursToMs(hours) : parseInt(minuteTimes * 60);
+  const MINUTES = hoursToMs(hours);
   const time = new Date(data?.start_date);
   time.setSeconds(time.getSeconds() + MINUTES);
 
   const { seconds, minutes } = useTimer({
     expiryTimestamp: time,
-    onExpire: () =>
-      router.replace('/assignments'),
+    onExpire: () => router.replace("/assignments"),
   });
 
   const postResultQuiz = async (quiz) => {
