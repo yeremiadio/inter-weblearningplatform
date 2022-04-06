@@ -73,7 +73,7 @@ function DetailQuizComponent({ data, mutate, error, toast }) {
   const { seconds, minutes } = useTimer({
     expiryTimestamp: time,
     onExpire: () =>
-      auth.user?.roles[0]?.name === "student" && postResultQuiz(quiz),
+      router.replace('/assignments'),
   });
 
   const postResultQuiz = async (quiz) => {

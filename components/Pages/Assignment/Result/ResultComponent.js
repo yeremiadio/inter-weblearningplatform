@@ -56,17 +56,17 @@ const ResultComponent = ({ result }) => {
     <>
       <div className="mb-4">
         <h3 className="text-3xl my-4 font-extrabold text-primary">
-          {result.quiz.title}
+          {result.quiz?.title}
         </h3>
         <Tag
           size={"md"}
-          colorScheme={result.quiz.type === "quiz" ? "blue" : "yellow"}
+          colorScheme={result.quiz?.type === "quiz" ? "blue" : "yellow"}
         >
-          {result.quiz.type}
+          {result.quiz?.type}
         </Tag>
       </div>
       <span className="text-lg text-secondary font-semibold">
-        Score: {result.score}
+        Score: {result?.score}
       </span>
 
       <div className="mt-4">
@@ -74,8 +74,8 @@ const ResultComponent = ({ result }) => {
           Submitted Answers
         </span>
         <div className="mt-4 text-secondary">
-          {result.quiz.type === "quiz"
-            ? result.result_quizzes.map((item, index) => (
+          {result.quiz?.type === "quiz"
+            ? result.result_quizzes?.map((item, index) => (
                 <div key={item.id} className="my-2">
                   <h3 className="text-primary font-semibold">{`${index + 1}. ${
                     item.question.question
@@ -94,11 +94,11 @@ const ResultComponent = ({ result }) => {
                   )}
                 </div>
               ))
-            : result.result_essays.map((item, index) => (
+            : result.result_essays?.map((item, index) => (
                 <div key={item.id} className="my-2">
                   <div className="mb-4">
                     <h3 className="text-primary font-semibold">{`Pertanyaan`}</h3>
-                    {parse(item.question.question)}
+                    {parse(item.question?.question)}
                   </div>
                   <div className="mb-4">
                     {" "}
@@ -112,8 +112,8 @@ const ResultComponent = ({ result }) => {
                 </div>
               ))}
         </div>
-        {result.quiz.type === "essay" &&
-          auth.user.user.roles[0].name !== "student" && (
+        {result.quiz?.type === "essay" &&
+          auth.user?.user?.roles[0]?.name !== "student" && (
             <div className="mb-4">
               <form onSubmit={formik.handleSubmit}>
                 <div className="mt-2 w-3/4 lg:w-1/4">
