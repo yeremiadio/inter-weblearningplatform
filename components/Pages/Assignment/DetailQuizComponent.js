@@ -18,10 +18,10 @@ function DetailQuizComponent({ data, mutate, error, toast }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoading, setLoading] = useState(false);
   const [quiz, setQuiz] = useState(data ? data.questions : "");
-  const { hours, minutes: minuteTimes } = getTimeDiff(
-    data?.start_date,
-    data?.end_date
-  );
+  // const { hours, minutes: minuteTimes } = getTimeDiff(
+  //   data?.start_date,
+  //   data?.end_date
+  // );
   const { thumbnail, question, options } = quiz[currentIndex];
   const router = useRouter();
   const SubmitAssignmentRef = useRef();
@@ -31,18 +31,18 @@ function DetailQuizComponent({ data, mutate, error, toast }) {
     false: 0,
   });
 
-  function hoursToMs(hours) {
-    var ms = parseInt(hours * 3600); // 3,600 seconds in 1 hour
-    return ms;
-  }
+  // function hoursToMs(hours) {
+  //   var ms = parseInt(hours * 3600); // 3,600 seconds in 1 hour
+  //   return ms;
+  // }
 
-  const MINUTES = hoursToMs(hours);
-  const time = new Date(data.start_date);
-  time.setSeconds(time.getSeconds() + MINUTES);
+  // const MINUTES = hoursToMs(hours);
+  // const time = new Date(data.start_date);
+  // time.setSeconds(time.getSeconds() + MINUTES);
 
-  const { seconds, minutes } = useTimer({
-    expiryTimestamp: time,
-  });
+  // const { seconds, minutes } = useTimer({
+  //   expiryTimestamp: time,
+  // });
 
   const checkScore = () => {
     const questionAnswered = quiz.filter((item) => item.selected);
@@ -117,7 +117,7 @@ function DetailQuizComponent({ data, mutate, error, toast }) {
         />
       </Modal>
       <div className="bg-section">
-        <div className="my-4">
+        {/* <div className="my-4">
           {
             <>
               Time Left:{" "}
@@ -126,7 +126,7 @@ function DetailQuizComponent({ data, mutate, error, toast }) {
               </b>
             </>
           }
-        </div>
+        </div> */}
         <div className="flex lg:flex-row items-center justify-center flex-1 flex-wrap gap-2 mb-2">
           {quiz.map((item, index) => (
             <Button
