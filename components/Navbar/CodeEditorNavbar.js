@@ -26,13 +26,17 @@ import {
   InboxInIcon,
 } from "@heroicons/react/solid";
 
-function CodeEditorNavbar({ codeNode, data = {}, isEdited = false }) {
+function CodeEditorNavbar({
+  codeNode,
+  codeTitle = "",
+  data = {},
+  isEdited = false,
+}) {
   const [isSmallestThan768] = useMediaQuery("(max-width: 768px)");
   const router = useRouter();
   const auth = useSelector((state) => state.auth);
   const toast = useToast();
   const isFetching = useSelector((state) => state.code.isFetching);
-  // const code = useSelector((state) => state.code.data);
   const dispatch = useDispatch();
   useEffect(() => {
     const ac = new AbortController();
@@ -60,9 +64,7 @@ function CodeEditorNavbar({ codeNode, data = {}, isEdited = false }) {
     }
   }, []);
 
-  const [titleCode, setTitleCode] = useState(
-    isEdited ? data.title : "untitled"
-  );
+  const [titleCode, setTitleCode] = useState(isEdited ? codeTitle : "untitled");
   const onChangeTitleProject = (value) => {
     setTitleCode(value);
   };
@@ -79,7 +81,6 @@ function CodeEditorNavbar({ codeNode, data = {}, isEdited = false }) {
           quality: 0.5,
         })
           .then(async (dataUrl) => {
-            // console.log({ title: titleCode, screenshot: dataUrl, ...data });
             await dispatch(
               storeCode(
                 { title: titleCode, screenshot: dataUrl, ...data },
@@ -91,8 +92,7 @@ function CodeEditorNavbar({ codeNode, data = {}, isEdited = false }) {
           .catch((err) => {
             console.log(err);
           })
-      : // : console.log({ title: titleCode, ...data });
-        await dispatch(
+      : await dispatch(
           updateCode({ title: titleCode, ...data }, router, toast)
         );
   };
@@ -156,7 +156,6 @@ function CodeEditorNavbar({ codeNode, data = {}, isEdited = false }) {
         justifyContent={"center"}
         className="line-clamp-1 p-2 mt-1"
         onChange={onChangeTitleProject}
-        defaultValue={"Untitled Project"}
         value={titleCode}
       >
         <EditablePreview />

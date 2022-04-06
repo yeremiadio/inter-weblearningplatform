@@ -48,9 +48,9 @@ const FrontendEditorDetailComponent = ({ code }) => {
     <div className="bg-gray-900" ref={codeRef}>
       <CodeEditorNavbar
         codeNode={codeNodeElement}
+        codeTitle={code.title}
         isEdited={true}
         data={{
-          title: code.title,
           type: "frontend",
           code: JSON.stringify({ html: html, css: css, js: js }),
           userId: code.user_id,

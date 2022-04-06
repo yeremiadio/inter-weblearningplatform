@@ -47,9 +47,9 @@ const JsEditorDetailComponent = ({ data, mutate, error }) => {
     <div ref={codeRef}>
       <CodeEditorNavbar
         isEdited={true}
+        codeTitle={data.title}
         codeNode={codeNodeElement}
         data={{
-          title: data.title,
           type: "js",
           code: code,
           userId: code.user_id,
